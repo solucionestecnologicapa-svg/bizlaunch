@@ -2271,8 +2271,15 @@ async function applyCoupon() {
 }
 function pickPlanStripOnly() { const P = PLANS[R.plan]; const s = byId('plan-strip').querySelector('span:nth-child(2)'); if (s) s.textContent = `${money(priceOf(R.plan, R.coupon).final)}/año · ${P.f} fotos · ${P.s} red${P.s > 1 ? 'es' : ''}`; }
 
+// Yappy / bank only appear once real data is set in CFG (the sample values stay hidden)
+const yappyReady = () => !!CFG.YAPPY && !/6000-0000/.test(CFG.YAPPY);
+const bankReady = () => !!(CFG.BANK && CFG.BANK.numero) && !/^[0\s-]+$/.test(CFG.BANK.numero) && !/Nombre del titular/i.test(CFG.BANK.titular || '');
 function payMethods() {
-  const m = [{ k:'yappy', i:'📱', t:'Yappy', s:'Inmediato' }, { k:'ach', i:'🏦', t:'Transferencia', s:'ACH / banca en línea' }, { k:'cash', i:'💵', t:'Efectivo', s:'En persona' }];
+  const m = [];
+  if (yappyReady()) m.push({ k:'yappy', i:'📱', t:'Yappy', s:'Inmediato' });
+  if (bankReady()) m.push({ k:'ach', i:'🏦', t:'Transferencia', s:'ACH / banca en línea' });
+  if (!m.length) m.push({ k:'wa', i:'💬', t:'Por WhatsApp', s:'Te enviamos los datos' });
+  m.push({ k:'cash', i:'💵', t:'Efectivo', s:'En persona' });
   if (CFG.PAY_LINKS[R.plan]) m.unshift({ k:'link', i:'💳', t:'Tarjeta', s:'Pago seguro en línea' });
   return m;
 }
@@ -2285,6 +2292,7 @@ function renderPays() {
   box.innerHTML = !R.pay ? '' : `<div class="pay-box">${
     R.pay === 'yappy' ? `Envía <b>${total}</b> por Yappy a:<div class="big-num">${esc(CFG.YAPPY)}</div>En el mensaje escribe el nombre de tu negocio.${refInput}` :
     R.pay === 'ach' ? `Transfiere <b>${total}</b> a:<div style="margin:8px 0;line-height:1.8"><b>${esc(B.banco)}</b> · ${esc(B.tipo)}<br>Cuenta: <b>${esc(B.numero)}</b><br>Titular: ${esc(B.titular)}</div>${refInput}` :
+    R.pay === 'wa' ? `Te escribimos por WhatsApp con los datos para pagar <b>${total}</b> (Yappy o transferencia). También puedes escribirnos tú al confirmar el registro.` :
     R.pay === 'cash' ? `Paga <b>${total}</b> en persona:<div style="margin-top:8px">📍 ${esc(CFG.OFFICE)}</div><p style="color:var(--mut);margin-top:8px">Te escribiremos para coordinar día y hora.</p>` :
     `Al confirmar te llevaremos a la página de pago seguro para pagar <b>${total}</b> con tarjeta.`}</div>`;
 }
@@ -2304,7 +2312,7 @@ async function submitReg(e) {
     const photos = [];
     for (let i = 0; i < R.photos.length; i++) { btn.textContent = `Subiendo fotos ${i + 1}/${R.photos.length}…`; photos.push(await uploadPhoto(R.photos[i].blob, id)); }
     btn.textContent = 'Guardando…';
-    const label = FREE ? 'Plan Gratis' : { yappy:'Yappy', ach:'Transferencia ACH', cash:'Efectivo', link:'Tarjeta (enlace)' }[R.pay];
+    const label = FREE ? 'Plan Gratis' : { yappy:'Yappy', ach:'Transferencia ACH', cash:'Efectivo', link:'Tarjeta (enlace)', wa:'Coordinar por WhatsApp' }[R.pay];
     const ref = byId('r-ref') ? v('r-ref') : '';
     const rec = {
       id, plan: R.plan, plan_n: P.n, plan_p: pr.final,
@@ -2335,20 +2343,21 @@ function showRegOk(rec) {
     byId('reg-ok').hidden = false; byId('reg').scrollTo(0, 0); return;
   }
   const total = money(rec.plan_p);
-  const msg = `Hola BizLaunch 👋 Acabo de registrar "${rec.name}" (Plan ${rec.plan_n}, ${total}). Pago por ${rec.payment.label}${rec.payment.ref ? ', referencia ' + rec.payment.ref : ''}. Adjunto comprobante.`;
+  const msg = R.pay === 'wa' ? `Hola BizLaunch 👋 Acabo de registrar "${rec.name}" (Plan ${rec.plan_n}, ${total}). ¿Me envían los datos para pagar?`
+    : `Hola BizLaunch 👋 Acabo de registrar "${rec.name}" (Plan ${rec.plan_n}, ${total}). Pago por ${rec.payment.label}${rec.payment.ref ? ', referencia ' + rec.payment.ref : ''}. Adjunto comprobante.`;
   const payLink = R.pay === 'link' ? safeUrl(CFG.PAY_LINKS[R.plan]) : '';
   byId('reg-ok').innerHTML = `<div class="ok-screen">
     <div class="ok-ico">🎉</div>
     <h2 class="sec-title" style="font-size:1.8rem">¡Registro recibido!</h2>
     <p class="sec-sub">“${esc(rec.name)}” ya está en revisión. Te enviamos una confirmación a <b>${esc(rec.email)}</b>.</p>
     <ol class="next">
-      <li><b>${R.pay === 'cash' ? 'Coordinamos tu pago en efectivo' : R.pay === 'link' ? 'Completa el pago con tarjeta' : 'Envía tu comprobante de pago'}</b> (${total}).</li>
+      <li><b>${R.pay === 'cash' ? 'Coordinamos tu pago en efectivo' : R.pay === 'wa' ? 'Escríbenos para recibir los datos de pago' : R.pay === 'link' ? 'Completa el pago con tarjeta' : 'Envía tu comprobante de pago'}</b> (${total}).</li>
       <li><b>Verificamos y activamos</b> tu perfil en menos de 24 horas hábiles.</li>
       <li><b>Te avisamos por correo</b> con tu link y tu código QR para compartir.</li>
     </ol>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       ${payLink ? `<a class="btn btn-pri" href="${esc(payLink)}" target="_blank" rel="noopener">💳 Pagar ahora</a>` : ''}
-      <a class="btn ${payLink ? 'btn-ghost' : 'btn-wa'}" href="${esc(waLink(CFG.CONTACT_WA, msg))}" target="_blank" rel="noopener">${WA_SVG}Enviar comprobante</a>
+      <a class="btn ${payLink ? 'btn-ghost' : 'btn-wa'}" href="${esc(waLink(CFG.CONTACT_WA, msg))}" target="_blank" rel="noopener">${WA_SVG}${R.pay === 'wa' ? 'Pedir datos de pago' : R.pay === 'cash' ? 'Coordinar pago' : 'Enviar comprobante'}</a>
       <button class="btn btn-ghost" data-act="reg-close">Volver al inicio</button>
     </div></div>`;
   byId('reg-ok').hidden = false; byId('reg').scrollTo(0, 0);
