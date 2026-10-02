@@ -1162,7 +1162,8 @@ const CFG = {
   YAPPY: '+507 6000-0000',                          // ⚠️ tu número Yappy real
   BANK: { banco:'Banco General', tipo:'Cuenta de ahorros', numero:'00-00-00-000000-0', titular:'Nombre del titular' }, // ⚠️ tus datos ACH reales
   OFFICE: 'Ciudad de Panamá · Lun–Vie 9am–6pm',
-  PAY_LINKS: { basico:'', pro:'', premium:'' },     // opcional: enlaces de pago con tarjeta (Stripe, PagueloFácil, etc.)
+  PAY_LINKS: { basico:'https://www.paypal.com/ncp/payment/DL53VK65EJMD6', pro:'https://www.paypal.com/ncp/payment/8E64VWCAVB8AA', premium:'https://www.paypal.com/ncp/payment/PKC7CLZQTPY74' },   // enlaces de pago con tarjeta (PayPal)
+  PAY_LINK_PRICES: { basico:50, pro:100, premium:150 },   // precio fijo de cada enlace: si hay descuento o cambia el precio, la opción Tarjeta se oculta
   SITE: 'https://bizlaunchpanama.netlify.app/'
 };
 
@@ -2274,18 +2275,20 @@ function pickPlanStripOnly() { const P = PLANS[R.plan]; const s = byId('plan-str
 // Yappy / bank only appear once real data is set in CFG (the sample values stay hidden)
 const yappyReady = () => !!CFG.YAPPY && !/6000-0000/.test(CFG.YAPPY);
 const bankReady = () => !!(CFG.BANK && CFG.BANK.numero) && !/^[0\s-]+$/.test(CFG.BANK.numero) && !/Nombre del titular/i.test(CFG.BANK.titular || '');
+const cardReady = () => !!CFG.PAY_LINKS[R.plan] && priceOf(R.plan, R.coupon).final === (CFG.PAY_LINK_PRICES || {})[R.plan];
 function payMethods() {
   const m = [];
   if (yappyReady()) m.push({ k:'yappy', i:'📱', t:'Yappy', s:'Inmediato' });
   if (bankReady()) m.push({ k:'ach', i:'🏦', t:'Transferencia', s:'ACH / banca en línea' });
   if (!m.length) m.push({ k:'wa', i:'💬', t:'Por WhatsApp', s:'Te enviamos los datos' });
   m.push({ k:'cash', i:'💵', t:'Efectivo', s:'En persona' });
-  if (CFG.PAY_LINKS[R.plan]) m.unshift({ k:'link', i:'💳', t:'Tarjeta', s:'Pago seguro en línea' });
+  if (cardReady()) m.unshift({ k:'link', i:'💳', t:'Tarjeta', s:'Visa / Mastercard' });
   return m;
 }
 function renderPays() {
   if (PLANS[R.plan].free) { byId('pays').innerHTML = ''; byId('pay-box').innerHTML = '<div class="note" style="margin-bottom:14px">🌱 <b>Sin costo.</b> Cuando quieras fotos, ubicación, menú o reservas, subes de plan desde tu panel y conservas tu mismo link.</div>'; return; }
   const total = money(priceOf(R.plan, R.coupon).final);
+  if (R.pay && !payMethods().some(m => m.k === R.pay)) R.pay = '';
   byId('pays').innerHTML = payMethods().map(m => `<button type="button" class="pay${R.pay === m.k ? ' on' : ''}" data-act="pay" data-k="${m.k}"><div class="i">${m.i}</div><b>${m.t}</b><small>${m.s}</small></button>`).join('');
   const box = byId('pay-box'), B = CFG.BANK;
   const refInput = `<div class="f" style="margin-top:12px"><label for="r-ref">Número de referencia (opcional)</label><input id="r-ref" placeholder="Si ya pagaste, escríbelo aquí"></div>`;
