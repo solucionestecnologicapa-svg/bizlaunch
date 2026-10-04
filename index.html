@@ -3066,7 +3066,7 @@ byId('adm-newpass').addEventListener('submit', saveNewPassword);
     history.replaceState(null, '', location.pathname);
     setTimeout(() => { openAdmin(); toast('El enlace venció o ya se usó. Pide uno nuevo con “¿Olvidaste tu contraseña?”.', 'bad'); }, 300);
   } else if (/type=recovery/.test(h)) setTimeout(showNewPassword, 300);
-  if (SB) SB.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') showNewPassword(); });
+  try { if (SB && SB.auth && typeof SB.auth.onAuthStateChange === 'function') SB.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') showNewPassword(); }); } catch (e) {}
 })();
 document.addEventListener('input', e => { if (e.target.id === 'a-q') { ADM_FILTER.q = e.target.value; aFilterList(); } });
 document.addEventListener('change', e => { if (e.target.id === 'a-plan') { ADM_FILTER.plan = e.target.value; aFilterList(); } });
