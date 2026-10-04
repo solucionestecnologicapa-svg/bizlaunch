@@ -21,6 +21,7 @@ Supabase → SQL Editor:
 4. `04-gratis-reservas-destacados.sql` — Plan Gratis, reservas, Yappy y "Destacar"
 5. `05-endurecimiento.sql` — límites del registro público, fotos solo imágenes de hasta 5 MB,
    estadísticas a prueba de recargas y limpieza de contraseñas antiguas
+6. `06-plan-gratis-opcional.sql` — permite al administrador deshabilitar el Plan Gratis
 
 Luego crea el usuario administrador en Authentication → Users y desactiva "Allow new users to sign up".
 

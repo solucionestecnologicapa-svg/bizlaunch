@@ -677,6 +677,116 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv-in{opacity:1;transform:none}html{scroll-behavior:auto}}
 
 /* Responsive */
+/* ---------- Printables: business cards, sign, flyers ---------- */
+#printer{z-index:600;background:#0A0F1A}
+.pr-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 0}
+.pr-tools .seg{display:inline-flex;background:var(--card);border:1px solid var(--bdr2);border-radius:999px;padding:3px}
+.pr-tools .seg button{padding:7px 14px;border-radius:999px;font-size:.82rem;font-weight:700;color:var(--mut)}
+.pr-tools .seg button.on{background:var(--acc);color:#04121A}
+.pr-tip{color:var(--dim);font-size:.78rem;padding-bottom:12px}
+.pr-stage{display:flex;flex-direction:column;align-items:center;gap:18px;padding:6px 0 60px}
+.pr-page{width:215.9mm;height:279.4mm;background:#fff;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);zoom:var(--z,1);flex-shrink:0;color:#111;font-family:'DM Sans',system-ui,sans-serif}
+.pr-cards{position:absolute;left:17.95mm;top:14.7mm;display:grid;grid-template-columns:repeat(2,90mm);grid-auto-rows:50mm}
+.pr-cards .bc{outline:.15mm dashed #b9bec8}
+.pr-cut{position:absolute;left:6mm;right:6mm;top:139.7mm;border-top:.25mm dashed #b9bec8}
+.pr-cut:after{content:'✂';position:absolute;left:-1mm;top:-3.2mm;font-size:4mm;color:#9aa1ad}
+/* shared piece + themes */
+.pz{position:relative;overflow:hidden;--fg:#fff;--mut:rgba(255,255,255,.78);--nm:var(--fg);--ct:var(--b);color:var(--fg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pz:before,.pz:after{content:'';position:absolute;pointer-events:none}
+.pz>*{position:relative;z-index:1}
+.pz .tile{background:#fff;border-radius:1.6mm;padding:1.1mm;box-shadow:0 .4mm 1.6mm rgba(0,0,0,.18)}
+.pz .tile img{width:100%;height:auto;display:block;image-rendering:pixelated}
+.pz .nm{font-family:'Syne','DM Sans',sans-serif;font-weight:800;color:var(--nm);line-height:1.05;letter-spacing:-.01em;overflow-wrap:anywhere}
+.pz .ct{color:var(--ct);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.pz .ln{color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pz .ln b{color:var(--fg)}
+.pz .av{border-radius:50%;object-fit:cover;border:.5mm solid rgba(255,255,255,.85)}
+.pt-0{background:radial-gradient(circle at 12% -10%,color-mix(in srgb,var(--b) 55%,transparent),transparent 55%),radial-gradient(circle at 110% 120%,color-mix(in srgb,var(--a) 70%,transparent),transparent 55%),#0B1220}
+.pt-1{background:#FBFAF7;--fg:#15181F;--mut:#4B5260;--nm:#15181F;--ct:var(--a)}
+.pt-1:before{left:0;top:0;bottom:0;width:4.5%;background:linear-gradient(var(--a),var(--b))}
+.pt-2{background:linear-gradient(135deg,var(--a),color-mix(in srgb,var(--b) 70%,var(--a)));--ct:rgba(255,255,255,.85)}
+.pt-2:before{right:-18%;top:-40%;width:70%;padding-bottom:70%;border-radius:50%;background:rgba(255,255,255,.08)}
+.pt-3{background:#fff;--fg:#15181F;--mut:#4B5260;--ct:var(--a)}
+.pt-3:before{inset:0;background:linear-gradient(135deg,var(--a),var(--b));clip-path:polygon(58% 0,100% 0,100% 100%,44% 100%)}
+.pt-4{background:#F6EFE3;--fg:#2B2117;--mut:#5E5345;--nm:#2B2117;--ct:var(--a)}
+.pt-4:before{inset:3.5%;border:.7mm double var(--a);border-radius:1mm}
+.pt-4 .nm{font-family:Georgia,'Times New Roman',serif;font-weight:700;letter-spacing:0}
+.pt-5{background:#05070D;--nm:var(--b);--ct:#fff}
+.pt-5:before{inset:3.5%;border:.45mm solid var(--b);border-radius:1.5mm;box-shadow:0 0 2.5mm var(--b),inset 0 0 2.5mm color-mix(in srgb,var(--b) 60%,transparent)}
+.pt-5 .nm{text-shadow:0 0 2mm color-mix(in srgb,var(--b) 70%,transparent)}
+.pt-6{background:#fff;--fg:#15181F;--mut:#4B5260;--ct:var(--a)}
+.pt-6:before{right:-22%;bottom:-75%;width:78%;padding-bottom:78%;border-radius:50%;background:var(--a)}
+.pt-6:after{right:22%;top:-30%;width:26%;padding-bottom:26%;border-radius:50%;background:color-mix(in srgb,var(--b) 35%,transparent)}
+.pt-7{background:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--a) 22%,transparent) .45mm,transparent 0) 0 0/3.2mm 3.2mm,#fff;--fg:#15181F;--mut:#4B5260;--nm:var(--a);--ct:#15181F}
+.pt-7:before{left:0;right:0;bottom:0;height:3.5%;background:linear-gradient(90deg,var(--a),var(--b))}
+/* business card 90x50 mm */
+.bc{width:90mm;height:50mm}
+.bc-in{position:absolute;inset:4.6mm 4.6mm 4.2mm 5.6mm;display:flex;gap:3mm;align-items:stretch}
+.pt-1 .bc-in{left:7.6mm}
+.bc-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.7mm}
+.bc .head{display:flex;align-items:center;gap:2mm}
+.bc .av{width:8.5mm;height:8.5mm;flex-shrink:0}
+.bc .ct{font-size:5.2pt}
+.bc .nm{font-size:13pt;margin:.4mm 0 1.2mm}
+.bc .nm.l{font-size:11pt}.bc .nm.xl{font-size:9.2pt}
+.bc .ln{font-size:6.6pt}
+.bc .brand{font-size:4.6pt;color:var(--mut);opacity:.85;margin-top:1mm}
+.bc-qrs{display:flex;gap:1.8mm;align-items:center}
+.bc-qrs figure{width:16.5mm;margin:0;text-align:center}
+.bc-qrs figcaption{font-size:4.9pt;font-weight:700;margin-top:.8mm;color:var(--fg);line-height:1.1}
+.pt-3 .bc-qrs figcaption,.pt-6 .bc-qrs figcaption{color:#fff}
+/* sign: full letter page */
+.sg{position:absolute;inset:0;display:flex;flex-direction:column;padding:16mm 15mm 13mm}
+.sg .top{display:flex;align-items:center;gap:5mm}
+.sg .av{width:24mm;height:24mm;border-width:1mm}
+.sg .ct{font-size:12pt}
+.sg .nm{font-size:48pt;margin-top:2mm}
+.sg .nm.l{font-size:37pt}.sg .nm.xl{font-size:28pt}
+.sg .tag{display:inline-flex;align-self:flex-start;align-items:center;gap:2mm;font-size:16pt;font-weight:800;margin-top:8mm;padding:2.6mm 6mm;border-radius:99mm;background:var(--b);color:#0B0F17}
+.sg .hrs{font-size:13pt;color:var(--mut);margin-top:4mm}
+.sg .wm{position:absolute;right:10mm;bottom:30mm;font-size:46mm;line-height:1;opacity:.14;z-index:0;transform:rotate(-12deg)}
+.sg .big{display:inline-flex;align-items:center;gap:3mm;font-family:'Syne','DM Sans',sans-serif;font-weight:800;font-size:24pt;color:var(--fg);margin-bottom:4mm}
+.sg .qrs{display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin:auto 0}
+.sg .qrs figure{margin:0;text-align:center}
+.sg .qrs .tile{padding:3mm;border-radius:5mm}
+.sg .qrs figcaption{margin-top:4mm;font-size:15pt;font-weight:800;color:var(--fg)}
+.sg .qrs figcaption small{display:block;font-size:10.5pt;font-weight:600;color:var(--mut);margin-top:1mm}
+.sg .info{display:flex;flex-wrap:wrap;gap:2mm 8mm;font-size:13pt}
+.sg .brand{margin-top:6mm;font-size:9pt;color:var(--mut)}
+.sg.pt-3:before{clip-path:polygon(0 62%,100% 46%,100% 100%,0 100%)}
+.sg.pt-3 .qrs figcaption,.sg.pt-3 .qrs figcaption small,.sg.pt-3 .info,.sg.pt-3 .ln,.sg.pt-3 .ln b,.sg.pt-3 .brand{color:#fff}
+.sg.pt-6:before{right:-35%;bottom:-38%;width:120%;padding-bottom:120%}
+.sg.pt-6 .qrs figcaption,.sg.pt-6 .qrs figcaption small,.sg.pt-6 .info,.sg.pt-6 .ln,.sg.pt-6 .ln b,.sg.pt-6 .brand{color:#fff}
+.sg.pt-1:before{width:3.2%}
+/* flyer: half letter, landscape */
+.fl{position:absolute;left:0;right:0;height:139.7mm;display:flex;align-items:center;gap:8mm;padding:12mm 13mm}
+.fl+.pr-cut+.fl,.fl.b2{top:139.7mm}
+.fl .left{flex:1;min-width:0;display:flex;flex-direction:column;gap:1.6mm}
+.fl .av{width:16mm;height:16mm}
+.fl .ct{font-size:9pt}
+.fl .nm{font-size:26pt;margin:1mm 0 2mm}
+.fl .nm.l{font-size:21pt}.fl .nm.xl{font-size:17pt}
+.fl .tag{font-size:12pt;font-weight:700;color:var(--fg)}
+.fl .ln{font-size:10pt}
+.fl .brand{font-size:7.5pt;color:var(--mut);margin-top:2mm}
+.fl .qrs{display:flex;gap:5mm}
+.fl .qrs figure{width:44mm;margin:0;text-align:center}
+.fl .qrs .tile{padding:2mm;border-radius:3.5mm}
+.fl .qrs figcaption{margin-top:2mm;font-size:10pt;font-weight:800;color:var(--fg)}
+.fl.pt-3:before{clip-path:polygon(56% 0,100% 0,100% 100%,46% 100%)}
+.fl.pt-3 .qrs figcaption,.fl.pt-6 .qrs figcaption{color:#fff}
+.fl.pt-6:before{right:-12%;bottom:-70%;width:62%;padding-bottom:62%}
+@media print{
+  @page{size:letter;margin:0}
+  body.printing>*:not(#printer){display:none!important}
+  body.printing{overflow:visible!important;background:#fff}
+  body.printing #printer{position:static;visibility:visible;opacity:1;transform:none;overflow:visible;background:#fff}
+  body.printing #printer .ov-bar,body.printing #printer .pr-tools,body.printing #printer .pr-tip{display:none!important}
+  body.printing .pr-stage{display:block;padding:0}
+  body.printing .pr-page{zoom:1!important;box-shadow:none;margin:0;break-after:page;page-break-after:always}
+  body.printing .pr-page:last-child{break-after:auto;page-break-after:auto}
+}
+
 @media(max-width:960px){
   .hero{text-align:center;padding:48px 0 40px}
   .hero-grid{grid-template-columns:1fr;gap:12px}
@@ -850,7 +960,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <h2 class="sec-title">Un solo pago al año</h2>
       <p class="sec-sub">Elige el nivel de visibilidad que necesita tu negocio. Puedes subir de plan cuando quieras.</p>
     </div>
-    <div class="free-banner rv-in"><span class="fb-ico">🌱</span><div class="grow"><b>¿Estás empezando? Publica tu negocio gratis.</b><p>Nombre, categoría, botón de WhatsApp y tu panel de estadísticas. Sin tarjeta y sin vencimiento. Sube de plan cuando quieras.</p></div><button class="btn btn-ghost btn-sm" data-act="reg" data-plan="gratis">Publicar gratis</button></div>
+    <div class="free-banner rv-in" id="free-banner"><span class="fb-ico">🌱</span><div class="grow"><b>¿Estás empezando? Publica tu negocio gratis.</b><p>Nombre, categoría, botón de WhatsApp y tu panel de estadísticas. Sin tarjeta y sin vencimiento. Sube de plan cuando quieras.</p></div><button class="btn btn-ghost btn-sm" data-act="reg" data-plan="gratis">Publicar gratis</button></div>
     <div class="plans">
       <div class="plan rv-in">
         <div class="plan-name" style="color:#00F5C8">Básico</div>
@@ -940,7 +1050,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <h2 class="sec-title">Todo claro antes de empezar</h2>
     </div>
     <div class="faq">
-      <details><summary>¿Hay un plan gratis?</summary><p>Sí. El Plan Gratis publica tu negocio con nombre, categoría, descripción y botón de WhatsApp, e incluye tu panel de estadísticas. No vence. Para fotos, mapa, menú, ofertas y reservas, sube a un plan pagado cuando quieras.</p></details>
+      <details id="faq-free"><summary>¿Hay un plan gratis?</summary><p>Sí. El Plan Gratis publica tu negocio con nombre, categoría, descripción y botón de WhatsApp, e incluye tu panel de estadísticas. No vence. Para fotos, mapa, menú, ofertas y reservas, sube a un plan pagado cuando quieras.</p></details>
       <details><summary>¿Puedo aparecer en los primeros lugares?</summary><p>Sí, con “Destacar”: tu negocio aparece arriba del directorio y en la portada durante los días que elijas, con cualquier plan. Pídelo desde tu panel.</p></details>
       <details><summary>¿Hay mensualidades o cargos ocultos?</summary><p>No. Pagas una vez y tu perfil queda activo 12 meses. Antes de que venza te avisamos para que decidas si renuevas.</p></details>
       <details><summary>¿Cuánto tarda en publicarse mi perfil?</summary><p>Menos de 24 horas hábiles después de confirmar tu pago. Te avisamos por correo cuando esté en línea.</p></details>
@@ -1185,6 +1295,24 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- ============ PRINTABLES ============ -->
+<div class="ov" id="printer" role="dialog" aria-modal="true" aria-label="Tarjetas y letrero para imprimir">
+  <div class="ov-bar"><div class="wrap"><b id="pr-title" style="font-family:'Syne',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Tarjetas y letrero</b><button class="btn btn-ghost btn-sm" data-act="pr-close">✕ Cerrar</button></div></div>
+  <div class="wrap">
+    <div class="pr-tools">
+      <div class="seg" role="tablist" aria-label="Tipo de impreso">
+        <button data-act="pr-kind" data-k="cards" role="tab">🪪 Tarjetas</button>
+        <button data-act="pr-kind" data-k="sign" role="tab">🪧 Letrero</button>
+        <button data-act="pr-kind" data-k="flyer" role="tab">📄 Volantes</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-act="pr-design">🎨 Otro diseño <span id="pr-num" style="color:var(--dim);font-weight:600"></span></button>
+      <button class="btn btn-pri btn-sm" data-act="pr-print" style="margin-left:auto">🖨 Imprimir o guardar PDF</button>
+    </div>
+    <p class="pr-tip" id="pr-tip"></p>
+    <div class="pr-stage" id="pr-stage"></div>
+  </div>
+</div>
+
 <script src="/vendor/supabase-2.117.2.js"></script>
 <script src="/vendor/emailjs-4.4.1.min.js"></script>
 <script src="/vendor/qrcode-1.0.0.min.js"></script>
@@ -1368,18 +1496,20 @@ function parseHours(str) {
 
 /* ---------- settings (prices / promo) stored in Supabase ---------- */
 const BOOST_DEFAULT = [{ d: 3, p: 5 }, { d: 7, p: 10 }, { d: 30, p: 30 }];
-let SITE = { precios: { basico:50, pro:100, premium:150 }, promo: { active:false, pct:0, title:'', msg:'', until:'' }, boost: BOOST_DEFAULT };
+let SITE = { precios: { basico:50, pro:100, premium:150 }, promo: { active:false, pct:0, title:'', msg:'', until:'' }, boost: BOOST_DEFAULT, gratis_off: false };
+const freeOn = () => !SITE.gratis_off;
+function applyFree() { const on = freeOn(); ['free-banner', 'faq-free'].forEach(id => { const e = byId(id); if (e) e.hidden = !on; }); }
 let PAGES = { map: {}, at: '' };   // {negocioId: slug} of the pages already published for Google
 async function loadSettings() {
   try {
     const { data, error } = await SB.from('ajustes').select('key,value').in('key', ['site', 'paginas']);
     if (error) throw error;
     const site = (data || []).find(r => r.key === 'site'), pag = (data || []).find(r => r.key === 'paginas');
-    if (site && site.value) SITE = { precios: Object.assign({}, SITE.precios, site.value.precios || {}), promo: Object.assign({}, SITE.promo, site.value.promo || {}), boost: Array.isArray(site.value.boost) && site.value.boost.length ? site.value.boost : BOOST_DEFAULT };
+    if (site && site.value) SITE = { precios: Object.assign({}, SITE.precios, site.value.precios || {}), promo: Object.assign({}, SITE.promo, site.value.promo || {}), boost: Array.isArray(site.value.boost) && site.value.boost.length ? site.value.boost : BOOST_DEFAULT, gratis_off: !!site.value.gratis_off };
     if (pag && pag.value) PAGES = { map: pag.value.map || {}, at: pag.value.at || '' };
   } catch (e) { console.warn('ajustes', e); }
   PAID.forEach(k => { if (+SITE.precios[k] > 0) PLANS[k].p = +SITE.precios[k]; });
-  applyPrices();
+  applyPrices(); applyFree();
 }
 /* ---------- timed discount ---------- */
 function promoEnds() { const p = SITE.promo || {}; return p.ends_at ? Date.parse(p.ends_at) : (p.until ? Date.parse(p.until + 'T23:59:59') : null); }
@@ -2103,6 +2233,7 @@ function renderOwnerPanel() {
         <div class="box" style="text-align:center"><h3>Comparte tu perfil</h3><div class="qr" id="op-qr"></div>
           <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px"><button class="btn btn-ghost btn-xs" data-act="op-copy">🔗 Copiar link</button><button class="btn btn-ghost btn-xs" data-act="op-qr">⬇ QR</button><a class="btn btn-wa btn-xs" href="${esc('https://wa.me/?text=' + encodeURIComponent('Encuéntranos en BizLaunch 👉 ' + url))}" target="_blank" rel="noopener">Enviar</a></div>
           <p style="color:var(--dim);font-size:.74rem;margin-top:10px">Ponlo en la bio de Instagram, en tu estado de WhatsApp y en tu local.</p></div>
+        ${d.active ? `<div class="box"><h3>🖨 Tarjetas y letrero</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tarjetas de presentación, un letrero y volantes con tu código QR de WhatsApp y de tu página, listos para imprimir.</p><button class="btn btn-pri btn-sm btn-block" data-act="op-print">Crear e imprimir</button></div>` : ''}
         <div class="box"><h3>⭐ Reseñas</h3>${rv.total ? `<p><b style="font-family:Syne,sans-serif;font-size:1.6rem;color:#FFC83D">${rv.promedio}</b> <span style="color:var(--mut)">de 5 · ${rv.total} reseña${rv.total > 1 ? 's' : ''}</span></p>` : '<p style="color:var(--mut);font-size:.86rem">Aún no tienes reseñas.</p>'}<p style="color:var(--mut);font-size:.8rem;margin-top:8px">Pídele a tus clientes que te dejen una en tu perfil: generan confianza.</p></div>
         <div class="box"><h3>💡 Consejos</h3><ul class="tips">
           <li><b>Responde rápido</b> por WhatsApp: la primera hora decide la venta.</li>
@@ -2188,12 +2319,13 @@ function openReg(plan) {
   Object.assign(R, { plan: null, step: 1, photos: [], pay: null, coupon: 0, couponCode: '', emailTaken: false });
   byId('email-hint').textContent = ''; byId('r-thumbs').innerHTML = '';
   $$('#reg .err').forEach(e => e.classList.remove('on'));
-  byId('pick').innerHTML = Object.keys(PLANS).map(k => { const P = PLANS[k], pr = priceOf(k);
+  byId('pick').innerHTML = Object.keys(PLANS).filter(k => !PLANS[k].free || freeOn()).map(k => { const P = PLANS[k], pr = priceOf(k);
     if (P.free) return `<button class="pk" style="--c:${P.c}" data-act="pick" data-plan="${k}"><b>Plan ${P.n}</b><div class="pp">$0</div><small>💬 Botón de WhatsApp<br>📊 Panel de estadísticas<br>Sin fotos, mapa ni menú</small></button>`;
     return `<button class="pk" style="--c:${P.c}" data-act="pick" data-plan="${k}"><b>Plan ${P.n}</b><div class="pp">${pr.pct ? `<s style="font-size:1rem;color:var(--dim)">${money(pr.base)}</s> ` : ''}${money(pr.final)}<small style="display:inline;font-size:.8rem">/año</small></div><small>📷 ${P.f} fotos · 🔗 ${P.s} red${P.s > 1 ? 'es' : ''}<br>${P.verified ? '✓ Verificado + primeros lugares' : P.hours ? '📅 Reservas + 📱 Yappy' : '🗺 Mapa + 🍽 menú'}<br>${k === 'basico' ? 'Ofertas y reseñas' : k === 'pro' ? '🕐 Horario en vivo' : '🎥 Destacado en portada'}</small></button>`; }).join('');
   show('reg', true); byId('reg').scrollTo(0, 0);
   updatePreview();
-  if (plan && PLANS[plan]) pickPlan(plan);
+  if (plan && PLANS[plan] && (!PLANS[plan].free || freeOn())) pickPlan(plan);
+  else if (plan === 'gratis') toast('El Plan Gratis no está disponible por ahora. Elige uno de los planes anuales.');
 }
 function closeReg() { show('reg', false); }
 
@@ -2539,7 +2671,7 @@ function aRow(b) {
   return `<div class="arow"><div class="arow-top"><div><h3>${esc(b.name)}</h3><div class="arow-badges">${statusChip(b)}<span class="chip chip-plan" style="--c:${P.c}">${P.n} · ${money(b.price)}</span>${b.visits ? `<span class="chip st-mut" title="Visitas totales">👁 ${b.visits}</span>` : ''}${b.active && V3 ? `<span class="chip st-ok" title="Clics a WhatsApp, últimos 30 días">💬 ${ev30(b.id, 'whatsapp')} en 30d</span>` : ''}${isBoosted(b) ? `<span class="chip chip-boost">⚡ hasta ${esc(fmtDateTime(b.boostUntil))}</span>` : ''}</div></div>
     <div class="arow-acts">
       ${b.active && V5 ? `<button class="btn btn-ghost btn-xs" style="color:#FFC83D" data-act="a-boost" data-id="${esc(b.id)}">⚡ ${isBoosted(b) ? 'Destacado' : 'Destacar'}</button>` : ''}
-      ${b.active && b.token ? `<button class="btn btn-ghost btn-xs" data-act="a-panel" data-id="${esc(b.id)}" title="Abrir el panel privado del cliente">📊 Panel</button><button class="btn btn-ghost btn-xs" data-act="a-panel-copy" data-id="${esc(b.id)}">🔗 Link panel</button>${b.phone || b.wa ? `<a class="btn btn-wa btn-xs" href="${esc(waLink(b.phone || b.wa, reportMsg(b)))}" target="_blank" rel="noopener">Enviar reporte</a>` : ''}` : ''}
+      ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-print" data-id="${esc(b.id)}" title="Tarjetas, letrero y volantes con QR">🖨 Tarjetas</button>` : ''}${b.active && b.token ? `<button class="btn btn-ghost btn-xs" data-act="a-panel" data-id="${esc(b.id)}" title="Abrir el panel privado del cliente">📊 Panel</button><button class="btn btn-ghost btn-xs" data-act="a-panel-copy" data-id="${esc(b.id)}">🔗 Link panel</button>${b.phone || b.wa ? `<a class="btn btn-wa btn-xs" href="${esc(waLink(b.phone || b.wa, reportMsg(b)))}" target="_blank" rel="noopener">Enviar reporte</a>` : ''}` : ''}
       ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-off" data-id="${esc(b.id)}">Desactivar</button>` : `<button class="btn btn-pri btn-xs" data-act="a-on" data-id="${esc(b.id)}">${b.activatedAt ? '↻ Renovar' : '✓ Activar'}</button>`}
       <button class="btn btn-ghost btn-xs" data-act="a-edit" data-id="${esc(b.id)}">Editar</button>
       ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-view" data-id="${esc(b.id)}">Ver perfil</button>` : ''}
@@ -2622,6 +2754,8 @@ function aAjustes() {
     <div class="box"><h3>⚡ Precios de “Destacar”</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Opciones que ven los dueños en su panel. El pago lo coordinan contigo por WhatsApp y tú lo activas con el botón ⚡ de cada negocio.</p>
       ${(SITE.boost || BOOST_DEFAULT).map((o, i) => `<div class="fgrid g2"><div class="f"><label for="bd${i}">Opción ${i + 1}: días</label><input id="bd${i}" type="number" min="1" max="90" value="${o.d}"></div><div class="f"><label for="bp${i}">Precio ($)</label><input id="bp${i}" type="number" min="0" step="0.5" value="${o.p}"></div></div>`).join('')}
       <button class="btn btn-pri btn-sm" data-act="boost-prices">Guardar precios de Destacar</button></div>
+    <div class="box"><h3>🌱 Plan Gratis</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">${freeOn() ? '🟢 <b style="color:var(--txt)">Habilitado.</b> Los visitantes pueden publicar su negocio gratis.' : '🔴 <b style="color:var(--txt)">Deshabilitado.</b> El Plan Gratis no aparece en la web y no se aceptan registros nuevos gratis.'} Los negocios gratis que ya están publicados no se ven afectados.</p>
+      <button class="btn ${freeOn() ? 'btn-ghost' : 'btn-pri'} btn-sm" data-act="free-toggle">${freeOn() ? 'Deshabilitar Plan Gratis' : 'Habilitar Plan Gratis'}</button></div>
     <div class="box" id="promo-box"><h3>🎁 Botón de descuento</h3>
       ${promoPct() ? `<div class="note" style="margin-bottom:16px;border-color:rgba(0,245,200,.35);background:rgba(0,245,200,.06)">🟢 <b>Activo: -${promoPct()}%</b> · termina en <b class="js-cd"></b>${promoEnds() ? ' (' + esc(fmtDateTime(promoEnds())) + ')' : ''}. Los visitantes ven el botón flotante y la barra con la cuenta regresiva.</div>`
         : `<div class="note" style="margin-bottom:16px">⚪ <b>Inactivo.</b>${p.active && promoEnds() && Date.now() > promoEnds() ? ' El último descuento terminó el ' + esc(fmtDateTime(promoEnds())) + '.' : ''} Al activarlo aparece un botón flotante con cuenta regresiva en todo el sitio, y desaparece solo cuando se acaba el tiempo.</div>`}
@@ -2669,10 +2803,11 @@ async function saveSettings(promoOverride, okMsg, boostOverride) {
   const precios = {}; for (const k of PAID) { const n = parseInt(byId('cfg-' + k).value, 10); if (!(n > 0)) return toast('Precio inválido para ' + PLANS[k].n, 'bad'); precios[k] = n; }
   const promo = promoOverride || SITE.promo;
   if (promo.active && !(promo.pct >= 1 && promo.pct <= 90)) return toast('El descuento debe estar entre 1 y 90%.', 'bad');
-  const { error } = await SB.from('ajustes').upsert({ key: 'site', value: { precios, promo, boost: boostOverride || SITE.boost }, updated_at: new Date().toISOString() });
-  if (error) return toast('Error: ' + error.message, 'bad');
+  const { error } = await SB.from('ajustes').upsert({ key: 'site', value: { precios, promo, boost: boostOverride || SITE.boost, gratis_off: !!SITE.gratis_off }, updated_at: new Date().toISOString() });
+  if (error) { toast('Error: ' + error.message, 'bad'); return false; }
   SITE = Object.assign({}, SITE, { precios, promo }, boostOverride ? { boost: boostOverride } : {}); PAID.forEach(k => PLANS[k].p = precios[k]); applyPrices(); toast(okMsg || '✓ Precios publicados', 'ok');
   if (ATAB === 'ajustes') { adminTab('ajustes'); promoPreview(); }
+  return true;
 }
 /* ---------- Destacar (boost) ---------- */
 function saveBoostPrices() {
@@ -2834,6 +2969,115 @@ function routeFromHash() {
 let PANEL_TOKEN = null;
 
 /* =====================================================================
+   PRINTABLES — business cards (10 per page), a letter sign and flyers,
+   each with a QR to the profile and a QR to WhatsApp. The design is
+   picked from the business id so every client gets a different one.
+   ===================================================================== */
+const PR_THEMES = ['Noche', 'Papel', 'Color', 'Diagonal', 'Clásico', 'Neón', 'Círculos', 'Puntos'];
+const PR_COLORS = [['#0E7C66', '#19C39C'], ['#5B3FD1', '#9B7BFF'], ['#C2410C', '#F59E0B'], ['#0B5FA5', '#38BDF8'], ['#B4235A', '#F472B6'], ['#1F6F43', '#84CC16'], ['#0F766E', '#2DD4BF'], ['#9D174D', '#FB7185'], ['#1E3A8A', '#60A5FA'], ['#7C2D12', '#FB923C']];
+let PR = { b: null, kind: 'cards', shift: 0 };
+const hashStr = s => { let h = 2166136261; for (const c of String(s)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+const fmtTel = w => { const d = waNum(w); if (!d) return ''; const l = d.slice(3); return '+507 ' + (l.length === 8 ? l.slice(0, 4) + '-' + l.slice(4) : l.length === 7 ? l.slice(0, 3) + '-' + l.slice(3) : l); };
+const shortWeb = u => { try { return new URL(safeUrl(u)).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+function qrImg(text, size, dark) {
+  if (!window.QRCode || !text) return '';
+  try { const d = document.createElement('div'); new QRCode(d, { text, width: size, height: size, colorDark: dark || '#0B0F17', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    const c = d.querySelector('canvas'); if (c && c.toDataURL) return c.toDataURL('image/png'); const i = d.querySelector('img'); return i ? i.src : '';
+  } catch (e) { return ''; }
+}
+function prDesign(b) {
+  const h = hashStr(b.id), n = PR_THEMES.length, t = (h % n + PR.shift) % n, c = PR_COLORS[(Math.floor(h / n) + PR.shift * 3) % PR_COLORS.length];
+  return { t, a: c[0], b: c[1] };
+}
+function prData(b) {
+  const prov = provLabel(b.province) || 'Panamá', addr = [b.address, prov].filter(Boolean).join(', ');
+  const photo = b.photos && b.photos[0] ? safeUrl(b.photos[0]) : '';
+  return { name: b.name || 'Mi negocio', cat: catOf(b.category), tel: fmtTel(b.wa), addr, web: shortWeb(b.website), photo: /^https:/.test(photo) ? photo : '',
+    url: profileUrl(b.id), wa: b.wa ? 'https://wa.me/' + waNum(b.wa) : '', food: isFood(b.category), hours: PLANS[b.plan] && PLANS[b.plan].hours ? String(b.hours || '').slice(0, 60) : '' };
+}
+const nmSize = n => n.length > 30 ? ' xl' : n.length > 19 ? ' l' : '';
+function prCard(D, ds, q) {
+  return `<div class="pz bc pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}"><div class="bc-in">
+    <div class="bc-info">
+      <div class="head">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div></div></div>
+      <div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
+      ${D.tel ? `<div class="ln">📱 <b>${esc(D.tel)}</b></div>` : ''}
+      <div class="ln">📍 ${esc(D.addr)}</div>
+      ${D.web ? `<div class="ln">🌐 ${esc(D.web)}</div>` : ''}
+      <div class="brand">Encuéntranos en BizLaunch Panamá</div>
+    </div>
+    <div class="bc-qrs">
+      ${q.web ? `<figure><div class="tile"><img src="${q.web}" alt="QR de la página"></div><figcaption>Nuestra página</figcaption></figure>` : ''}
+      ${q.wa ? `<figure><div class="tile"><img src="${q.wa}" alt="QR de WhatsApp"></div><figcaption>WhatsApp</figcaption></figure>` : ''}
+    </div></div></div>`;
+}
+function prQrs(D, label) {
+  return `${D.wa && label.wa ? `<figure><div class="tile"><img src="${label.wa}" alt="QR de WhatsApp"></div><figcaption>💬 Escríbenos por WhatsApp<small>${esc(D.tel)}</small></figcaption></figure>` : ''}
+    ${label.web ? `<figure><div class="tile"><img src="${label.web}" alt="QR de la página"></div><figcaption>${D.food ? '🍽 Mira nuestro menú' : '🌐 Conoce más de nosotros'}<small>Fotos, ubicación y más</small></figcaption></figure>` : ''}`;
+}
+function prSign(D, ds, q) {
+  return `<div class="pz sg pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}">
+    <div class="top">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div><div class="nm${nmSize(D.name)}">${esc(D.name)}</div></div></div>
+    <div class="wm" aria-hidden="true">${D.cat[2]}</div>
+    <div class="tag">📲 Escanea con la cámara de tu celular</div>
+    ${D.hours ? `<div class="hrs">🕒 ${esc(D.hours)}</div>` : ''}
+    <div class="qrs">${prQrs(D, q)}</div>
+    ${D.tel ? `<div class="big">💬 ${esc(D.tel)}</div>` : ''}
+    <div class="info"><span class="ln">📍 ${esc(D.addr)}</span>${D.web ? `<span class="ln">🌐 ${esc(D.web)}</span>` : ''}</div>
+    <div class="brand">Encuéntranos en BizLaunch · ${esc(SITE_ROOT().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</div></div>`;
+}
+function prFlyer(D, ds, q, second) {
+  return `<div class="pz fl pt-${ds.t}${second ? ' b2' : ''}" style="--a:${ds.a};--b:${ds.b}">
+    <div class="left">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div>
+      <div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
+      <div class="tag">Escanea y escríbenos 📲</div>
+      ${D.tel ? `<div class="ln">📱 <b>${esc(D.tel)}</b></div>` : ''}<div class="ln">📍 ${esc(D.addr)}</div>${D.web ? `<div class="ln">🌐 ${esc(D.web)}</div>` : ''}
+      <div class="brand">Encuéntranos en BizLaunch Panamá</div></div>
+    <div class="qrs">${q.wa ? `<figure><div class="tile"><img src="${q.wa}" alt="QR de WhatsApp"></div><figcaption>💬 WhatsApp</figcaption></figure>` : ''}${q.web ? `<figure><div class="tile"><img src="${q.web}" alt="QR de la página"></div><figcaption>${D.food ? '🍽 Menú' : '🌐 Página'}</figcaption></figure>` : ''}</div></div>`;
+}
+function renderPrinter() {
+  const b = PR.b; if (!b) return;
+  const D = prData(b), ds = prDesign(b);
+  const big = PR.kind === 'cards' ? 320 : 640;
+  const q = { web: qrImg(D.url, big), wa: qrImg(D.wa, big, '#064E3B') };
+  $$('#printer [data-act="pr-kind"]').forEach(x => { x.classList.toggle('on', x.dataset.k === PR.kind); x.setAttribute('aria-selected', x.dataset.k === PR.kind); });
+  byId('pr-num').textContent = `· ${PR_THEMES[ds.t]}`;
+  byId('pr-title').textContent = '🖨 ' + D.name;
+  byId('pr-tip').textContent = { cards: '10 tarjetas de 9 × 5 cm por hoja carta. Imprime en cartulina y corta por las líneas.', sign: 'Letrero tamaño carta para la puerta, la caja o el mostrador. Si puedes, plastifícalo.', flyer: '2 volantes por hoja carta para repartir o dejar en el mostrador. Corta por la línea.' }[PR.kind] +
+    ' En la ventana de impresión elige “Guardar como PDF” para descargarlo, y activa “Gráficos de fondo” si los colores no salen.';
+  const page = inner => `<div class="pr-page">${inner}</div>`;
+  byId('pr-stage').innerHTML = PR.kind === 'cards' ? page(`<div class="pr-cards">${Array.from({ length: 10 }, () => prCard(D, ds, q)).join('')}</div>`)
+    : PR.kind === 'sign' ? page(prSign(D, ds, q))
+    : page(prFlyer(D, ds, q) + '<div class="pr-cut"></div>' + prFlyer(D, ds, q, true));
+  fitPrinter();
+}
+function fitPrinter() { const st = byId('pr-stage'); if (!st) return; const w = st.clientWidth || window.innerWidth; const z = Math.min(1, (w - 8) / 816); $$('#pr-stage .pr-page').forEach(p => p.style.setProperty('--z', z.toFixed(3))); }
+function openPrinter(b, kind) {
+  if (!b) return toast('No encontramos los datos del negocio.', 'bad');
+  if (!window.QRCode) return toast('No se pudo cargar el generador de códigos QR. Recarga la página.', 'bad');
+  PR = { b, kind: kind || 'cards', shift: 0 };
+  show('printer', true); byId('printer').scrollTo(0, 0); renderPrinter();
+}
+function closePrinter() { show('printer', false); }
+function printNow() {
+  document.body.classList.add('printing'); fitPrinter();
+  const done = () => { document.body.classList.remove('printing'); window.removeEventListener('afterprint', done); };
+  window.addEventListener('afterprint', done);
+  const imgs = $$('#pr-stage img').filter(i => !i.complete);
+  Promise.race([Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r; }))), new Promise(r => setTimeout(r, 2500))]).then(() => setTimeout(() => { window.print(); setTimeout(done, 1500); }, 60));
+}
+async function ownerPrint() {
+  if (!OP) return;
+  try {
+    const { data, error } = await SB.from('negocios').select(PUBC).eq('id', OP.id).maybeSingle();
+    if (error) throw error;
+    const b = norm(data); if (!b) return toast('Tu perfil todavía no está publicado.', 'bad');
+    openPrinter(b);
+  } catch (e) { toast('No se pudo cargar tu negocio. Intenta de nuevo.', 'bad'); }
+}
+window.addEventListener('resize', debounce(fitPrinter, 150));
+
+/* =====================================================================
    GOOGLE PAGES EXPORT — builds a ZIP with one SEO page per live business
    ===================================================================== */
 function coordsOf(m) {
@@ -2958,6 +3202,7 @@ document.addEventListener('click', e => {
     case 'adm-close': closeAdmin(); break;
     case 'adm-logout': adminLogout(); break;
     case 'adm-forgot': adminForgot(); break;
+    case 'free-toggle': { const was = SITE.gratis_off; SITE.gratis_off = !was; saveSettings(SITE.promo, SITE.gratis_off ? '✓ Plan Gratis deshabilitado' : '✓ Plan Gratis habilitado').then(ok => { if (!ok) { SITE.gratis_off = was; if (ATAB === 'ajustes') adminTab('ajustes'); } applyFree(); }); break; }
     case 'atab': adminTab(t.dataset.tab); break;
     case 'a-reload': adminLoad().then(() => adminTab(ATAB)); break;
     case 'a-new': aEdit(null); break;
@@ -3002,6 +3247,12 @@ document.addEventListener('click', e => {
     case 'menu-jump': { const s = byId('mn-s' + t.dataset.s); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); break; }
     case 'lb-menu': if (CUR) { LB = CUR.menu.fotos.map(safeUrl).filter(Boolean); lbOpen(+t.dataset.i); } break;
     case 'a-panel': { const b = ADM.find(x => x.id === id); if (b && b.token) window.open(panelUrl(b.token), '_blank', 'noopener'); break; }
+    case 'pr-close': closePrinter(); break;
+    case 'pr-kind': PR.kind = t.dataset.k; renderPrinter(); break;
+    case 'pr-design': PR.shift++; renderPrinter(); break;
+    case 'pr-print': printNow(); break;
+    case 'a-print': openPrinter(ADM.find(x => x.id === id)); break;
+    case 'op-print': ownerPrint(); break;
     case 'a-panel-copy': { const b = ADM.find(x => x.id === id); if (!b || !b.token) break; const u = panelUrl(b.token); if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => toast('🔗 Link del panel copiado', 'ok'), () => prompt('Copia este link:', u)); else prompt('Copia este link:', u); break; }
     case 'of-ok': ofAction('ok', id); break;
     case 'of-toggle': ofAction('toggle', id, t); break;
@@ -3023,7 +3274,8 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (byId('lb').classList.contains('open')) { if (e.key === 'ArrowRight') lbNav(1); if (e.key === 'ArrowLeft') lbNav(-1); if (e.key === 'Escape') show('lb', false); return; }
   if (e.key !== 'Escape') return;
-  if (byId('edit').classList.contains('open')) show('edit', false);
+  if (byId('printer').classList.contains('open')) closePrinter();
+  else if (byId('edit').classList.contains('open')) show('edit', false);
   else if (byId('legal').classList.contains('open')) show('legal', false);
   else if (byId('promo-modal').classList.contains('open')) show('promo-modal', false);
   else if (byId('rsv-modal').classList.contains('open')) show('rsv-modal', false);
