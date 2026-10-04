@@ -1129,6 +1129,16 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <div class="fgrid"><div class="f"><label for="adm-pass">Contraseña</label><input id="adm-pass" type="password" autocomplete="current-password"></div></div>
       <button class="btn btn-pur btn-block" type="submit" id="adm-btn">Ingresar</button>
       <div class="err" id="adm-err"></div>
+      <button type="button" class="linkbtn" data-act="adm-forgot" style="margin-top:14px;font-size:.84rem">¿Olvidaste tu contraseña?</button>
+    </form>
+    <form id="adm-newpass" hidden>
+      <div style="font-size:2rem;margin-bottom:8px">🔑</div>
+      <h2 class="h-font" style="font-size:1.3rem;margin-bottom:4px">Crea tu nueva contraseña</h2>
+      <p style="color:var(--mut);font-size:.85rem;margin-bottom:20px">Mínimo 10 caracteres. Mezcla letras, números y algún símbolo.</p>
+      <div class="fgrid"><div class="f"><label for="np-1">Nueva contraseña</label><input id="np-1" type="password" autocomplete="new-password" minlength="10" required></div></div>
+      <div class="fgrid"><div class="f"><label for="np-2">Repítela</label><input id="np-2" type="password" autocomplete="new-password" minlength="10" required></div></div>
+      <button class="btn btn-pur btn-block" type="submit" id="np-btn">Guardar contraseña</button>
+      <div class="err" id="np-err"></div>
     </form>
   </div>
   <div id="adm-panel" hidden>
@@ -2434,6 +2444,39 @@ async function adminLogin(e) {
   } catch (x) { err.textContent = x.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : x.message; err.classList.add('on'); }
   finally { btn.disabled = false; }
 }
+async function adminForgot() {
+  const err = byId('adm-err'), em = byId('adm-email').value.trim().toLowerCase();
+  err.classList.remove('on');
+  if (!isAdminEmail(em)) { err.textContent = 'Escribe arriba el correo de administrador y vuelve a tocar “¿Olvidaste tu contraseña?”.'; err.classList.add('on'); byId('adm-email').focus(); return; }
+  try {
+    const { error } = await SB.auth.resetPasswordForEmail(em, { redirectTo: SITE_ROOT() });
+    if (error) throw error;
+    toast('Listo: revisa ' + em + ' (también la carpeta de spam).', 'ok');
+  } catch (x) { err.textContent = /rate|seconds|limit/i.test(x.message || '') ? 'Ya se envió un enlace hace poco. Espera unos minutos y revisa tu correo (también spam).' : (x.message || 'No se pudo enviar el enlace.'); err.classList.add('on'); }
+}
+function showNewPassword() {
+  show('admin', true);
+  byId('adm-login').hidden = false; byId('adm-panel').hidden = true; byId('adm-logout').hidden = true;
+  byId('adm-form').hidden = true; byId('adm-newpass').hidden = false;
+  setTimeout(() => byId('np-1').focus(), 50);
+}
+async function saveNewPassword(e) {
+  e.preventDefault(); const err = byId('np-err'), btn = byId('np-btn'), a = byId('np-1').value, b = byId('np-2').value;
+  err.classList.remove('on');
+  const fail = m => { err.textContent = m; err.classList.add('on'); };
+  if (a.length < 10) return fail('La contraseña debe tener al menos 10 caracteres.');
+  if (a !== b) return fail('Las dos contraseñas no coinciden.');
+  btn.disabled = true;
+  try {
+    const { data, error } = await SB.auth.updateUser({ password: a });
+    if (error) throw error;
+    byId('np-1').value = byId('np-2').value = '';
+    byId('adm-newpass').hidden = true; byId('adm-form').hidden = false;
+    toast('Contraseña actualizada ✓', 'ok');
+    if (data && data.user && isAdminEmail(data.user.email)) { history.replaceState(null, '', '#admin'); await enterAdmin(); }
+  } catch (x) { fail(/session|expired|jwt/i.test(x.message || '') ? 'El enlace venció. Vuelve a pedir uno con “¿Olvidaste tu contraseña?”.' : /same|different/i.test(x.message || '') ? 'Usa una contraseña distinta a la anterior.' : (x.message || 'No se pudo guardar.')); }
+  finally { btn.disabled = false; }
+}
 async function adminLogout() { await SB.auth.signOut(); byId('adm-panel').hidden = true; byId('adm-login').hidden = false; byId('adm-logout').hidden = true; toast('Sesión cerrada'); }
 async function enterAdmin() {
   byId('adm-login').hidden = true; byId('adm-panel').hidden = false; byId('adm-logout').hidden = false;
@@ -2914,6 +2957,7 @@ document.addEventListener('click', e => {
     case 'admin': openAdmin(); break;
     case 'adm-close': closeAdmin(); break;
     case 'adm-logout': adminLogout(); break;
+    case 'adm-forgot': adminForgot(); break;
     case 'atab': adminTab(t.dataset.tab); break;
     case 'a-reload': adminLoad().then(() => adminTab(ATAB)); break;
     case 'a-new': aEdit(null); break;
@@ -3014,6 +3058,16 @@ drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
 drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('drag'); addRegPhotos(e.dataTransfer.files); });
 rfiles.addEventListener('change', () => { addRegPhotos(rfiles.files); rfiles.value = ''; });
 byId('adm-form').addEventListener('submit', adminLogin);
+byId('adm-newpass').addEventListener('submit', saveNewPassword);
+/* password-recovery links from Supabase land here (#access_token=…&type=recovery) */
+(function authLinks() {
+  const h = location.hash;
+  if (/error_code=|error=/.test(h) && /access_denied|otp_expired|invalid/i.test(h)) {
+    history.replaceState(null, '', location.pathname);
+    setTimeout(() => { openAdmin(); toast('El enlace venció o ya se usó. Pide uno nuevo con “¿Olvidaste tu contraseña?”.', 'bad'); }, 300);
+  } else if (/type=recovery/.test(h)) setTimeout(showNewPassword, 300);
+  if (SB) SB.auth.onAuthStateChange(ev => { if (ev === 'PASSWORD_RECOVERY') showNewPassword(); });
+})();
 document.addEventListener('input', e => { if (e.target.id === 'a-q') { ADM_FILTER.q = e.target.value; aFilterList(); } });
 document.addEventListener('change', e => { if (e.target.id === 'a-plan') { ADM_FILTER.plan = e.target.value; aFilterList(); } });
 
