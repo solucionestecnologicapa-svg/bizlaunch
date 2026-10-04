@@ -19,8 +19,16 @@ Supabase → SQL Editor:
 2. `02-estadisticas-ofertas.sql` — estadísticas, clics de WhatsApp, ofertas y páginas para Google
 3. `03-menu.sql` — menú y lista de precios
 4. `04-gratis-reservas-destacados.sql` — Plan Gratis, reservas, Yappy y "Destacar"
+5. `05-endurecimiento.sql` — límites del registro público, fotos solo imágenes de hasta 5 MB,
+   estadísticas a prueba de recargas y limpieza de contraseñas antiguas
 
 Luego crea el usuario administrador en Authentication → Users y desactiva "Allow new users to sign up".
+
+## Archivos del sitio
+- `vendor/` — librerías (Supabase, EmailJS, QR, Excel, ZIP) alojadas en el propio sitio, con la versión en el nombre.
+- `og-image.png`, `icon-*.png`, `apple-touch-icon.png`, `site.webmanifest` — imagen para compartir e íconos.
+- `robots.txt`, `sitemap.xml`, `404.html` — para Google y para enlaces rotos.
+- `netlify.toml` — cabeceras de seguridad (CSP, HSTS, etc.) y caché.
 
 ## Configuración
 En `index.html`, sección `CFG`: número de Yappy, datos bancarios, horario de oficina y enlaces de pago.
@@ -29,3 +37,6 @@ En `index.html`, sección `CFG`: número de Yappy, datos bancarios, horario de o
 - La clave de Supabase de `index.html` es la clave **pública** (anon): es normal que esté visible.
   La protección está en las reglas de la base de datos.
 - **Nunca** subas a este repositorio la clave `service_role` ni contraseñas.
+- La política de contenido (CSP) en `netlify.toml` solo permite conectarse a Supabase y EmailJS.
+  Si agregas otro servicio externo, añádelo ahí o el navegador lo bloqueará.
+- En EmailJS → Account → Security, limita los envíos a `bizlaunchpanama.netlify.app`.

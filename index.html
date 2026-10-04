@@ -14,9 +14,15 @@
 <meta property="og:title" content="BizLaunch — Directorio de Negocios en Panamá">
 <meta property="og:description" content="Perfil profesional para tu negocio con fotos, mapa, WhatsApp directo y reseñas. Desde $50/año, sin mensualidades.">
 <meta property="og:image" content="https://bizlaunchpanama.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BizLaunch: directorio de negocios en Panamá">
 <meta property="og:locale" content="es_PA">
 <meta property="og:site_name" content="BizLaunch by Roosevelt">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bizlaunchpanama.netlify.app/og-image.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23050A14'/><text x='50' y='68' font-size='56' text-anchor='middle' font-family='Arial' font-weight='900' fill='%2300F5C8'>B</text></svg>">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"BizLaunch by Roosevelt","url":"https://bizlaunchpanama.netlify.app/","description":"Directorio profesional de negocios en Panamá"}
@@ -45,10 +51,15 @@ button{cursor:pointer;background:none;border:none}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
 .h-font{font-family:'Syne',sans-serif;letter-spacing:-.01em}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+h1,h2,h3,.sec-title{text-wrap:balance}
+p{text-wrap:pretty}
+.skip{position:fixed;left:12px;top:-60px;z-index:1000;background:var(--acc);color:#04121A;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none;transition:top .2s}
+.skip:focus{top:12px}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:700;font-size:.92rem;text-decoration:none;transition:transform .15s,opacity .15s,background .15s,border-color .15s;white-space:nowrap;border:1.5px solid transparent;line-height:1.1}
 .btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.97)}
 .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .btn-pri{background:var(--acc);color:#04121A}
 .btn-pri:hover{opacity:.9}
@@ -208,10 +219,13 @@ button{cursor:pointer;background:none;border:none}
 .trust{display:flex;gap:18px;justify-content:flex-start;flex-wrap:wrap;margin-top:22px;color:var(--mut);font-size:.84rem}
 .trust span{display:inline-flex;align-items:center;gap:6px}
 .trust b{color:var(--acc)}
-.stats{display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap;margin-top:32px;animation:fadeUp .7s cubic-bezier(.2,.8,.2,1) backwards}
-.stat{min-width:120px;padding:14px 18px;border-radius:var(--r);background:var(--card);border:1px solid var(--bdr)}
-.stat b{display:block;font-family:'Syne',sans-serif;font-size:1.9rem;line-height:1}
-.stat span{font-size:.72rem;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:32px;max-width:600px;min-height:78px}
+.stats.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:460px}
+.stat{padding:14px 16px;border-radius:var(--r);background:var(--card);border:1px solid var(--bdr);min-width:0;animation:fadeUp .6s cubic-bezier(.2,.8,.2,1) backwards}
+.stat:nth-child(2){animation-delay:.06s}.stat:nth-child(3){animation-delay:.12s}.stat:nth-child(4){animation-delay:.18s}
+.stat.sk{background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:sk 1.3s infinite}
+.stat b{display:block;font-family:'Syne',sans-serif;font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:.7rem;color:var(--mut);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px}
 
 /* Category chips */
 .cats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -231,6 +245,12 @@ button{cursor:pointer;background:none;border:none}
 .card:hover .card-media img{transform:scale(1.05)}
 .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--c) 35%,transparent),transparent 60%),linear-gradient(135deg,#13203A,#0A1222)}
 .ph span{font-family:'Syne',sans-serif;font-weight:800;font-size:3.2rem;color:var(--c);opacity:.85}
+.ph-card{position:relative;background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--c) 30%,transparent),transparent 62%),radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0) 0 0/18px 18px,linear-gradient(135deg,#13203A,#0A1222)}
+.ph-card i{font-style:normal;font-size:2.6rem;width:84px;height:84px;display:grid;place-items:center;border-radius:26px;background:color-mix(in srgb,var(--c) 16%,rgba(255,255,255,.04));border:1px solid color-mix(in srgb,var(--c) 40%,transparent);box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.ph-card span{position:absolute;right:16px;bottom:8px;font-size:2.4rem;opacity:.22}
+.card:hover .ph-card i{transform:translateY(-3px) rotate(-4deg) scale(1.04)}
+.vtick{display:inline-flex;width:17px;height:17px;margin-left:6px;vertical-align:-2px;color:#5BC8FF}
+.vtick svg{width:100%;height:100%}
 .card-badges{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap}
 .card-count{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:999px;backdrop-filter:blur(6px)}
 .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
@@ -291,7 +311,8 @@ button{cursor:pointer;background:none;border:none}
 .guarantee p{color:var(--mut);font-size:.84rem}
 
 /* Testimonials */
-.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,380px));justify-content:center;gap:18px}
+#featured{grid-template-columns:repeat(auto-fit,minmax(280px,370px));justify-content:center}
 .tcard{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:24px}
 .stars{color:#FFC83D;letter-spacing:2px}
 .tcard p{color:var(--txt);font-size:.92rem;margin:10px 0 14px}
@@ -416,6 +437,8 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 
 /* Profile */
 .pf-hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;overflow:hidden}
+.pf-ico{position:absolute;right:max(20px,calc(50% - 560px));top:96px;width:150px;height:150px;display:grid;place-items:center;font-size:4.4rem;border-radius:44px;background:color-mix(in srgb,var(--c) 16%,rgba(255,255,255,.04));border:1px solid color-mix(in srgb,var(--c) 40%,transparent);box-shadow:0 24px 60px rgba(0,0,0,.45);transform:rotate(-6deg);animation:fadeUp .7s cubic-bezier(.2,.8,.2,1) backwards}
+@media(max-width:760px){.pf-ico{width:84px;height:84px;font-size:2.5rem;border-radius:26px;top:28px;right:22px}}
 .pf-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.03)}
 .pf-bg:after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 2%,rgba(5,10,20,.55) 55%,rgba(5,10,20,.25))}
 .pf-hero .wrap{position:relative;padding-bottom:40px;padding-top:120px;width:100%}
@@ -659,7 +682,8 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   .hero-grid{grid-template-columns:1fr;gap:12px}
   .hero p.lead{margin:0 auto 26px}
   .search{margin:0 auto}
-  .trust,.stats{justify-content:center}
+  .trust{justify-content:center}
+  .stats{margin-left:auto;margin-right:auto}
   .demo{height:560px}
   .phone{width:262px;height:534px}
   .f1{left:max(0px,calc(50% - 250px))}.f2{right:max(0px,calc(50% - 250px))}
@@ -692,10 +716,17 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   .pf-bar{display:flex}
   .pf-open .fab-wa{display:none}
   .eplans{grid-template-columns:1fr 1fr}
+  .toolbar{display:grid;grid-template-columns:1fr 1fr}
+  .toolbar input{grid-column:1/-1;min-width:0}
+  .toolbar select{min-width:0;width:100%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));min-height:166px}
+  .stats.three{grid-template-columns:repeat(3,minmax(0,1fr));min-height:78px}
+  .stats.three .stat{padding:12px 10px}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#directorio">Saltar al directorio</a>
 
 <div id="promo" role="status"></div>
 
@@ -736,7 +767,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <span><b>✓</b> Activación en 24 h</span>
       <span><b>✓</b> Contacto directo por WhatsApp</span>
     </div>
-    <div class="stats" id="stats" hidden></div>
+    <div class="stats" id="stats" aria-live="polite"><div class="stat sk"></div><div class="stat sk"></div><div class="stat sk"></div><div class="stat sk"></div></div>
    </div>
    <div class="demo" id="demo" aria-hidden="true"></div>
   </div>
@@ -805,7 +836,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
     </div>
     <div class="steps">
       <div class="step rv-in"><div class="step-n">1</div><h3>Completa tu perfil</h3><p>Datos, fotos, redes y ubicación. Te toma unos 5 minutos y ves la vista previa mientras escribes.</p></div>
-      <div class="step rv-in"><div class="step-n">2</div><h3>Paga como prefieras</h3><p>Yappy, transferencia o efectivo. Verificamos y activamos tu perfil en menos de 24 horas.</p></div>
+      <div class="step rv-in"><div class="step-n">2</div><h3>Paga como prefieras</h3><p>Tarjeta Visa o Mastercard, Yappy, transferencia o efectivo. Verificamos y activamos tu perfil en menos de 24 horas.</p></div>
       <div class="step rv-in"><div class="step-n">3</div><h3>Recibe clientes</h3><p>Te encuentran por categoría y provincia, y te escriben directo a tu WhatsApp. Comparte tu link y tu código QR.</p></div>
     </div>
   </div>
@@ -1144,9 +1175,9 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/vendor/supabase-2.117.2.js"></script>
+<script src="/vendor/emailjs-4.4.1.min.js"></script>
+<script src="/vendor/qrcode-1.0.0.min.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -1205,6 +1236,7 @@ const catOf = v => CATS.find(c => c[0] === v) || [v, v || 'Otros servicios', '�
 const provLabel = v => (PROVS.find(p => p[0] === v) || [v, v])[1];
 const fmtDate = ms => ms ? new Date(ms).toLocaleDateString('es-PA', {day:'numeric', month:'short', year:'numeric'}) : '—';
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const cssUrl = u => String(u || '').replace(/['"()\\\s]/g, c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0'));
 function safeUrl(u) {
   u = String(u || '').trim(); if (!u) return '';
   if (/^data:image\/(png|jpe?g|webp|gif|svg\+xml);/i.test(u)) return u;
@@ -1270,7 +1302,7 @@ const isLive = b => { const e = expiresAt(b); return b.active && (!e || Date.now
 /* ---------- maps ---------- */
 function toMapEmbed(v) {
   v = String(v || '').trim(); if (!v) return '';
-  if (v.includes('google.com/maps/embed')) return safeUrl(v);
+  if (/google\.com\/maps\/embed/.test(v)) { try { const x = new URL(v); return x.protocol === 'https:' && /^(www|maps)\.google\.com$/.test(x.hostname) && x.pathname.startsWith('/maps/embed') ? x.href : ''; } catch (e) { return ''; } }
   if (/goo\.gl|maps\.app/.test(v)) return '';
   if (/google\.[a-z.]+\/maps|maps\.google/.test(v)) {
     const c = v.match(/@(-?[\d.]+),(-?[\d.]+)/); if (c) return 'https://maps.google.com/maps?q=' + c[1] + ',' + c[2] + '&z=16&output=embed';
@@ -1454,9 +1486,10 @@ function renderStats() {
   const provs = new Set(ALL.map(b => b.province).filter(Boolean)).size;
   const visits = ALL.reduce((s, b) => s + b.visits, 0);
   const cats = new Set(ALL.map(b => b.category).filter(Boolean)).size;
-  el.innerHTML = [[ALL.length, 'Negocios activos', 'var(--acc)'], [cats, 'Categorías', 'var(--pur)'], [provs, provs === 1 ? 'Provincia' : 'Provincias', 'var(--red)']]
-    .concat(visits >= 100 ? [[visits, 'Visitas a perfiles', 'var(--amb)']] : [])
-    .map(s => `<div class="stat"><b style="color:${s[2]}" data-count="${s[0]}">${REDUCED ? s[0].toLocaleString('es-PA') : 0}</b><span>${s[1]}</span></div>`).join('');
+  const rows = [[ALL.length, ALL.length === 1 ? 'Negocio' : 'Negocios', 'var(--acc)'], [cats, cats === 1 ? 'Categoría' : 'Categorías', 'var(--pur)'], [provs, provs === 1 ? 'Provincia' : 'Provincias', 'var(--red)']]
+    .concat(visits >= 100 ? [[visits, 'Visitas', 'var(--amb)']] : []);
+  el.classList.toggle('three', rows.length === 3);
+  el.innerHTML = rows.map(s => `<div class="stat"><b style="color:${s[2]}" data-count="${s[0]}">${REDUCED ? s[0].toLocaleString('es-PA') : 0}</b><span>${s[1]}</span></div>`).join('');
   el.hidden = false;
   el.querySelectorAll('[data-count]').forEach(countUp);
 }
@@ -1483,13 +1516,13 @@ function cardHTML(b, opt) {
   const initial = esc(((b.name || '?').trim().charAt(0) || '?').toUpperCase());
   return `<article class="card${isBoosted(b) ? ' card--boost' : b.plan === 'premium' ? ' card--premium' : ''}${opt.reveal ? ' rv-in' : ''}">
     <button class="card-media" ${act} aria-label="Ver perfil de ${esc(b.name)}">
-      ${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async">` : `<div class="ph" style="--c:${P.c}"><span>${initial}</span></div>`}
-      <div class="card-badges">${isBoosted(b) ? '<span class="chip chip-boost">⚡ Destacado</span>' : ''}${OFFERS.some(o => o.negocio_id === b.id) ? '<span class="chip chip-offer">🏷 Oferta</span>' : ''}${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}${isNew(b) ? '<span class="chip st-ok" style="backdrop-filter:blur(6px)">Nuevo</span>' : ''}</div>
+      ${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async">` : `<div class="ph ph-card" style="--c:${P.c}"><i aria-hidden="true">${catOf(b.category)[2]}</i><span>${initial}</span></div>`}
+      <div class="card-badges">${[isBoosted(b) ? '<span class="chip chip-boost">⚡ Destacado</span>' : '', OFFERS.some(o => o.negocio_id === b.id) ? '<span class="chip chip-offer">🏷 Oferta</span>' : '', isNew(b) ? '<span class="chip st-ok" style="backdrop-filter:blur(6px)">Nuevo</span>' : ''].filter(Boolean).slice(0, 2).join('')}</div>
       ${b.photos.length > 1 ? `<span class="card-count">📷 ${b.photos.length}</span>` : ''}
     </button>
     <div class="card-body">
       <div class="card-meta">${catOf(b.category)[2]} ${esc(b.category ? catOf(b.category)[1] : 'Categoría')}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}${menuCount(b.menu) ? ` · <span style="color:var(--acc)">${isFood(b.category) ? '🍽 Menú' : '📋 Precios'}</span>` : ''}</div>
-      <h3 class="card-title">${esc(b.name || 'Nombre de tu negocio')}</h3>
+      <h3 class="card-title">${esc(b.name || 'Nombre de tu negocio')}${P.verified ? '<span class="vtick" title="Negocio verificado" aria-label="Verificado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 2.1 3.2-.3.9 3.1 2.8 1.6-1 3 1 3-2.8 1.6-.9 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.9-3.1-2.8-1.6 1-3-1-3 2.8-1.6.9-3.1 3.2.3z" fill="currentColor"/><path d="M8 12.3l2.6 2.6L16.2 9.3" fill="none" stroke="#04121A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : ''}</h3>
       ${st && !st.closedToday ? `<div class="hstat ${st.open ? 'is-open' : 'is-closed'}">${st.open ? 'Abierto ahora' : 'Cerrado ahora'}</div>` : ''}
       ${b.desc || opt.preview ? `<p class="card-desc">${esc(b.desc || 'Aquí aparecerá la descripción de tu negocio.')}</p>` : ''}
       <div class="card-actions">
@@ -1585,7 +1618,7 @@ function renderProfile(b) {
 
   byId('pf-content').innerHTML = `
   <section class="pf-hero">
-    <div class="pf-bg" style="${cover ? `background-image:url('${esc(cover)}')` : `background:radial-gradient(60% 80% at 30% 20%,${P.c}55,transparent),linear-gradient(135deg,#13203A,#050A14)`}"></div>
+    <div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${P.c}55,transparent),linear-gradient(135deg,#13203A,#050A14)`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${P.c}">${catOf(b.category)[2]}</div>`}
     <div class="wrap">
       <div class="pf-badges">${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
       <h1 class="pf-name">${esc(b.name)}</h1>
@@ -2239,7 +2272,7 @@ function blobToDataURL(blob) { return new Promise(r => { const fr = new FileRead
 async function uploadPhoto(blob, folder) {
   const path = folder + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
   const { error } = await SB.storage.from(CFG.BUCKET).upload(path, blob, { contentType: 'image/jpeg', upsert: false });
-  if (error) { console.warn('upload', error); return blobToDataURL(blob); }
+  if (error) { console.warn('upload', error); throw new Error('No se pudo subir una foto. Revisa tu conexión e intenta de nuevo'); }
   return SB.storage.from(CFG.BUCKET).getPublicUrl(path).data.publicUrl;
 }
 
@@ -2727,7 +2760,7 @@ async function eSave() {
 }
 
 async function exportXlsx(f) {
-  try { await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'); } catch (e) { return toast(e.message, 'bad'); }
+  try { await loadScript('/vendor/xlsx-0.18.5.full.min.js'); } catch (e) { return toast(e.message, 'bad'); }
   const l = ADM.filter(b => f === 'activos' ? b.active : f === 'pendientes' ? !b.active && !b.activatedAt : true);
   if (!l.length) return toast('No hay datos para exportar');
   const rows = l.map(b => ({ ID: b.id, Negocio: b.name, Categoría: catOf(b.category)[1], Plan: b.planN, 'Precio ($)': b.price, Estado: b.active ? 'Activo' : b.activatedAt ? 'Vencido' : 'Pendiente', Dueño: b.owner, Cédula: b.cedula, Correo: b.email, Teléfono: b.phone, WhatsApp: b.wa, Provincia: provLabel(b.province), RUC: b.ruc, Dirección: b.address, 'Sitio web': b.website, Fotos: b.photos.length, Pago: (b.payment || {}).label || '', Referencia: (b.payment || {}).ref || (b.payment || {}).yappyRef || '', Visitas: b.visits, Registrado: fmtDate(b.registeredAt), Activado: fmtDate(b.activatedAt), Vence: fmtDate(expiresAt(b)), Notas: b.notes }));
@@ -2799,6 +2832,8 @@ function seoPage(tpl, b, ogDefault) {
     .replace(/<meta property="og:title" content="[^"]*">/, () => `<meta property="og:title" content="${A(b.name + ' · ' + cat + ' en ' + prov)}">`)
     .replace(/<meta property="og:description" content="[^"]*">/, () => `<meta property="og:description" content="${A(desc)}">`)
     .replace(/<meta property="og:image" content="[^"]*">/, () => `<meta property="og:image" content="${A(img)}">`)
+    .replace(/<meta property="og:image:(width|height)" content="[^"]*">\n?/g, m => img === ogDefault ? m : '')
+    .replace(/<meta name="twitter:image" content="[^"]*">/, () => `<meta name="twitter:image" content="${A(img)}">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, () => `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}<\/script>\n<script>window.BL_PAGE=${JSON.stringify(b.id).replace(/</g, '\\u003c')};<\/script>`)
     .replace('<div class="ov" id="profile"', '<div class="ov open" id="profile"')
     .replace('<div id="pf-content"></div>', () => `<div id="pf-content">${stat}</div>`);
@@ -2821,7 +2856,7 @@ async function exportSite() {
   if (location.protocol === 'file:') return toast('Abre el panel desde tu sitio publicado (Netlify) para generar el ZIP.', 'bad');
   const btn = byId('seo-btn'); if (btn) { btn.disabled = true; btn.textContent = 'Generando…'; }
   try {
-    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+    await loadScript('/vendor/jszip-3.10.1.min.js');
     const r = await fetch('/index.html', { cache: 'no-store' }); if (!r.ok) throw new Error('No se pudo leer index.html del sitio');
     let tpl = await r.text();
     if (!tpl.includes('id="pf-content"') || tpl.includes('window.BL_PAGE=')) throw new Error('El index.html publicado no es la versión nueva del sitio');
@@ -3019,7 +3054,7 @@ function buildDemo() {
     <div class="float f1">🔎 Te encuentran por categoría y provincia<small>En el directorio y en Google</small></div>
     <div class="phone"><div class="notch"></div>
       <div class="scr scr-profile">
-        <div class="d-cover" style="${cover ? `background-image:url('${esc(cover)}')` : ''}">${cover ? '' : `<div class="ph" style="--c:${P.c}"><span>${ini}</span></div>`}</div>
+        <div class="d-cover" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : ''}">${cover ? '' : `<div class="ph" style="--c:${P.c}"><span>${ini}</span></div>`}</div>
         <div class="d-body">
           <b class="d-name">${esc(name)}</b>
           <div class="d-meta">${catOf(cat)[2]} ${esc(catOf(cat)[1])}${b && b.province ? ' · ' + esc(provLabel(b.province)) : ''}</div>
@@ -3030,7 +3065,7 @@ function buildDemo() {
         </div>
       </div>
       <div class="scr scr-chat">
-        <div class="c-head"><span class="c-av" style="${cover ? `background-image:url('${esc(cover)}');color:transparent` : ''}">${ini}</span><div><b>${esc(name)}</b><small>en línea</small></div></div>
+        <div class="c-head"><span class="c-av" style="${cover ? `background-image:url('${esc(cssUrl(cover))}');color:transparent` : ''}">${ini}</span><div><b>${esc(name)}</b><small>en línea</small></div></div>
         <div class="c-body"><span class="c-day">Hoy</span>
           <div class="bub out">${food ? 'Hola, los vi en BizLaunch 👋 ¿Tienen mesa para 4 hoy?' : 'Hola, los vi en BizLaunch 👋 ¿Me pueden dar información?'}<i>✓✓</i></div>
           <div class="bub in typing"><span></span><span></span><span></span></div>
