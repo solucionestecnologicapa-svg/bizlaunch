@@ -787,6 +787,34 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   body.printing .pr-page:last-child{break-after:auto;page-break-after:auto}
 }
 
+/* ---------- Favorites, suggestions, hours ---------- */
+.card{position:relative}
+.fav{position:absolute;top:10px;right:10px;z-index:3;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(5,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);color:#fff;transition:transform .2s,background .2s}
+.fav:hover{transform:scale(1.08)}
+.hrt{font-size:1.05rem;line-height:1;color:rgba(255,255,255,.85);transition:color .2s}
+.fav.on{background:rgba(255,92,92,.18);border-color:rgba(255,92,92,.5)}
+.fav.on .hrt,.fav-big.on .hrt{color:#FF5C7A}
+.fav.pop .hrt,.fav-big.pop .hrt{animation:heart .45s cubic-bezier(.2,.9,.3,1.6)}
+@keyframes heart{30%{transform:scale(1.45)}60%{transform:scale(.9)}}
+.fav-big .hrt{margin-right:2px}
+.fav-big.on{border-color:rgba(255,92,122,.5)}
+.chip-fav{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border-radius:12px;background:var(--card);border:1px solid var(--bdr2);font-weight:700;font-size:.86rem;white-space:nowrap}
+.chip-fav .hrt{color:#FF5C7A}
+.chip-fav b{font-weight:800;color:var(--mut)}
+.chip-fav.on{border-color:#FF5C7A;background:rgba(255,92,122,.1)}
+.sg-host{position:relative}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:60;background:var(--card2);border:1px solid var(--bdr2);border-radius:14px;padding:6px;box-shadow:var(--sh);max-height:340px;overflow:auto;text-align:left;animation:fade .18s ease}
+.sugg button{display:flex;align-items:center;gap:11px;width:100%;padding:9px 10px;border-radius:10px;text-align:left}
+.sugg button:hover,.sugg button:focus{background:rgba(255,255,255,.06);outline:none}
+.sugg b{display:block;font-size:.9rem}
+.sugg small{display:block;color:var(--mut);font-size:.76rem}
+.sg-i{width:34px;height:34px;flex-shrink:0;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.06);font-size:1.05rem}
+.sg-none{padding:12px;color:var(--mut);font-size:.86rem}
+.is-soon{color:var(--amb)}
+.is-soon:before{animation:live 1.6s ease-out infinite}
+.rv-reply{margin-top:10px;padding:10px 12px;border-left:3px solid var(--acc);background:rgba(0,245,200,.05);border-radius:0 10px 10px 0;font-size:.86rem}
+.rv-reply b{display:block;font-size:.74rem;color:var(--acc);margin-bottom:3px}
+
 /* ---------- Extra motion ---------- */
 /* 1 · WhatsApp button heartbeat */
 .fab-wa:before,.fab-wa:after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);opacity:0;pointer-events:none;animation:waPulse 4s cubic-bezier(.2,.8,.2,1) infinite}
@@ -976,6 +1004,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <select id="f-cat"></select>
       <label class="sr" for="f-prov">Provincia</label>
       <select id="f-prov"></select>
+      <button type="button" class="chip-fav" id="f-fav" data-act="fav-filter" hidden aria-label="Ver mis favoritos"><span class="hrt">♥</span>Favoritos <b>0</b></button>
     </div>
     <div class="result-info" id="result-info"></div>
     <div class="grid" id="dir-grid"></div>
@@ -1148,7 +1177,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
     </div>
     <div class="foot-bottom">
       <span>© <span id="year"></span> BizLaunch by Roosevelt · Hecho en Panamá 🇵🇦</span>
-      <button class="linkbtn" data-act="admin">Acceso administrador</button>
+      <span style="display:inline-flex;gap:16px;flex-wrap:wrap"><button class="linkbtn js-install" data-act="install" hidden>📲 Instalar la app</button><button class="linkbtn" data-act="admin">Acceso administrador</button></span>
     </div>
   </div>
 </footer>
@@ -1536,7 +1565,7 @@ function parseHours(str) {
     const tp = m[2].split(/\s*[-–]\s*|\s+a\s+/); if (tp.length < 2) continue;
     const o = t2m(tp[0]), c = t2m(tp[1]); if (o < 0 || c < 0) continue;
     const open = c > o ? cur >= o && cur < c : cur >= o || cur < c;
-    return { open, from: tp[0].trim(), to: tp[1].trim() };
+    return { open, from: tp[0].trim(), to: tp[1].trim(), toClose: open ? (c - cur + 1440) % 1440 : null, toOpen: !open && o > cur ? o - cur : null };
   }
   return { open: false, from: '', to: '', closedToday: true };
 }
@@ -1555,6 +1584,8 @@ async function loadSettings() {
     if (site && site.value) SITE = { precios: Object.assign({}, SITE.precios, site.value.precios || {}), promo: Object.assign({}, SITE.promo, site.value.promo || {}), boost: Array.isArray(site.value.boost) && site.value.boost.length ? site.value.boost : BOOST_DEFAULT, gratis_off: !!site.value.gratis_off };
     if (pag && pag.value) PAGES = { map: pag.value.map || {}, at: pag.value.at || '' };
   } catch (e) { console.warn('ajustes', e); }
+  // pages built automatically on every Netlify deploy (scripts/build-pages.mjs)
+  try { if (location.protocol.startsWith('http')) { const r = await fetch('/paginas.json', { cache: 'no-cache' }); if (r.ok) { const j = await r.json(); if (j && j.map) PAGES = { map: j.map, at: j.at || '' }; } } } catch (e) {}
   PAID.forEach(k => { if (+SITE.precios[k] > 0) PLANS[k].p = +SITE.precios[k]; });
   applyPrices(); applyFree();
 }
@@ -1607,7 +1638,7 @@ function applyPrices() {
    PUBLIC DIRECTORY
    ===================================================================== */
 let ALL = [], LIMIT = 12, OFFERS = [];
-const F = { q:'', cat:'', prov:'' };
+const F = { q:'', cat:'', prov:'', fav:false };
 
 function fillSelects() {
   const provOpts = '<option value="">Todas las provincias</option>' + PROVS.map(p => `<option value="${esc(p[0])}">${esc(p[1])}</option>`).join('');
@@ -1692,7 +1723,8 @@ function sortBiz(a, b) { return (isBoosted(b) - isBoosted(a)) || PLANS[a.plan].r
 function matches(b) {
   if (F.cat && b.category !== F.cat) return false;
   if (F.prov && b.province !== F.prov) return false;
-  if (F.q) { const hay = nrm([b.name, b.desc, catOf(b.category)[1], b.address, provLabel(b.province)].join(' ')); if (!nrm(F.q).split(/\s+/).every(w => hay.includes(w))) return false; }
+  if (F.fav && !FAVS.has(b.id)) return false;
+  if (F.q && !smartMatch(F.q, [b.name, b.desc, catOf(b.category)[1], b.category, b.address, provLabel(b.province), (b.menu && b.menu.secciones || []).map(s => s.items.map(i => i.n).join(' ')).join(' ')])) return false;
   return true;
 }
 
@@ -1701,7 +1733,7 @@ function cardHTML(b, opt) {
   const st = P.hours && b.hours ? parseHours(b.hours) : null;
   const act = opt.preview ? 'tabindex="-1"' : `data-act="profile" data-id="${esc(b.id)}"`;
   const initial = esc(((b.name || '?').trim().charAt(0) || '?').toUpperCase());
-  return `<article class="card${isBoosted(b) ? ' card--boost' : b.plan === 'premium' ? ' card--premium' : ''}${opt.reveal ? ' rv-in' : ''}">
+  return `<article class="card${isBoosted(b) ? ' card--boost' : b.plan === 'premium' ? ' card--premium' : ''}${opt.reveal ? ' rv-in' : ''}">${opt.preview ? '' : favBtn(b)}
     <button class="card-media" ${act} aria-label="Ver perfil de ${esc(b.name)}">
       ${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async">` : `<div class="ph ph-card" style="--c:${P.c}"><i aria-hidden="true">${catOf(b.category)[2]}</i><span>${initial}</span></div>`}
       <div class="card-badges">${[isBoosted(b) ? '<span class="chip chip-boost">⚡ Destacado</span>' : '', OFFERS.some(o => o.negocio_id === b.id) ? '<span class="chip chip-offer">🏷 Oferta</span>' : '', isNew(b) ? '<span class="chip st-ok" style="backdrop-filter:blur(6px)">Nuevo</span>' : ''].filter(Boolean).slice(0, 2).join('')}</div>
@@ -1710,7 +1742,7 @@ function cardHTML(b, opt) {
     <div class="card-body">
       <div class="card-meta">${catOf(b.category)[2]} ${esc(b.category ? catOf(b.category)[1] : 'Categoría')}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}${menuCount(b.menu) ? ` · <span style="color:var(--acc)">${isFood(b.category) ? '🍽 Menú' : '📋 Precios'}</span>` : ''}</div>
       <h3 class="card-title">${esc(b.name || 'Nombre de tu negocio')}${P.verified ? '<span class="vtick" title="Negocio verificado" aria-label="Verificado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 2.1 3.2-.3.9 3.1 2.8 1.6-1 3 1 3-2.8 1.6-.9 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.9-3.1-2.8-1.6 1-3-1-3 2.8-1.6.9-3.1 3.2.3z" fill="currentColor"/><path d="M8 12.3l2.6 2.6L16.2 9.3" fill="none" stroke="#04121A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : ''}</h3>
-      ${st && !st.closedToday ? `<div class="hstat ${st.open ? 'is-open' : 'is-closed'}">${st.open ? 'Abierto ahora' : 'Cerrado ahora'}</div>` : ''}
+      ${st && !st.closedToday ? `<div>${hoursBadge(st, false)}</div>` : ''}
       ${b.desc || opt.preview ? `<p class="card-desc">${esc(b.desc || 'Aquí aparecerá la descripción de tu negocio.')}</p>` : ''}
       <div class="card-actions">
         ${b.wa ? `<a class="btn btn-wa btn-sm" ${opt.preview ? '' : `href="${esc(waLink(b.wa, 'Hola, vi su negocio en BizLaunch y quisiera más información.'))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(b.id)}"`}>${WA_SVG}WhatsApp</a>` : ''}
@@ -1723,13 +1755,13 @@ function cardHTML(b, opt) {
 function renderDirectory() {
   const list = ALL.filter(matches).sort(sortBiz);
   const grid = byId('dir-grid'), info = byId('result-info'), more = byId('more');
-  const filtered = F.q || F.cat || F.prov;
+  const filtered = F.q || F.cat || F.prov || F.fav;
   info.innerHTML = list.length ? `${list.length} negocio${list.length !== 1 ? 's' : ''}${filtered ? ' encontrados · <button class="linkbtn" data-act="clear">Limpiar filtros</button>' : ''}` : '';
   if (!list.length) {
     grid.innerHTML = filtered
       ? `<div class="empty" style="grid-column:1/-1">🔍<b>Sin resultados</b>Prueba con otra palabra o provincia.<br><br><button class="btn btn-ghost btn-sm" data-act="clear">Ver todos</button></div>`
       : `<div class="empty" style="grid-column:1/-1">🏪<b>Sé el primero en el directorio</b>Los primeros negocios de cada categoría reciben toda la atención.<br><br><button class="btn btn-pri btn-sm" data-act="reg">Registrar mi negocio</button></div>`;
-    more.hidden = true; return;
+    more.hidden = true; updateFavBtn(); return;
   }
   const before = grid.querySelectorAll('.card').length;
   grid.innerHTML = list.slice(0, LIMIT).map(b => cardHTML(b)).join('');
@@ -1737,6 +1769,7 @@ function renderDirectory() {
   grid.querySelectorAll('.card').forEach((c, i) => { const j = APPEND ? i - before : i; if (j >= 0) { c.classList.add('pop'); c.style.animationDelay = Math.min(j, 10) * 45 + 'ms'; } });
   APPEND = false;
   more.hidden = list.length <= LIMIT;
+  updateFavBtn();
 }
 let APPEND = false;
 
@@ -1801,7 +1834,7 @@ function renderProfile(b) {
   const gm = mapsLink(b);
   const T = tipo => ` data-track="${tipo}" data-id="${esc(b.id)}"`;
   const offers = OFFERS.filter(o => o.negocio_id === b.id);
-  const statusHtml = st ? (st.closedToday ? '<span class="hstat is-closed" style="margin:0">Cerrado hoy</span>' : `<span class="hstat ${st.open ? 'is-open' : 'is-closed'}" style="margin:0">${st.open ? 'Abierto · cierra ' + esc(st.to) : 'Cerrado · abre ' + esc(st.from)}</span>`) : '';
+  const statusHtml = hoursBadge(st, true);
 
   byId('pf-content').innerHTML = `
   <section class="pf-hero">
@@ -1816,6 +1849,8 @@ function renderProfile(b) {
         ${P.call && b.wa ? `<a class="btn btn-dark" href="tel:+${esc(waNum(b.wa))}"${T('llamada')}>📞 Llamar</a>` : ''}
         ${P.webBtn && web ? `<a class="btn btn-dark" href="${esc(web)}" target="_blank" rel="noopener"${T('web')}>🌐 Sitio web</a>` : ''}
         ${gm ? `<a class="btn btn-dark" href="${esc(gm)}" target="_blank" rel="noopener"${T('mapa')}>🧭 Cómo llegar</a>` : ''}
+        ${favBtn(b, true)}
+        ${b.wa ? `<button class="btn btn-dark" data-act="vcard">👤 Guardar contacto</button>` : ''}
       </div>
     </div>
   </section>
@@ -1878,13 +1913,15 @@ function isNew(b) { return b.activatedAt && Date.now() - b.activatedAt < 30 * DA
 async function loadReviews(id) {
   const box = byId('rv-list'); if (!box) return;
   let rows = [];
-  try { const { data, error } = await SB.from('resenas').select('autor,estrellas,comentario,created_at').eq('negocio_id', id).eq('aprobada', true).order('created_at', { ascending: false }).limit(30); if (error) throw error; rows = data || []; } catch (e) {}
+  for (const cols of ['autor,estrellas,comentario,created_at,respuesta', 'autor,estrellas,comentario,created_at']) {
+    try { const { data, error } = await SB.from('resenas').select(cols).eq('negocio_id', id).eq('aprobada', true).order('created_at', { ascending: false }).limit(30); if (error) throw error; rows = data || []; break; } catch (e) {}
+  }
   if (!CUR || CUR.id !== id) return;
   if (!rows.length) { box.innerHTML = '<p style="color:var(--mut);font-size:.9rem">Aún no hay reseñas. ¡Sé el primero en opinar!</p>'; return; }
   const avg = rows.reduce((s, r) => s + r.estrellas, 0) / rows.length;
   const rt = byId('pf-rating'); rt.textContent = '★ ' + avg.toFixed(1) + ' (' + rows.length + ')'; rt.style.color = '#FFC83D'; rt.hidden = false;
   box.innerHTML = `<div class="rv-sum"><b>${avg.toFixed(1)}</b><div><div class="stars">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5 - Math.round(avg))}</div><small style="color:var(--mut)">${rows.length} reseña${rows.length > 1 ? 's' : ''}</small></div></div>` +
-    rows.map(r => `<div class="rv"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>${esc(r.comentario)}</p><small>${esc(r.autor || 'Cliente')} · ${fmtDate(Date.parse(r.created_at))}</small></div>`).join('');
+    rows.map(r => `<div class="rv"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>${esc(r.comentario)}</p><small>${esc(r.autor || 'Cliente')} · ${fmtDate(Date.parse(r.created_at))}</small>${r.respuesta ? `<div class="rv-reply"><b>Respuesta de ${esc(CUR.name)}</b>${esc(r.respuesta)}</div>` : ''}</div>`).join('');
 }
 
 async function submitReview(e) {
@@ -2268,6 +2305,7 @@ function renderOwnerPanel() {
           <div id="op-menu"></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn btn-pri btn-sm" data-act="op-menu-save" id="op-menu-btn">Guardar ${isFood(d.category) ? 'menú' : 'lista'}</button><a class="btn btn-ghost btn-sm" href="${esc(url)}" target="_blank" rel="noopener">Ver cómo se ve ↗</a></div>
         </div>` : ''}
+        ${d.active ? `<div class="box" id="op-rv-box" hidden><h3>💬 Responde a tus reseñas</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tu respuesta aparece debajo de la reseña en tu perfil. Agradecer y responder con amabilidad da confianza a nuevos clientes.</p><div id="op-rv"></div></div>` : ''}
         ${d.active && hasExtras(d.plan) ? `<div class="box" id="op-extras-box"><h3>📅 Reservas y 📱 Yappy</h3>
           <p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">Tus clientes eligen día y hora en tu perfil y te llega la solicitud lista por WhatsApp; tú confirmas. Con Yappy, ven tu número o tu QR para pagarte directo.</p>
           <div id="op-extras"></div>
@@ -2305,6 +2343,29 @@ function renderOwnerPanel() {
   const f = byId('op-form'); if (f) f.addEventListener('submit', submitOwnerOffer);
   if (byId('op-menu')) menuEditor(byId('op-menu'), d.menu, { food: isFood(d.category), limit: MENU_LIMIT[d.plan] ?? 25 });
   if (byId('op-extras')) extrasEditor(byId('op-extras'), d.extras, { prefix: 'ox' });
+  if (byId('op-rv-box')) loadOwnerReviews();
+}
+async function loadOwnerReviews() {
+  const box = byId('op-rv-box'), el = byId('op-rv'); if (!box || !OP) return;
+  try {
+    const { data, error } = await SB.rpc('resenas_dueno', { p_token: OP.token });
+    if (error) throw error;
+    const rows = Array.isArray(data) ? data : [];
+    box.hidden = false;
+    el.innerHTML = rows.length ? rows.map(r => `<div class="rv" style="margin-bottom:12px"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>${esc(r.comentario)}</p><small>${esc(r.autor || 'Cliente')} · ${fmtDate(Date.parse(r.created_at))}</small>
+        <div class="f" style="margin-top:10px"><label for="rr-${r.id}">${r.respuesta ? 'Tu respuesta' : 'Responder'}</label><textarea id="rr-${r.id}" maxlength="400" rows="2" placeholder="¡Gracias por visitarnos! …">${esc(r.respuesta || '')}</textarea></div>
+        <button class="btn btn-pri btn-xs" data-act="op-rv-save" data-rid="${r.id}">${r.respuesta ? 'Guardar cambios' : 'Publicar respuesta'}</button></div>`).join('')
+      : '<p style="color:var(--mut);font-size:.86rem">Cuando tengas reseñas aprobadas aparecerán aquí para que las respondas.</p>';
+  } catch (e) { box.hidden = true; }
+}
+async function saveOwnerReply(rid, btn) {
+  if (!OP) return; const ta = byId('rr-' + rid); if (!ta) return;
+  btn.disabled = true; const was = btn.textContent; btn.textContent = 'Guardando…';
+  try {
+    const { error } = await SB.rpc('responder_resena_dueno', { p_token: OP.token, p_id: +rid, p_texto: ta.value });
+    if (error) throw error;
+    toast(ta.value.trim() ? '✓ Respuesta publicada en tu perfil' : 'Respuesta eliminada', 'ok'); loadOwnerReviews();
+  } catch (e) { toast(e.message || 'No se pudo guardar', 'bad'); btn.disabled = false; btn.textContent = was; }
 }
 async function saveOwnerExtras() {
   const ed = byId('op-extras'), btn = byId('op-extras-btn'); if (!ed || !ed._extras || !OP) return;
@@ -2685,7 +2746,7 @@ async function adminLoad() {
 }
 function adminTabs() {
   const pend = ADM.filter(b => !b.active && !b.activatedAt).length;
-  const soon = ADM.filter(b => b.activatedAt && daysLeft(b) <= 30).length;
+  const soon = porAvisar();
   const pendOf = ADM_OFFERS.filter(o => !o.aprobada && o.activa && (!o.vence || o.vence >= today())).length;
   const tabs = [['resumen','📊 Resumen'],['pendientes','⏳ Pendientes',pend],['negocios','🏪 Negocios'],['vencimientos','🔄 Vencimientos',soon],['ofertas','🏷 Ofertas',pendOf],['resenas','⭐ Reseñas',PENDING_RV.length],['ajustes','⚙️ Ajustes']];
   byId('adm-tabs').innerHTML = tabs.map(t => `<button class="${ATAB === t[0] ? 'on' : ''}" data-act="atab" data-tab="${t[0]}">${t[1]}${t[2] ? `<em>${t[2]}</em>` : ''}</button>`).join('') + '<button data-act="a-new" style="margin-left:auto;color:var(--acc)">＋ Nuevo negocio</button>';
@@ -2786,11 +2847,29 @@ function aResumen() {
     </div>
     <div class="box"><h3>Últimos pendientes</h3>${pend.slice(0, 4).map(aRow).join('') || '<p style="color:var(--mut)">Nada pendiente 🎉</p>'}</div>`;
 }
+/* expiry reminders: grouped by urgency, remembering who was already told (in this browser) */
+const VSTAGES = [['vencido', '⚫ Vencidos', d => d <= 0], ['1', '🔴 Vencen hoy o mañana', d => d > 0 && d <= 1], ['7', '🟠 Vencen esta semana', d => d > 1 && d <= 7], ['30', '🟡 Vencen este mes', d => d > 7 && d <= 30], ['90', '🔵 En 31 a 90 días', d => d > 30 && d <= 90]];
+const vStage = d => (VSTAGES.find(s => s[2](d)) || [''])[0];
+const avisos = () => { try { return JSON.parse(localStorage.getItem('bl_avisos') || '{}'); } catch (e) { return {}; } };
+function markAviso(id, stage) { const a = avisos(); a[id] = { stage, at: Date.now() }; try { localStorage.setItem('bl_avisos', JSON.stringify(a)); } catch (e) {} }
+const avisado = (b, d) => { const a = avisos()[b.id]; return a && a.stage === vStage(d) ? a : null; };
+const porAvisar = () => ADM.filter(b => expiresAt(b) && daysLeft(b) <= 30 && !avisado(b, daysLeft(b))).length;
+function vMsg(b, d) {
+  const P = PLANS[b.plan], hi = b.owner ? `Hola ${b.owner} 👋` : 'Hola 👋';
+  if (d <= 0) return `${hi} Tu perfil "${b.name}" en BizLaunch venció y ya no aparece en el directorio. Puedes reactivarlo hoy por ${money(P.p)} (12 meses) y conservas tu mismo link, tus fotos y tus reseñas. ¿Lo reactivamos?`;
+  if (d <= 1) return `${hi} Último aviso: tu perfil "${b.name}" en BizLaunch vence ${d === 1 ? 'mañana' : 'hoy'}. Renuévalo por ${money(P.p)} (12 meses más) para no dejar de aparecer ante tus clientes. ¿Te lo renovamos ahora?`;
+  if (d <= 7) return `${hi} Tu perfil "${b.name}" en BizLaunch vence en ${d} días. La renovación del Plan ${P.n} es de ${money(P.p)} por 12 meses y mantiene tu link, fotos y reseñas. ¿Te la dejo lista?`;
+  return `${hi} Te recuerdo con tiempo que tu perfil "${b.name}" en BizLaunch vence el ${fmtDate(expiresAt(b))} (en ${d} días). Para seguir visible, la renovación del Plan ${P.n} es de ${money(P.p)} por 12 meses. ¿Quieres renovarlo?`;
+}
 function aVenc() {
   const rows = ADM.filter(b => expiresAt(b)).map(b => ({ b, d: daysLeft(b) })).filter(x => x.d <= 90).sort((a, b) => a.d - b.d);
-  const line = ({ b, d }) => { const P = PLANS[b.plan]; const msg = d > 0 ? `Hola ${b.owner} 👋 Tu perfil "${b.name}" en BizLaunch vence en ${d} días. Para mantenerlo visible, la renovación del Plan ${P.n} es de ${money(P.p)} por 12 meses más. ¿Te lo renovamos?` : `Hola ${b.owner} 👋 Tu perfil "${b.name}" en BizLaunch venció y ya no aparece en el directorio. Puedes reactivarlo hoy por ${money(P.p)} (12 meses) y conserva su mismo link. ¿Lo reactivamos?`;
-    return `<div class="tline"><span>${d <= 0 ? '⚫' : d <= 30 ? '🔴' : d <= 60 ? '🟠' : '🟡'}</span><div class="grow"><b>${esc(b.name)}</b><div style="color:var(--mut);font-size:.78rem">${esc(b.owner)} · ${P.n} · vence ${fmtDate(expiresAt(b))}</div></div><b style="color:${d <= 30 ? 'var(--red)' : 'var(--amb)'}">${d <= 0 ? 'Vencido' : d + ' días'}</b>${b.phone || b.wa ? `<a class="btn btn-wa btn-xs" href="${esc(waLink(b.phone || b.wa, msg))}" target="_blank" rel="noopener">Recordar</a>` : ''}<button class="btn btn-pri btn-xs" data-act="a-on" data-id="${esc(b.id)}">↻ Renovar 12m</button></div>`; };
-  return aHead('Vencimientos', 'Próximos 90 días y vencidos. El botón “Recordar” abre WhatsApp con el mensaje listo.') + (rows.length ? rows.map(line).join('') : aEmpty('✅ Ningún plan vence en los próximos 90 días'));
+  const ago = t => { const n = Math.floor((Date.now() - t) / DAY); return n <= 0 ? 'hoy' : n === 1 ? 'ayer' : 'hace ' + n + ' días'; };
+  const line = ({ b, d }) => { const P = PLANS[b.plan], av = avisado(b, d), tel = b.phone || b.wa;
+    return `<div class="tline"><div class="grow"><b>${esc(b.name)}</b><div style="color:var(--mut);font-size:.78rem">${esc(b.owner)} · ${P.n} · vence ${fmtDate(expiresAt(b))}${av ? ` · <span style="color:var(--acc)">✓ avisado ${ago(av.at)}</span>` : ''}</div></div><b style="color:${d <= 7 ? 'var(--red)' : 'var(--amb)'}">${d <= 0 ? 'Vencido' : d === 1 ? '1 día' : d + ' días'}</b>${tel ? `<a class="btn ${av ? 'btn-ghost' : 'btn-wa'} btn-xs" href="${esc(waLink(tel, vMsg(b, d)))}" target="_blank" rel="noopener" data-act="a-remind" data-id="${esc(b.id)}" data-stage="${vStage(d)}">${av ? 'Recordar otra vez' : 'Recordar'}</a>` : ''}<button class="btn btn-pri btn-xs" data-act="a-on" data-id="${esc(b.id)}">↻ Renovar 12m</button></div>`; };
+  const pend = porAvisar();
+  return aHead('Vencimientos', 'El botón “Recordar” abre WhatsApp con un mensaje según lo urgente que sea. Te marcamos a quién ya avisaste en cada etapa (30, 7 y 1 día).') +
+    (pend ? `<div class="note" style="margin-bottom:16px;border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.07)">🔔 <b>${pend} negocio${pend > 1 ? 's' : ''} por avisar</b> en los próximos 30 días.</div>` : '') +
+    (rows.length ? VSTAGES.map(([k, label, f]) => { const g = rows.filter(x => f(x.d)); return g.length ? `<h4 style="margin:18px 0 8px;font-size:.86rem;color:var(--mut)">${label} · ${g.length}</h4>` + g.map(line).join('') : ''; }).join('') : aEmpty('✅ Ningún plan vence en los próximos 90 días'));
 }
 function aResenas() {
   return aHead('Reseñas por aprobar', 'Solo las aprobadas se muestran en los perfiles.') + (PENDING_RV.length ? PENDING_RV.map(r => { const b = ADM.find(x => x.id === String(r.negocio_id)); return `<div class="arow"><div class="arow-top"><div><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p style="margin:6px 0">${esc(r.comentario)}</p><small style="color:var(--mut)">${esc(r.autor || 'Cliente')} · sobre <b>${esc(b ? b.name : r.negocio_id)}</b> · ${fmtDate(Date.parse(r.created_at))}</small></div><div class="arow-acts"><button class="btn btn-pri btn-xs" data-act="rv-ok" data-id="${r.id}">Aprobar</button><button class="btn btn-ghost btn-xs" style="color:var(--red)" data-act="rv-del" data-id="${r.id}">Eliminar</button></div></div></div>`; }).join('') : aEmpty('No hay reseñas pendientes'));
@@ -2819,13 +2898,33 @@ function aAjustes() {
       <div class="toolbar"><input id="cp-code" placeholder="CODIGO" style="text-transform:uppercase;max-width:180px"><input id="cp-pct" type="number" min="1" max="90" placeholder="%" style="max-width:90px;flex:0"><input id="cp-desc" placeholder="Descripción (opcional)"><button class="btn btn-pri btn-sm" data-act="cp-add">Crear</button></div>
       <div id="cp-list"><div class="skel" style="height:50px"></div></div></div>
     <div class="box"><h3>🔎 Páginas para Google</h3>
-      <p style="color:var(--mut);font-size:.84rem;margin-bottom:10px">Genera un archivo ZIP con tu sitio completo: la portada y <b>una página propia para cada negocio activo</b> (por ejemplo <code>/n/barberia-don-luis/</code>), con título, descripción y foto para Google y para la vista previa de WhatsApp, más <code>sitemap.xml</code> y <code>robots.txt</code>. Descomprímelo y arrastra la carpeta a Netlify → Deploys.</p>
-      <p style="color:var(--mut);font-size:.8rem;margin-bottom:12px">Hazlo cada vez que actives un negocio nuevo o cambies nombres o fotos. Úsalo desde el sitio publicado, no desde el archivo en tu computadora.${PAGES.at ? ' Última generación: <b>' + esc(fmtDate(Date.parse(PAGES.at))) + '</b> (' + Object.keys(PAGES.map).length + ' páginas).' : ''}</p>
-      <button class="btn btn-pri btn-sm" data-act="seo-export" id="seo-btn">⬇ Generar ZIP para Netlify</button></div>
+      <p style="color:var(--mut);font-size:.84rem;margin-bottom:10px">Cada negocio activo tiene su propia página (por ejemplo <code>/n/barberia-don-luis/</code>) con título, descripción y foto para Google y para la vista previa de WhatsApp. <b style="color:var(--txt)">Se generan solas</b> cada vez que se publica el sitio.${PAGES.at ? ' Última actualización: <b style="color:var(--txt)">' + esc(fmtDateTime(Date.parse(PAGES.at))) + '</b> · ' + Object.keys(PAGES.map).length + ' páginas.' : ''}</p>
+      <p style="color:var(--mut);font-size:.82rem;margin-bottom:10px">Para que se actualicen al momento cuando actives o edites un negocio, pega aquí el <b style="color:var(--txt)">Build hook</b> de Netlify (se guarda solo en este navegador).</p>
+      <div class="toolbar" style="margin-bottom:10px"><input id="hook-url" type="url" placeholder="https://api.netlify.com/build_hooks/…" value="${esc(buildHook())}"><button class="btn btn-ghost btn-sm" data-act="hook-save">Guardar</button></div>
+      <button class="btn btn-pri btn-sm" data-act="pages-rebuild" id="seo-btn" ${buildHook() ? '' : 'disabled'}>🔄 Actualizar páginas ahora</button></div>
     <div class="box"><h3>📥 Exportar</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ghost btn-sm" data-act="export" data-f="todos">Todos</button><button class="btn btn-ghost btn-sm" data-act="export" data-f="activos">Activos</button><button class="btn btn-ghost btn-sm" data-act="export" data-f="pendientes">Pendientes</button></div></div>
     <div class="box"><h3>📊 Reporte por correo</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Envía a ${esc(CFG.ADMIN_EMAIL)} un resumen con activos, pendientes y vencimientos.</p><button class="btn btn-ghost btn-sm" data-act="report">Enviar reporte</button></div>`;
 }
 
+/* ---------- Netlify build hook: rebuilds the Google pages ---------- */
+const buildHook = () => { try { return localStorage.getItem('bl_build_hook') || ''; } catch (e) { return ''; } };
+function saveHook() {
+  const u = v('hook-url').trim();
+  if (u && !/^https:\/\/api\.netlify\.com\/build_hooks\/[A-Za-z0-9]+$/.test(u)) return toast('Ese no parece un Build hook de Netlify. Debe empezar con https://api.netlify.com/build_hooks/', 'bad');
+  try { u ? localStorage.setItem('bl_build_hook', u) : localStorage.removeItem('bl_build_hook'); } catch (e) { return toast('Este navegador no permite guardar el enlace.', 'bad'); }
+  toast(u ? '✓ Build hook guardado' : 'Build hook quitado', 'ok'); adminTab('ajustes');
+}
+let REBUILD_T = null;
+async function rebuildPages(manual) {
+  const u = buildHook(); if (!u) { if (manual) toast('Primero guarda el Build hook de Netlify.', 'bad'); return; }
+  clearTimeout(REBUILD_T);
+  const go = async () => {
+    try { const r = await fetch(u, { method: 'POST', mode: 'no-cors' }); if (r.type !== 'opaque' && !r.ok) throw new Error(r.status);
+      toast('🔄 Actualizando las páginas de Google. Estarán listas en 1–2 minutos.', 'ok');
+    } catch (e) { if (manual) toast('No se pudo avisar a Netlify. Revisa el Build hook.', 'bad'); }
+  };
+  if (manual) go(); else REBUILD_T = setTimeout(go, 4000);   // groups several quick changes into one rebuild
+}
 async function aSetActive(id, on) {
   const b = ADM.find(x => x.id === id); if (!b) return;
   const f = on ? { active: true, activated_at: new Date().toISOString(), expired_at: null } : { active: false };
@@ -2835,13 +2934,13 @@ async function aSetActive(id, on) {
   b.active = on; if (on) b.activatedAt = Date.parse(f.activated_at);
   toast(on ? '✓ ' + b.name + ' activado por 12 meses' : b.name + ' desactivado', 'ok');
   if (on && EJS && b.email) emailjs.send(CFG.EJS.svc, CFG.EJS.tReg, { to_email: b.email, to_name: b.owner, biz_name: b.name, plan_name: b.planN, plan_price: b.price, payment: '¡Tu perfil ya está ACTIVO en BizLaunch! Míralo y compártelo: ' + profileUrl(b.id) + (b.token ? ' — Tu panel privado de estadísticas y ofertas (guárdalo, no lo compartas): ' + panelUrl(b.token) : '') }).catch(e => console.warn(e));
-  adminTab(ATAB); refreshPublic();
+  adminTab(ATAB); refreshPublic(); rebuildPages();
 }
 async function aDelete(id) {
   const b = ADM.find(x => x.id === id); if (!b || !confirm('¿Eliminar "' + b.name + '" permanentemente? Esta acción no se puede deshacer.')) return;
   const { error } = await SB.from('negocios').delete().eq('id', id);
   if (error) return toast('Error: ' + error.message, 'bad');
-  ADM = ADM.filter(x => x.id !== id); toast('Eliminado'); adminTab(ATAB); refreshPublic();
+  ADM = ADM.filter(x => x.id !== id); toast('Eliminado'); adminTab(ATAB); refreshPublic(); rebuildPages();
 }
 async function rvModerate(id, ok) {
   const q = ok ? SB.from('resenas').update({ aprobada: true }).eq('id', id) : SB.from('resenas').delete().eq('id', id);
@@ -2981,7 +3080,7 @@ async function eSave() {
     else res = await SB.from('negocios').update(f).eq('id', id);
     if (res.error) throw res.error;
     show('edit', false); toast('✓ Guardado', 'ok');
-    await adminLoad(); adminTab(ATAB); refreshPublic();
+    await adminLoad(); adminTab(ATAB); refreshPublic(); rebuildPages();
   } catch (e) { console.error(e); toast('Error al guardar: ' + (e.message || e), 'bad'); }
   finally { btn.disabled = false; btn.textContent = EDIT && EDIT.isNew ? 'Crear negocio' : 'Guardar cambios'; }
 }
@@ -3016,6 +3115,104 @@ function routeFromHash() {
   else if (!BL_PAGE) closeProfile(true);
 }
 let PANEL_TOKEN = null;
+
+/* =====================================================================
+   VISITOR TOOLS — favorites, "save contact", install as app, smart search
+   ===================================================================== */
+/* favorites live only in this browser */
+let FAVS = new Set();
+try { FAVS = new Set(JSON.parse(localStorage.getItem('bl_favs') || '[]')); } catch (e) {}
+const isFav = id => FAVS.has(String(id));
+function toggleFav(id, el) {
+  id = String(id); FAVS.has(id) ? FAVS.delete(id) : FAVS.add(id);
+  try { localStorage.setItem('bl_favs', JSON.stringify([...FAVS])); } catch (e) {}
+  const on = FAVS.has(id);
+  $$(`[data-act="fav"][data-id="${window.CSS && CSS.escape ? CSS.escape(id) : id}"]`).forEach(b => { b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); const l = b.querySelector('.fl-t'); if (l) l.textContent = on ? 'Guardado' : 'Guardar'; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); });
+  toast(on ? '❤️ Guardado en tus favoritos' : 'Quitado de tus favoritos');
+  updateFavBtn(); if (F.fav) renderDirectory();
+}
+function updateFavBtn() { const b = byId('f-fav'); if (!b) return; const n = ALL.filter(x => FAVS.has(x.id)).length; b.hidden = !n && !F.fav; b.classList.toggle('on', !!F.fav); b.querySelector('b').textContent = n; }
+const favBtn = (b, big) => big
+  ? `<button class="btn btn-dark fav-big${isFav(b.id) ? ' on' : ''}" data-act="fav" data-id="${esc(b.id)}" aria-pressed="${isFav(b.id)}"><span class="hrt">♥</span><span class="fl-t">${isFav(b.id) ? 'Guardado' : 'Guardar'}</span></button>`
+  : `<button class="fav${isFav(b.id) ? ' on' : ''}" data-act="fav" data-id="${esc(b.id)}" aria-pressed="${isFav(b.id)}" aria-label="Guardar ${esc(b.name)} en favoritos"><span class="hrt">♥</span></button>`;
+
+/* "Guardar contacto": a vCard the phone imports straight into its contacts */
+function saveContact(b) {
+  if (!b) return;
+  const e = s => String(s || '').replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/([,;])/g, '\\$1');
+  const tel = b.wa ? '+' + waNum(b.wa) : '', web = safeUrl(b.website);
+  const lines = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:' + e(b.name), 'ORG:' + e(b.name), tel ? 'TEL;TYPE=CELL,VOICE:' + tel : '', b.address || b.province ? `ADR;TYPE=WORK:;;${e(b.address)};${e(provLabel(b.province))};;;Panamá` : '',
+    'URL:' + profileUrl(b.id), web ? 'URL;TYPE=WORK:' + web : '', 'NOTE:' + e(catOf(b.category)[1] + ' · encontrado en BizLaunch'), 'END:VCARD'].filter(Boolean);
+  const blob = new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/vcard;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (b.slug || 'contacto') + '.vcf';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast('👤 Abre el archivo para guardarlo en tus contactos');
+}
+
+/* install as an app (Android / desktop Chrome & Edge; iPhone uses "Agregar a inicio") */
+let INSTALL = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); INSTALL = e; $$('.js-install').forEach(b => b.hidden = false); });
+window.addEventListener('appinstalled', () => { INSTALL = null; $$('.js-install').forEach(b => b.hidden = true); toast('✓ BizLaunch quedó instalada en tu dispositivo', 'ok'); });
+async function installApp() {
+  if (INSTALL) { INSTALL.prompt(); try { await INSTALL.userChoice; } catch (e) {} INSTALL = null; $$('.js-install').forEach(b => b.hidden = true); return; }
+  toast(/iphone|ipad/i.test(navigator.userAgent) ? 'En Safari toca Compartir ⬆ y luego “Agregar a inicio”.' : 'Usa el menú del navegador → “Instalar app” o “Agregar a pantalla de inicio”.');
+}
+if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+if (/iphone|ipad/i.test(navigator.userAgent) && !navigator.standalone) $$('.js-install').forEach(b => b.hidden = false);
+
+/* smart search: no accents, tolerant to small typos, with suggestions */
+function lev(a, b) {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) { const cur = [i]; for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; }
+  return prev[b.length];
+}
+const SYN = { comida: 'restaurante', restaurant: 'restaurante', barber: 'barberia', peluqueria: 'belleza', salon: 'belleza', unas: 'belleza', taller: 'mecanico', carro: 'auto', abogado: 'legal', doctor: 'salud', medico: 'salud', dentista: 'salud', gym: 'gimnasio', cafe: 'cafeteria' };
+function wordHit(w, words, hay) {
+  if (hay.includes(w)) return true;
+  if (SYN[w] && hay.includes(SYN[w])) return true;
+  if (w.length < 4) return false;
+  const tol = w.length >= 7 ? 2 : 1;
+  return words.some(x => lev(w, x.slice(0, w.length + 1)) <= tol || lev(w, x) <= tol);
+}
+function smartMatch(q, fields) {
+  const hay = nrm(fields.join(' ')), words = hay.split(/[^a-z0-9ñ]+/).filter(Boolean);
+  return nrm(q).split(/\s+/).filter(Boolean).every(w => wordHit(w, words, hay));
+}
+function suggest(input) {
+  const box = input.parentElement.querySelector('.sugg'); if (!box) return;
+  const q = input.value.trim(); if (q.length < 2) { box.hidden = true; return; }
+  const cats = CATS.filter(c => smartMatch(q, [c[1], c[0]]) && ALL.some(b => b.category === c[0])).slice(0, 3);
+  const biz = ALL.filter(b => smartMatch(q, [b.name, catOf(b.category)[1], b.desc])).sort(sortBiz).slice(0, 5);
+  if (!cats.length && !biz.length) { box.innerHTML = `<div class="sg-none">Sin coincidencias para “${esc(q)}”</div>`; box.hidden = false; return; }
+  box.innerHTML = cats.map(c => `<button type="button" data-act="sg-cat" data-cat="${esc(c[0])}"><span class="sg-i">${c[2]}</span><span><b>${esc(c[1])}</b><small>Ver la categoría</small></span></button>`).join('') +
+    biz.map(b => `<button type="button" data-act="sg-biz" data-id="${esc(b.id)}"><span class="sg-i">${catOf(b.category)[2]}</span><span><b>${esc(b.name)}</b><small>${esc(catOf(b.category)[1])}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}</small></span></button>`).join('');
+  box.hidden = false;
+}
+function attachSuggest(input) {
+  if (!input) return;
+  const box = document.createElement('div'); box.className = 'sugg'; box.hidden = true; box.setAttribute('role', 'listbox');
+  input.parentElement.classList.add('sg-host'); input.parentElement.appendChild(box); input.setAttribute('autocomplete', 'off');
+  input.addEventListener('input', debounce(() => suggest(input), 120));
+  input.addEventListener('focus', () => suggest(input));
+  input.addEventListener('keydown', e => { if (e.key === 'Escape') box.hidden = true; if (e.key === 'ArrowDown') { const f = box.querySelector('button'); if (f) { e.preventDefault(); f.focus(); } } });
+  box.addEventListener('keydown', e => { const bs = [...box.querySelectorAll('button')], i = bs.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' && i < bs.length - 1) { e.preventDefault(); bs[i + 1].focus(); } if (e.key === 'ArrowUp') { e.preventDefault(); (i > 0 ? bs[i - 1] : input).focus(); } if (e.key === 'Escape') { box.hidden = true; input.focus(); } });
+  document.addEventListener('click', e => { if (!input.parentElement.contains(e.target)) box.hidden = true; });
+}
+function hideSugg() { $$('.sugg').forEach(b => b.hidden = true); }
+
+/* opening hours: "Abre en 20 min" / "Cierra en 15 min" */
+function hoursBadge(st, long) {
+  if (!st) return '';
+  if (st.closedToday) return long ? '<span class="hstat is-closed" style="margin:0">Cerrado hoy</span>' : '';
+  const dur = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' h' + (m % 60 ? ' ' + (m % 60) + ' min' : '');
+  const sty = long ? ' style="margin:0"' : '';
+  if (st.open && st.toClose <= 60) return `<span class="hstat is-soon"${sty}>Cierra en ${dur(st.toClose)}</span>`;
+  if (st.open) return `<span class="hstat is-open"${sty}>${long ? 'Abierto · cierra ' + esc(st.to) : 'Abierto ahora'}</span>`;
+  if (st.toOpen !== null && st.toOpen <= 120) return `<span class="hstat is-soon"${sty}>Abre en ${dur(st.toOpen)}</span>`;
+  return `<span class="hstat is-closed"${sty}>${long ? 'Cerrado · abre ' + esc(st.from) : 'Cerrado ahora'}</span>`;
+}
 
 /* =====================================================================
    EXTRA MOTION — confetti, cart feedback, spotlight, word reveal,
@@ -3195,7 +3392,7 @@ function printNow() {
 async function ownerPrint() {
   if (!OP) return;
   try {
-    const { data, error } = await SB.from('negocios').select(PUBC).eq('id', OP.id).maybeSingle();
+    const { data, error } = await SB.from('negocios').select(PUBC).eq('id', OP.d.id).maybeSingle();
     if (error) throw error;
     const b = norm(data); if (!b) return toast('Tu perfil todavía no está publicado.', 'bad');
     openPrinter(b);
@@ -3321,13 +3518,23 @@ document.addEventListener('click', e => {
     case 'lb-prev': lbNav(-1); break;
     case 'lb-next': lbNav(1); break;
     case 'cat': F.cat = F.cat === t.dataset.cat ? '' : t.dataset.cat; byId('f-cat').value = F.cat; LIMIT = 12; renderCats(); renderDirectory(); byId('directorio').scrollIntoView({ behavior: 'smooth' }); break;
-    case 'clear': Object.assign(F, { q:'', cat:'', prov:'' }); byId('f-q').value = ''; byId('f-cat').value = ''; byId('f-prov').value = ''; renderCats(); renderDirectory(); break;
+    case 'clear': Object.assign(F, { q:'', cat:'', prov:'', fav:false }); updateFavBtn(); byId('f-q').value = ''; byId('f-cat').value = ''; byId('f-prov').value = ''; renderCats(); renderDirectory(); break;
     case 'legal': show('legal', true); break;
     case 'legal-close': show('legal', false); break;
     case 'admin': openAdmin(); break;
     case 'adm-close': closeAdmin(); break;
     case 'adm-logout': adminLogout(); break;
     case 'adm-forgot': adminForgot(); break;
+    case 'fav': e.preventDefault(); e.stopPropagation(); toggleFav(id, t); break;
+    case 'fav-filter': F.fav = !F.fav; LIMIT = 12; updateFavBtn(); renderDirectory(); break;
+    case 'vcard': saveContact(CUR); break;
+    case 'a-remind': markAviso(id, t.dataset.stage); setTimeout(() => { adminTabs(); if (ATAB === 'vencimientos') adminTab('vencimientos'); }, 300); break;
+    case 'op-rv-save': saveOwnerReply(t.dataset.rid, t); break;
+    case 'install': installApp(); break;
+    case 'sg-cat': hideSugg(); F.cat = t.dataset.cat; F.q = ''; byId('f-q').value = ''; byId('hs-q').value = ''; byId('f-cat').value = F.cat; LIMIT = 12; renderCats(); renderDirectory(); byId('directorio').scrollIntoView({ behavior: 'smooth' }); break;
+    case 'sg-biz': hideSugg(); openProfile(id); break;
+    case 'hook-save': saveHook(); break;
+    case 'pages-rebuild': rebuildPages(true); break;
     case 'free-toggle': { const was = SITE.gratis_off; SITE.gratis_off = !was; saveSettings(SITE.promo, SITE.gratis_off ? '✓ Plan Gratis deshabilitado' : '✓ Plan Gratis habilitado').then(ok => { if (!ok) { SITE.gratis_off = was; if (ATAB === 'ajustes') adminTab('ajustes'); } applyFree(); }); break; }
     case 'atab': adminTab(t.dataset.tab); break;
     case 'a-reload': adminLoad().then(() => adminTab(ATAB)); break;
@@ -3417,7 +3624,8 @@ document.addEventListener('change', e => { if (e.target.id === 'cfg-unit') promo
 byId('lb').addEventListener('click', e => { if (e.target.id === 'lb') show('lb', false); });
 
 /* forms */
-byId('hero-search').addEventListener('submit', e => { e.preventDefault(); F.q = byId('hs-q').value.trim(); F.prov = byId('hs-prov').value; byId('f-q').value = F.q; byId('f-prov').value = F.prov; LIMIT = 12; renderDirectory(); byId('directorio').scrollIntoView({ behavior: 'smooth' }); });
+attachSuggest(byId('hs-q')); attachSuggest(byId('f-q'));
+byId('hero-search').addEventListener('submit', e => { e.preventDefault(); hideSugg(); F.q = byId('hs-q').value.trim(); F.prov = byId('hs-prov').value; byId('f-q').value = F.q; byId('f-prov').value = F.prov; LIMIT = 12; renderDirectory(); byId('directorio').scrollIntoView({ behavior: 'smooth' }); });
 byId('f-q').addEventListener('input', debounce(e => { F.q = e.target.value.trim(); LIMIT = 12; renderDirectory(); }, 200));
 byId('f-cat').addEventListener('change', e => { F.cat = e.target.value; LIMIT = 12; renderCats(); renderDirectory(); });
 byId('f-prov').addEventListener('change', e => { F.prov = e.target.value; LIMIT = 12; renderDirectory(); });

@@ -1,0 +1,12 @@
+{
+  "name": "bizlaunch",
+  "private": true,
+  "description": "BizLaunch by Roosevelt — directorio de negocios de Panamá",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-pages.mjs"
+  },
+  "dependencies": {
+    "jsdom": "^24.1.3"
+  }
+}

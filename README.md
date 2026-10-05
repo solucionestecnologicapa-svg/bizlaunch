@@ -10,6 +10,9 @@ reservas, Yappy, ofertas, reseñas y panel de estadísticas para cada dueño.
 - **Supabase** — base de datos, fotos y acceso del administrador.
 - **EmailJS** — correos de registro y activación.
 - **Netlify** — alojamiento. Cada cambio que se sube a este repositorio se publica solo.
+  Al publicar, `npm run build` (`scripts/build-pages.mjs`) copia el sitio a `dist/` y crea una
+  página para Google por cada negocio activo (`/n/<slug>/`), el `sitemap.xml` y `paginas.json`.
+- `sw.js` — permite instalar la web como app y abrirla con poca señal.
 
 ## Base de datos (Supabase)
 Los archivos de `sql/` ya están aplicados. Si se crea un proyecto nuevo, ejecútalos en orden en
@@ -22,6 +25,7 @@ Supabase → SQL Editor:
 5. `05-endurecimiento.sql` — límites del registro público, fotos solo imágenes de hasta 5 MB,
    estadísticas a prueba de recargas y limpieza de contraseñas antiguas
 6. `06-plan-gratis-opcional.sql` — permite al administrador deshabilitar el Plan Gratis
+7. `07-respuestas-resenas.sql` — el dueño responde sus reseñas desde su panel
 
 Luego crea el usuario administrador en Authentication → Users y desactiva "Allow new users to sign up".
 
