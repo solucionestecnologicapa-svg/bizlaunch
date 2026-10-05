@@ -1171,13 +1171,13 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <div>
         <h4>Contacto</h4>
         <a class="js-wa-contact" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="js-mail-contact"></a>
+        <a class="js-mail-contact" target="_blank" rel="noopener"></a>
         <a href="#" data-act="legal">Términos y privacidad</a>
       </div>
     </div>
     <div class="foot-bottom">
       <span>© <span id="year"></span> BizLaunch by Roosevelt · Hecho en Panamá 🇵🇦</span>
-      <span style="display:inline-flex;gap:16px;flex-wrap:wrap"><button class="linkbtn js-install" data-act="install" hidden>📲 Instalar la app</button><button class="linkbtn" data-act="admin">Acceso administrador</button></span>
+      <span style="display:inline-flex;gap:16px;flex-wrap:wrap"><button class="linkbtn js-install" data-act="install" hidden>📲 Instalar la app</button></span>
     </div>
   </div>
 </footer>
@@ -3744,7 +3744,12 @@ const contactWa = waLink(CFG.CONTACT_WA, 'Hola BizLaunch, tengo una pregunta sob
 $$('.js-wa-contact').forEach(a => a.href = contactWa);
 document.querySelector('.fab-wa').innerHTML = WA_SVG;
 splitHero(); spotlight(); progressBar();
-$$('.js-mail-contact').forEach(a => { a.href = 'mailto:' + CFG.ADMIN_EMAIL; a.textContent = CFG.ADMIN_EMAIL; });
+/* e-mail: phones open their mail app; computers open Gmail in the browser (mailto does nothing without a mail program) */
+const MOBILE = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+const mailHref = (to, subject) => MOBILE ? 'mailto:' + to + '?subject=' + encodeURIComponent(subject)
+  : 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) + '&su=' + encodeURIComponent(subject);
+$$('.js-mail-contact').forEach(a => { a.href = mailHref(CFG.ADMIN_EMAIL, 'Consulta sobre BizLaunch'); a.textContent = '✉️ ' + CFG.ADMIN_EMAIL; if (MOBILE) a.removeAttribute('target');
+  a.addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(CFG.ADMIN_EMAIL).then(() => toast('✉️ También copiamos el correo: ' + CFG.ADMIN_EMAIL), () => {}); }); });
 byId('year').textContent = new Date().getFullYear();
 
 (async function init() {
