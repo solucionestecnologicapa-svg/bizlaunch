@@ -787,6 +787,53 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   body.printing .pr-page:last-child{break-after:auto;page-break-after:auto}
 }
 
+/* ---------- Extra motion ---------- */
+/* 1 · WhatsApp button heartbeat */
+.fab-wa:before,.fab-wa:after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);opacity:0;pointer-events:none;animation:waPulse 4s cubic-bezier(.2,.8,.2,1) infinite}
+.fab-wa:after{animation-delay:.35s}
+.fab-wa svg{animation:waNudge 4s ease-in-out infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:.7}45%,100%{transform:scale(1.75);opacity:0}}
+@keyframes waNudge{0%,8%,100%{transform:none}2%{transform:rotate(-12deg) scale(1.08)}4%{transform:rotate(10deg) scale(1.08)}6%{transform:rotate(-6deg)}}
+/* 2 · confetti canvas */
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2000}
+/* 3 · card-shaped loading skeletons */
+.skc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden}
+.skc i,.skc b,.skc u,.skc s{display:block;background:linear-gradient(100deg,var(--card2) 30%,rgba(140,155,186,.18) 50%,var(--card2) 70%);background-size:300% 100%;animation:shine 1.4s ease-in-out infinite;border-radius:8px;text-decoration:none}
+.skc i{aspect-ratio:16/10;border-radius:0}
+.skc .sb{padding:16px 18px 18px;display:grid;gap:10px}
+.skc b{height:10px;width:46%}.skc u{height:16px;width:72%}.skc s{height:10px;width:92%}
+.skc .sr2{display:flex;gap:8px;margin-top:6px}.skc .sr2 s{height:32px;border-radius:999px;width:auto;flex:1}
+@keyframes shine{from{background-position:100% 0}to{background-position:-100% 0}}
+/* 4 · cart feedback */
+.plus1{position:fixed;z-index:700;pointer-events:none;font-weight:800;font-size:.9rem;color:#04121A;background:var(--acc);padding:3px 9px;border-radius:999px;animation:plusUp .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes plusUp{from{opacity:0;transform:translate(-50%,0) scale(.6)}25%{opacity:1;transform:translate(-50%,-14px) scale(1.05)}to{opacity:0;transform:translate(-50%,-46px) scale(.95)}}
+.cart-bar.bumped{animation:cartBump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes cartBump{40%{transform:translateX(-50%) scale(1.04)}}
+/* 5 · "open now" dot breathes */
+.is-open:before{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 60%,transparent);animation:live 2s ease-out infinite}
+@keyframes live{0%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 55%,transparent)}70%,100%{box-shadow:0 0 0 7px color-mix(in srgb,currentColor 0%,transparent)}}
+/* 6 · spotlight border on plans */
+.plan{--mx:50%;--my:0%}
+.plan:after{content:'';position:absolute;inset:-1.5px;border-radius:inherit;padding:2px;background:radial-gradient(260px circle at var(--mx) var(--my),var(--spot,var(--acc)),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.plan:before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(380px circle at var(--mx) var(--my),color-mix(in srgb,var(--spot,var(--acc)) 16%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.plan:hover:after,.plan:hover:before{opacity:1}
+.plan.feat{--spot:var(--pur)}
+.plan>:not(.plan-tag){position:relative}
+/* 7 · hero title word by word */
+.hero h1 .w{display:inline-block;animation:wordIn .8s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes wordIn{from{opacity:0;transform:translateY(55%) rotate(2deg);filter:blur(6px)}}
+.hero h1 em .w{background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+/* 8 · reading progress */
+#progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:120;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--acc),var(--pur));pointer-events:none}
+.pf-open #progress,.reg-open #progress{opacity:0}
+/* 9 · card → profile morph (View Transitions) */
+.ov.no-anim,.ov.no-anim .pf-bg{transition:none!important;animation:none!important}
+::view-transition-group(bl-cover){animation-duration:.5s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+::view-transition-old(root){animation:none}
+::view-transition-new(root){animation:vtIn .38s cubic-bezier(.2,.8,.2,1)}
+@keyframes vtIn{from{opacity:0;transform:translateY(14px)}}
+@media (prefers-reduced-motion:reduce){.fab-wa:before,.fab-wa:after,.fab-wa svg,.is-open:before,.skc *{animation:none!important}#progress{display:none}}
+
 @media(max-width:960px){
   .hero{text-align:center;padding:48px 0 40px}
   .hero-grid{grid-template-columns:1fr;gap:12px}
@@ -1571,7 +1618,7 @@ function fillSelects() {
 }
 
 async function loadDirectory() {
-  byId('dir-grid').innerHTML = '<div class="skel"></div>'.repeat(6);
+  byId('dir-grid').innerHTML = '<div class="skc" aria-hidden="true"><i></i><div class="sb"><b></b><u></u><s></s><div class="sr2"><s></s><s></s></div></div></div>'.repeat(6);
   try {
     if (!SB) throw new Error('sin conexión');
     let res = await SB.from('negocios').select(PUBC).eq('active', true);
@@ -1911,7 +1958,7 @@ function cartChange(k, d) {
 }
 function renderCart() {
   const bar = byId('cart-bar'); const items = cartItems();
-  if (!CUR || !items.length) { bar.classList.remove('on'); bar.innerHTML = ''; return; }
+  if (!CUR || !items.length) { bar.classList.remove('on'); bar.innerHTML = ''; CART_LAST = 0; return; }
   const food = isFood(CUR.category), count = items.reduce((s, x) => s + x.q, 0), total = items.reduce((s, x) => s + x.q * x.it.p, 0);
   const msg = `Hola ${CUR.name} 👋 Quiero ${food ? 'hacer este pedido' : 'cotizar lo siguiente'} (lo armé en BizLaunch):\n\n` +
     items.map(x => `• ${x.q} × ${x.it.n} — ${fmtP(x.q * x.it.p)}`).join('\n') +
@@ -1919,6 +1966,7 @@ function renderCart() {
   bar.innerHTML = `<div class="ci">🛒 <b>${fmtP(total)}</b><div style="color:var(--mut);font-size:.76rem">${count} artículo${count > 1 ? 's' : ''} · <button class="linkbtn" data-act="cart-clear">vaciar</button></div></div>
     <a class="btn btn-wa btn-sm" href="${esc(waLink(CUR.wa, msg))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}${food ? 'Pedir' : 'Cotizar'} por WhatsApp</a>`;
   bar.classList.add('on');
+  cartFeedback();
 }
 
 /* =====================================================================
@@ -2511,6 +2559,7 @@ async function submitReg(e) {
 }
 
 function showRegOk(rec) {
+  setTimeout(confetti, 250);
   byId('reg-form').hidden = true;
   if (rec.plan === 'gratis') {
     byId('reg-ok').innerHTML = `<div class="ok-screen"><div class="ok-ico">🌱</div>
@@ -2969,6 +3018,83 @@ function routeFromHash() {
 let PANEL_TOKEN = null;
 
 /* =====================================================================
+   EXTRA MOTION — confetti, cart feedback, spotlight, word reveal,
+   reading progress and the card → profile morph
+   ===================================================================== */
+function confetti() {
+  if (REDUCED) return;
+  const c = document.createElement('canvas'); c.id = 'confetti'; document.body.appendChild(c);
+  const x = c.getContext && c.getContext('2d'); if (!x) { c.remove(); return; }
+  const dpr = Math.min(2, window.devicePixelRatio || 1), W = c.width = innerWidth * dpr, H = c.height = innerHeight * dpr;
+  const cols = ['#00F5C8', '#7C5CFC', '#FFC83D', '#FF5C5C', '#25D366', '#5BC8FF'];
+  const P = Array.from({ length: 150 }, (_, i) => { const side = i % 2 ? 1 : -1;
+    return { x: W / 2 + side * W * .18, y: H * .55, vx: side * -(4 + Math.random() * 9) * dpr + (Math.random() - .5) * 6 * dpr, vy: -(10 + Math.random() * 11) * dpr,
+      s: (5 + Math.random() * 6) * dpr, r: Math.random() * 6, vr: (Math.random() - .5) * .35, c: cols[i % cols.length], sh: i % 3 }; });
+  const t0 = performance.now();
+  (function frame(t) {
+    const k = (t - t0) / 1000; x.clearRect(0, 0, W, H);
+    P.forEach(p => { p.vy += .42 * dpr; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.globalAlpha = Math.max(0, 1 - Math.max(0, k - 1.8) / 1.2); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c;
+      if (p.sh === 0) x.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); else if (p.sh === 1) { x.beginPath(); x.arc(0, 0, p.s / 3, 0, 7); x.fill(); } else { x.fillRect(-p.s / 6, -p.s / 2, p.s / 3, p.s); }
+      x.restore(); });
+    if (k < 3) requestAnimationFrame(frame); else c.remove();
+  })(t0);
+}
+function plusOne(el, txt) {
+  if (REDUCED || !el || !el.getBoundingClientRect) return;
+  const r = el.getBoundingClientRect(), s = document.createElement('span'); s.className = 'plus1'; s.textContent = txt || '+1';
+  s.style.left = (r.left + r.width / 2) + 'px'; s.style.top = (r.top - 4) + 'px'; document.body.appendChild(s); setTimeout(() => s.remove(), 850);
+}
+var CART_LAST = 0;
+function cartFeedback() {
+  const bar = byId('cart-bar'), b = bar && bar.querySelector('.ci b'); if (!b) { CART_LAST = 0; return; }
+  const to = cartItems().reduce((s, x) => s + x.q * x.it.p, 0), from = CART_LAST; CART_LAST = to;
+  bar.classList.remove('bumped'); void bar.offsetWidth; bar.classList.add('bumped');
+  if (REDUCED || from === to) return;
+  const t0 = performance.now(), d = 420;
+  (function step(t) { const p = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - p, 3); b.textContent = fmtP(from + (to - from) * e); if (p < 1) requestAnimationFrame(step); })(t0);
+}
+/* spotlight that follows the pointer on the plan cards */
+function spotlight() {
+  $$('.plan').forEach(el => el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
+}
+/* hero title: split into words that rise one after another */
+function splitHero() {
+  if (REDUCED) return;
+  const h = document.querySelector('.hero h1'); if (!h) return;
+  let n = 0; const g = ['#00F5C8', '#27D3D8', '#4DB0E6', '#6A88F4', '#7C5CFC'];
+  h.querySelectorAll('.ln>span').forEach(line => {
+    const em = line.querySelector('em'), host = em || line, words = host.textContent.trim().split(/\s+/);
+    line.style.animation = 'none';
+    host.innerHTML = words.map((w, i) => { const st = `animation-delay:${(.08 + n++ * .09).toFixed(2)}s` + (em ? `;background-image:linear-gradient(90deg,${g[Math.min(g.length - 1, Math.round(i / Math.max(1, words.length - 1) * (g.length - 2)))]},${g[Math.min(g.length - 1, Math.round(i / Math.max(1, words.length - 1) * (g.length - 2)) + 1)]})` : '');
+      return `<span class="w" style="${st}">${esc(w)}</span>`; }).join(' ');
+    if (em) em.style.background = 'none';
+  });
+}
+/* thin reading-progress bar at the top */
+function progressBar() {
+  if (REDUCED) return;
+  const p = document.createElement('div'); p.id = 'progress'; p.setAttribute('aria-hidden', 'true'); document.body.appendChild(p);
+  let tick = false;
+  const upd = () => { tick = false; const max = document.documentElement.scrollHeight - innerHeight; p.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`; };
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+}
+/* card → profile morph with the View Transitions API (falls back to the normal opening) */
+function openProfileFrom(card, id) {
+  const media = card && card.closest('.card') && card.closest('.card').querySelector('.card-media');
+  if (REDUCED || !document.startViewTransition || !media || BL_PAGE) return openProfile(id);
+  const pf = byId('profile');
+  media.style.viewTransitionName = 'bl-cover';
+  const vt = document.startViewTransition(async () => {
+    media.style.viewTransitionName = '';
+    pf.classList.add('no-anim');
+    await openProfile(id);
+    const bg = pf.querySelector('.pf-bg'); if (bg) bg.style.viewTransitionName = 'bl-cover';
+  });
+  vt.finished.finally(() => { pf.classList.remove('no-anim'); const bg = pf.querySelector('.pf-bg'); if (bg) bg.style.viewTransitionName = ''; media.style.viewTransitionName = ''; });
+}
+
+/* =====================================================================
    PRINTABLES — business cards (10 per page), a letter sign and flyers,
    each with a QR to the profile and a QR to WhatsApp. The design is
    picked from the business id so every client gets a different one.
@@ -3186,7 +3312,7 @@ document.addEventListener('click', e => {
     case 'rm-photo': URL.revokeObjectURL(R.photos[+t.dataset.i].url); R.photos.splice(+t.dataset.i, 1); renderThumbs(); break;
     case 'coupon': applyCoupon(); break;
     case 'pay': R.pay = t.dataset.k; stepErr(4); renderPays(); break;
-    case 'profile': openProfile(id); break;
+    case 'profile': if (t.closest('#dir-grid, #featured')) openProfileFrom(t, id); else openProfile(id); break;
     case 'pf-close': closeProfile(); break;
     case 'share': share(); break;
     case 'qr-dl': downloadQR(); break;
@@ -3241,7 +3367,7 @@ document.addEventListener('click', e => {
     case 'rsv-ppl': RSV.ppl = Math.max(1, Math.min(CUR.extras.reservas.max_personas, RSV.ppl + +t.dataset.d)); byId('rsv-ppl').textContent = RSV.ppl; updateReservationLink(); break;
     case 'yappy-copy': { const n = CUR && CUR.extras.yappy.numero; if (!n) break; track(CUR.id, 'yappy'); if (navigator.clipboard) navigator.clipboard.writeText(n).then(() => toast('📋 Copiado: ' + n, 'ok'), () => prompt('Copia:', n)); else prompt('Copia:', n); break; }
     case 'lb-yappy': if (CUR && CUR.extras.yappy.qr) { track(CUR.id, 'yappy'); LB = [safeUrl(CUR.extras.yappy.qr)]; lbOpen(0); } break;
-    case 'cart-add': cartChange(t.dataset.k, 1); break;
+    case 'cart-add': cartChange(t.dataset.k, 1); plusOne(t, '+1'); break;
     case 'cart-rm': cartChange(t.dataset.k, -1); break;
     case 'cart-clear': CART = {}; if (CUR) { const y = byId('profile').scrollTop; renderProfile(CUR); loadReviews(CUR.id); byId('profile').scrollTop = y; } renderCart(); break;
     case 'menu-jump': { const s = byId('mn-s' + t.dataset.s); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); break; }
@@ -3409,6 +3535,7 @@ function startDemo() {
 const contactWa = waLink(CFG.CONTACT_WA, 'Hola BizLaunch, tengo una pregunta sobre los planes.');
 $$('.js-wa-contact').forEach(a => a.href = contactWa);
 document.querySelector('.fab-wa').innerHTML = WA_SVG;
+splitHero(); spotlight(); progressBar();
 $$('.js-mail-contact').forEach(a => { a.href = 'mailto:' + CFG.ADMIN_EMAIL; a.textContent = CFG.ADMIN_EMAIL; });
 byId('year').textContent = new Date().getFullYear();
 
