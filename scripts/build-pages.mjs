@@ -9,7 +9,7 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 const SRC = new URL('..', import.meta.url).pathname;
 const ROOT = SRC + 'dist/';
 const log = (...a) => console.log('[páginas]', ...a);
-const SKIP = new Set(['node_modules', 'dist', 'sql', 'scripts', 'package.json', 'package-lock.json', 'netlify.toml', 'README.md']);
+const SKIP = new Set(['node_modules', 'dist', 'sql', 'scripts', 'package.json', 'package-lock.json', 'netlify.toml', 'README.md', 'asistencia-apps-script']);
 
 async function copySite() {
   await rm(ROOT, { recursive: true, force: true }); await mkdir(ROOT, { recursive: true });

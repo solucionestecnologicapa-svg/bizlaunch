@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0f1c">
+<title>Control de Asistencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="vendor/qrcode-generator-1.4.4.min.js"></script>
+<style>
+  :root{
+    --ink:#0a0f1c; --panel:#111a2c; --panel-2:#0e1626; --line:#22304a;
+    --paper:#eaf0f8; --muted:#7c8aa5; --cobalt:#3d7fff; --cobalt-dim:#254a91;
+    --amber:#ffb020; --green:#35d48a; --coral:#ff5470; --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--ink);}
+  body{
+    margin:0; min-height:100vh;
+    background:
+      radial-gradient(1100px 600px at 12% -10%, #14203a 0%, transparent 60%),
+      radial-gradient(900px 500px at 105% 10%, #12233f 0%, transparent 55%),
+      var(--ink);
+    color:var(--paper); font-family:'Inter',system-ui,sans-serif;
+    display:flex; flex-direction:column; overflow-x:hidden;
+  }
+  button{font-family:inherit;}
+  input,select,textarea{font-family:'Inter',sans-serif;}
+  [hidden]{display:none !important;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(16px,4vw,48px);border-bottom:1px solid var(--line);flex-wrap:wrap;gap:12px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--cobalt),#7aa6ff);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#03102a;flex:none;user-select:none;}
+  .brand-text h1{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin:0;letter-spacing:.2px;}
+  .brand-text p{margin:2px 0 0;font-size:12px;color:var(--muted);}
+  .clock-wrap{text-align:right;}
+  .clock{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:1px;}
+  .date{font-size:12px;color:var(--muted);text-transform:capitalize;}
+
+  /* ---------- Layout ---------- */
+  .stage{flex:1;display:grid;grid-template-columns:minmax(0,560px) minmax(0,360px);gap:28px;padding:clamp(16px,4vw,48px);max-width:1200px;width:100%;margin:0 auto;align-items:start;justify-content:center;}
+  @media (max-width:860px){.stage{grid-template-columns:minmax(0,1fr);}}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cobalt);margin:0 0 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .back-link{font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;color:var(--muted);cursor:pointer;font-size:12.5px;background:none;border:none;padding:0;}
+  .back-link:hover{color:var(--paper);}
+
+  .scanner-panel{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3.4vw,36px);position:relative;overflow:hidden;min-height:520px;}
+  .scanner-panel::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,127,255,.06),transparent 40%);pointer-events:none;}
+  .step{display:none;position:relative;}
+  .step.active{display:block;}
+
+  .search-row{display:flex;gap:10px;}
+  #searchInput{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--paper);font-size:16px;padding:15px 16px;outline:none;transition:border-color .15s;}
+  #searchInput:focus{border-color:var(--cobalt);}
+  .scan-btn{flex:none;background:linear-gradient(135deg,var(--cobalt),#5f9bff);border:none;border-radius:12px;color:#03102a;font-weight:700;font-size:14px;padding:0 16px;cursor:pointer;white-space:nowrap;}
+  .scan-btn:hover{filter:brightness(1.08);}
+  .results-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:360px;overflow-y:auto;padding-right:2px;}
+  .result-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s, transform .08s;text-align:left;color:inherit;width:100%;}
+  .result-row:hover,.result-row:focus-visible{border-color:var(--cobalt);outline:none;}
+  .result-row:active{transform:scale(.985);}
+  .result-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .result-name{font-size:14px;font-weight:600;}
+  .result-group{font-size:11.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .result-badge{font-size:10.5px;font-family:'JetBrains Mono',monospace;padding:4px 8px;border-radius:20px;letter-spacing:.4px;white-space:nowrap;}
+  .result-badge.nuevo{background:rgba(255,176,32,.12);color:var(--amber);border:1px solid rgba(255,176,32,.3);}
+  .result-badge.activo{background:rgba(53,212,138,.12);color:var(--green);border:1px solid rgba(53,212,138,.3);}
+  .empty-hint{text-align:center;color:var(--muted);font-size:13px;padding:30px 10px;line-height:1.6;}
+  .tip{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5;}
+
+  .selected-card{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:18px;display:flex;align-items:center;gap:14px;}
+  .avatar-ring{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--cobalt),#7aa6ff);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#03102a;flex:none;font-size:16px;}
+  .selected-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;}
+  .selected-group{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:2px;}
+  .mode-banner{font-size:13px;padding:12px 14px;border-radius:12px;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start;line-height:1.45;}
+  .mode-banner.nuevo{background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);color:var(--amber);}
+  .mode-banner.activo{background:rgba(61,127,255,.08);border:1px solid rgba(61,127,255,.25);color:#a9c4ff;}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:12px;gap:4px;}
+  .seg button{flex:1;background:none;border:none;color:var(--muted);padding:9px;border-radius:9px;cursor:pointer;font-weight:600;font-size:13px;}
+  .seg button.on{background:var(--cobalt-dim);color:var(--paper);}
+  .input-row{display:flex;gap:10px;margin-bottom:14px;}
+  #cedulaInput{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:17px;padding:14px 16px;letter-spacing:1px;outline:none;text-transform:uppercase;}
+  #cedulaInput:focus{border-color:var(--cobalt);}
+  .icon-btn{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;color:var(--muted);width:48px;font-size:17px;cursor:pointer;}
+  .icon-btn:hover{color:var(--paper);border-color:var(--cobalt-dim);}
+  .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:16px;}
+  .keypad button{background:var(--panel-2);border:1px solid var(--line);color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:19px;padding:14px 0;border-radius:12px;cursor:pointer;transition:background .12s, transform .08s;}
+  .keypad button:active{transform:scale(.95);background:var(--cobalt-dim);}
+  .keypad button.wide{font-size:14px;color:var(--muted);}
+  .submit-btn{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--cobalt),#5f9bff);color:#03102a;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15.5px;letter-spacing:.3px;cursor:pointer;}
+  .submit-btn:hover{filter:brightness(1.08);}
+  .submit-btn:disabled{opacity:.55;cursor:default;}
+  .error-text{font-size:12.5px;color:var(--coral);margin:-6px 0 14px;min-height:16px;}
+
+  .face-back{border-radius:16px;min-height:250px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:8px;border:1px solid var(--line);padding:20px;opacity:0;transform:scale(.94);transition:opacity .35s ease, transform .35s ease;}
+  .face-back.show{opacity:1;transform:scale(1);}
+  .face-back.status-ok{background:linear-gradient(150deg,#123527,#0d1626 75%);}
+  .face-back.status-warn{background:linear-gradient(150deg,#3a2c10,#0d1626 75%);}
+  .face-back.status-err{background:linear-gradient(150deg,#3a1420,#0d1626 75%);}
+  .result-icon{font-size:40px;line-height:1;}
+  .result-name-big{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;}
+  .result-meta{font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .result-msg{font-size:13px;margin-top:2px;max-width:340px;}
+  .result-again{margin-top:10px;background:none;border:1px solid var(--line);color:var(--paper);padding:9px 16px;border-radius:20px;font-size:12.5px;cursor:pointer;}
+  .result-again:hover{border-color:var(--cobalt-dim);}
+  .countdown{font-size:11px;color:var(--muted);}
+
+  /* ---- Escáner QR ---- */
+  .video-wrap{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:4/3;border:1px solid var(--line);}
+  .video-wrap video{width:100%;height:100%;object-fit:cover;display:block;}
+  .scan-frame{position:absolute;inset:14%;border:3px solid rgba(61,127,255,.85);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.35);pointer-events:none;}
+  .scan-line{position:absolute;left:14%;right:14%;height:2px;background:var(--cobalt);top:14%;animation:scan 2.2s ease-in-out infinite;box-shadow:0 0 12px var(--cobalt);}
+  @keyframes scan{0%,100%{top:15%;}50%{top:84%;}}
+  .scan-toast{position:absolute;left:12px;right:12px;bottom:12px;border-radius:12px;padding:12px 14px;font-size:13.5px;display:none;}
+  .scan-toast.show{display:block;}
+  .scan-toast.ok{background:rgba(18,53,39,.95);border:1px solid var(--green);}
+  .scan-toast.warn{background:rgba(58,44,16,.95);border:1px solid var(--amber);}
+  .scan-toast.err{background:rgba(58,20,32,.95);border:1px solid var(--coral);}
+  .scan-toast b{display:block;font-size:15px;margin-bottom:2px;}
+  .scan-status{font-size:12.5px;color:var(--muted);margin-top:10px;min-height:18px;}
+
+  .setup-note{margin-top:16px;font-size:12px;color:var(--amber);background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);padding:10px 12px;border-radius:10px;display:none;}
+
+  /* ---------- Registros de hoy ---------- */
+  .log-panel{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,28px);display:flex;flex-direction:column;max-height:600px;}
+  .log-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;}
+  .log-head h2{font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0;}
+  .log-count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);margin-left:auto;}
+  .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite;flex:none;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(53,212,138,.55);}70%{box-shadow:0 0 0 8px rgba(53,212,138,0);}100%{box-shadow:0 0 0 0 rgba(53,212,138,0);}}
+  .log-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1;padding-right:4px;}
+  .log-empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;}
+  .log-item{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+  .log-time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--green);min-width:58px;}
+  .log-main{flex:1;min-width:0;}
+  .log-name{font-size:13px;font-weight:600;display:block;}
+  .log-group{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+
+  footer{text-align:center;color:var(--muted);font-size:11.5px;padding:18px 10px 26px;}
+
+  /* ---------- Modales ---------- */
+  .modal-overlay{position:fixed;inset:0;background:rgba(6,10,20,.72);display:none;align-items:center;justify-content:center;z-index:100;padding:16px;backdrop-filter:blur(2px);}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.5);max-height:calc(100vh - 32px);overflow-y:auto;}
+  .modal-box.wide{max-width:640px;}
+  .modal-box h3{font-family:'Space Grotesk',sans-serif;margin:0 0 4px;font-size:17px;}
+  .modal-box .sub{color:var(--muted);font-size:12.5px;margin:0 0 18px;line-height:1.5;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}
+  @media (max-width:520px){.grid2{grid-template-columns:1fr;}}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;}
+  .field input,.field select,.field textarea{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--paper);font-size:14px;padding:11px 12px;outline:none;color-scheme:dark;}
+  .field textarea{font-family:'JetBrains Mono',monospace;font-size:12px;min-height:160px;resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cobalt);}
+  .field.req label::after{content:" *";color:var(--coral);}
+  .modal-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .modal-actions button{flex:1;padding:12px;border-radius:10px;border:none;font-weight:600;cursor:pointer;font-size:13.5px;min-width:110px;}
+  .btn-primary{background:linear-gradient(135deg,var(--cobalt),#5f9bff);color:#03102a;}
+  .btn-primary:disabled{opacity:.55;cursor:default;}
+  .btn-ghost{background:var(--panel-2);color:var(--paper);border:1px solid var(--line) !important;}
+  .btn-warn{background:var(--panel-2);color:var(--amber);border:1px solid rgba(255,176,32,.4) !important;}
+  .modal-error{color:var(--coral);font-size:12.5px;min-height:16px;margin-top:-4px;margin-bottom:6px;}
+  .modal-error.ok{color:var(--green);}
+
+  /* ---------- Panel de administrador ---------- */
+  .admin-overlay{position:fixed;inset:0;background:var(--ink);z-index:90;display:none;flex-direction:column;overflow:hidden;}
+  .admin-overlay.open{display:flex;}
+  .admin-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,3vw,36px);border-bottom:1px solid var(--line);flex-wrap:wrap;gap:12px;}
+  .admin-topbar h2{font-family:'Space Grotesk',sans-serif;font-size:17px;margin:0;}
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;}
+  .tabs button{background:none;border:1px solid transparent;color:var(--muted);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;}
+  .tabs button:hover{color:var(--paper);}
+  .tabs button.on{background:var(--panel);border-color:var(--line);color:var(--paper);}
+  .admin-body{flex:1;overflow-y:auto;padding:20px clamp(16px,3vw,36px) 48px;}
+  .admin-wrap{max-width:1180px;margin:0 auto;}
+  .tab-pane{display:none;}
+  .tab-pane.on{display:block;}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+  .toolbar input,.toolbar select{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--paper);padding:10px 12px;font-size:13px;outline:none;color-scheme:dark;}
+  .toolbar input[type=search]{flex:1;min-width:200px;}
+  .toolbar input:focus,.toolbar select:focus{border-color:var(--cobalt);}
+  .btn-small{background:var(--panel-2);border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:10px 14px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;}
+  .btn-small:hover{border-color:var(--cobalt);}
+  .btn-small.primary{background:linear-gradient(135deg,var(--cobalt),#5f9bff);color:#03102a;border:none;}
+  .btn-small.danger:hover{border-color:var(--coral);color:var(--coral);}
+  .btn-small:disabled{opacity:.5;cursor:default;}
+  .admin-status{font-size:12.5px;color:var(--muted);margin:0 0 12px;min-height:16px;}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);}
+  table.t{width:100%;border-collapse:collapse;font-size:13px;}
+  table.t th{text-align:left;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;background:var(--panel);}
+  table.t td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  table.t tr:last-child td{border-bottom:none;}
+  table.t tbody tr:hover td{background:rgba(61,127,255,.04);}
+  table.t tr.grp-row td{background:var(--panel-2);font-family:'Space Grotesk',sans-serif;font-weight:600;color:#a9c4ff;font-size:13px;}
+  .num{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:11.5px;}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+  .chip.si{background:rgba(53,212,138,.12);color:var(--green);border:1px solid rgba(53,212,138,.3);}
+  .chip.no{background:rgba(255,176,32,.12);color:var(--amber);border:1px solid rgba(255,176,32,.3);}
+  .chip.err{background:rgba(255,84,112,.12);color:var(--coral);border:1px solid rgba(255,84,112,.3);}
+  .row-actions{display:flex;gap:6px;white-space:nowrap;justify-content:flex-end;}
+  .row-actions button{background:var(--panel-2);border:1px solid var(--line);color:var(--paper);border-radius:8px;padding:6px 9px;font-size:11.5px;cursor:pointer;}
+  .row-actions button:hover{border-color:var(--cobalt);}
+  .row-actions button.danger:hover{border-color:var(--coral);color:var(--coral);}
+  .admin-empty{text-align:center;color:var(--muted);padding:40px 10px;font-size:13px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px;}
+  .card h3{font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0 0 4px;}
+  .card .sub{color:var(--muted);font-size:12.5px;margin:0 0 14px;line-height:1.5;}
+  .form-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
+  .form-row .field{flex:1;min-width:150px;margin-bottom:0;}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--paper);cursor:pointer;}
+  .check input{width:16px;height:16px;accent-color:var(--cobalt);}
+  .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:18px;align-items:start;}
+  @media (max-width:900px){.two-col{grid-template-columns:minmax(0,1fr);}}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0;}
+  .kpi{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .kpi b{display:block;font-family:'Space Grotesk',sans-serif;font-size:22px;}
+  .kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace;}
+  .bar{height:6px;border-radius:4px;background:var(--line);overflow:hidden;min-width:60px;}
+  .bar i{display:block;height:100%;background:var(--green);}
+
+  /* Vista previa del carnet (HTML) — mismas proporciones que el PDF (85.6 × 54 mm) */
+  .carnet{width:100%;max-width:380px;aspect-ratio:85.6/54;background:#fff;color:#111;border-radius:12px;position:relative;overflow:hidden;font-family:Helvetica,Arial,sans-serif;container-type:inline-size;box-shadow:0 10px 30px rgba(0,0,0,.35);}
+  .carnet .c-head{position:absolute;left:0;right:0;top:0;height:24%;background:var(--cc,#1d3f8f);color:#fff;padding:2.6cqw 4.6cqw;}
+  .carnet .c-inst{font-weight:700;font-size:4.2cqw;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .carnet .c-sub{font-size:2.9cqw;opacity:.9;margin-top:.6cqw;}
+  .carnet .c-photo{position:absolute;left:4.7%;top:29.6%;width:22.2%;height:42.6%;background:#eef2f8;border:1px solid #cdd6e4;border-radius:1.6cqw;display:flex;align-items:center;justify-content:center;color:#96a5be;font-weight:700;font-size:8cqw;}
+  .carnet .c-data{position:absolute;left:30.4%;top:30%;width:35%;}
+  .carnet .c-lbl{font-size:2.3cqw;color:#6b778c;letter-spacing:.2cqw;}
+  .carnet .c-val{font-size:3.9cqw;font-weight:700;margin-bottom:1.4cqw;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .carnet .c-val.doc{font-family:'Courier New',monospace;}
+  .carnet .c-qr{position:absolute;right:4.7%;top:29.6%;width:26.9%;}
+  .carnet .c-qr svg{width:100%;height:auto;display:block;}
+  .carnet .c-id{font-size:2.2cqw;text-align:center;color:#6e6e6e;margin-top:.4cqw;}
+  .carnet .c-band{position:absolute;left:0;right:0;top:78.7%;height:13%;background:var(--ct,#e3e9f4);display:flex;align-items:center;padding:0 4.7%;gap:6cqw;}
+  .carnet .c-band div{font-size:2.3cqw;color:#5b6577;}
+  .carnet .c-band b{display:block;font-size:3.4cqw;color:#111;}
+  .carnet .c-foot{position:absolute;left:0;right:0;bottom:1.3%;text-align:center;font-size:2cqw;color:#8a8a8a;}
+
+  @media (prefers-reduced-motion: reduce){.pulse-dot,.scan-line{animation:none;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark" title="">ID</div>
+    <div class="brand-text">
+      <h1 id="institucionNombre">Control de Asistencia</h1>
+      <p>Busca tu nombre o escanea tu carnet para marcar tu entrada</p>
+    </div>
+  </div>
+  <div class="clock-wrap">
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="date" id="dateLabel">-</div>
+  </div>
+</div>
+
+<main class="stage">
+
+  <section class="scanner-panel" aria-live="polite">
+
+    <!-- Paso 1: buscar nombre -->
+    <div class="step active" id="stepBuscar">
+      <p class="eyebrow"><span>Paso 1 · Busca tu nombre</span></p>
+      <div class="search-row">
+        <input type="text" id="searchInput" autocomplete="off" placeholder="Apellido o nombre…" aria-label="Buscar estudiante">
+        <button class="scan-btn" id="openScanBtn" title="Escanear el QR del carnet">📷 Carnet QR</button>
+      </div>
+      <div class="results-list" id="resultsList">
+        <div class="empty-hint" id="rosterHint">Cargando lista de estudiantes…</div>
+      </div>
+      <p class="tip">💡 ¿Tienes carnet? Pulsa <b>Carnet QR</b> y muéstralo a la cámara. También funciona con lectores de código USB.</p>
+    </div>
+
+    <!-- Paso 2: documento -->
+    <div class="step" id="stepCedula">
+      <p class="eyebrow">
+        <span>Paso 2 · Tu documento</span>
+        <button class="back-link" id="backBtn">‹ buscar otro nombre</button>
+      </p>
+      <div class="selected-card">
+        <div class="avatar-ring" id="avatarInitial">?</div>
+        <div>
+          <div class="selected-name" id="selectedName">—</div>
+          <div class="selected-group" id="selectedGroup">—</div>
+        </div>
+      </div>
+      <div class="mode-banner nuevo" id="bannerNuevo" hidden>🆕 Es tu primera vez. Escribe tu cédula o pasaporte: quedará guardado para tus próximos registros y para tu carnet.</div>
+      <div class="mode-banner activo" id="bannerActivo" hidden>🔒 Escribe tu cédula o pasaporte para confirmar que eres tú.</div>
+      <div class="seg" id="docTipo" role="tablist">
+        <button class="on" data-tipo="CEDULA" role="tab">Cédula</button>
+        <button data-tipo="PASAPORTE" role="tab">Pasaporte</button>
+      </div>
+      <div class="input-row">
+        <input type="text" id="cedulaInput" inputmode="numeric" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej: 8-123-4567" maxlength="20" aria-label="Número de documento">
+        <button class="icon-btn" id="clearBtn" title="Borrar todo">⌫</button>
+      </div>
+      <div class="error-text" id="errorText"></div>
+      <div class="keypad" id="keypad">
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+        <button data-k="-" class="wide">-</button><button data-k="0">0</button><button data-k="borrar" class="wide">←</button>
+      </div>
+      <button class="submit-btn" id="submitBtn">Registrar asistencia</button>
+    </div>
+
+    <!-- Paso 3: resultado -->
+    <div class="step" id="stepResultado">
+      <p class="eyebrow">Resultado</p>
+      <div class="face-back" id="faceBack">
+        <div class="result-icon" id="resultIcon">✓</div>
+        <div class="result-name-big" id="resultName">—</div>
+        <div class="result-meta" id="resultMeta">—</div>
+        <div class="result-msg" id="resultMsg">—</div>
+        <button class="result-again" id="againBtn">Registrar a otro estudiante</button>
+        <div class="countdown" id="countdown"></div>
+      </div>
+    </div>
+
+    <!-- Escáner de carnet -->
+    <div class="step" id="stepScan">
+      <p class="eyebrow">
+        <span>Escanea tu carnet</span>
+        <button class="back-link" id="closeScanBtn">‹ volver a buscar por nombre</button>
+      </p>
+      <div class="video-wrap">
+        <video id="scanVideo" playsinline muted></video>
+        <div class="scan-frame"></div>
+        <div class="scan-line"></div>
+        <div class="scan-toast" id="scanToast"></div>
+      </div>
+      <div class="scan-status" id="scanStatus">Iniciando cámara…</div>
+    </div>
+
+    <div class="setup-note" id="setupNote">
+      ⚠ Aún no conectaste la hoja de Google Sheets. Pega la URL de tu Apps Script en <code>APPS_SCRIPT_URL</code> dentro de este archivo.
+    </div>
+  </section>
+
+  <aside class="log-panel">
+    <div class="log-head">
+      <span class="pulse-dot" title="En vivo"></span>
+      <h2>Registros de hoy</h2>
+      <span class="log-count" id="logCount"></span>
+    </div>
+    <div class="log-list" id="logList">
+      <div class="log-empty">Aún no hay asistencias registradas hoy.</div>
+    </div>
+  </aside>
+</main>
+
+<footer>Sistema de asistencia · datos almacenados en Google Sheets</footer>
+
+<!-- ============ Login administrador ============ -->
+<div class="modal-overlay" id="adminLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="modal-box">
+    <h3 id="loginTitle">Acceso de administrador</h3>
+    <p class="sub" id="loginSub">Solo personal autorizado.</p>
+    <div class="field"><label for="adminUser">Usuario</label><input type="text" id="adminUser" autocomplete="username" autocapitalize="characters"></div>
+    <div class="field"><label for="adminPass">Contraseña</label><input type="password" id="adminPass" autocomplete="current-password"></div>
+    <div class="modal-error" id="adminLoginError"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="adminLoginCancel">Cancelar</button>
+      <button class="btn-primary" id="adminLoginSubmit">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Panel de administrador ============ -->
+<div class="admin-overlay" id="adminPanel">
+  <div class="admin-topbar">
+    <h2>🛠 Administración</h2>
+    <nav class="tabs" id="adminTabs">
+      <button class="on" data-tab="tabEstudiantes">👩‍🎓 Estudiantes</button>
+      <button data-tab="tabGrupos">🗂 Grupos</button>
+      <button data-tab="tabReportes">📊 Reportes</button>
+      <button data-tab="tabCarnets">🪪 Carnets</button>
+      <button data-tab="tabCuenta">🔐 Cuenta</button>
+    </nav>
+    <button class="btn-small danger" id="adminLogoutBtn">Salir</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-wrap">
+      <p class="admin-status" id="adminStatus"></p>
+
+      <!-- Estudiantes -->
+      <section class="tab-pane on" id="tabEstudiantes">
+        <div class="toolbar">
+          <input type="search" id="adminSearch" placeholder="Buscar por apellido, nombre o documento…">
+          <select id="adminGroupFilter" aria-label="Filtrar por grupo"></select>
+          <button class="btn-small primary" id="adminAddBtn">+ Agregar estudiante</button>
+          <button class="btn-small" id="adminImportBtn">⇪ Importar lista</button>
+          <button class="btn-small" id="adminRefreshBtn">↻</button>
+        </div>
+        <div class="table-wrap">
+          <table class="t">
+            <thead><tr><th>N°</th><th>Apellidos</th><th>Nombres</th><th>Documento</th><th>Grupo</th><th>Nivel</th><th></th></tr></thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Grupos -->
+      <section class="tab-pane" id="tabGrupos">
+        <div class="card">
+          <h3 id="grupoFormTitle">Nuevo grupo</h3>
+          <p class="sub">Crea los grupos antes de agregar estudiantes. El nivel del grupo se asigna automáticamente a sus estudiantes.</p>
+          <div class="form-row">
+            <div class="field req"><label for="gNombre">Nombre del grupo</label><input id="gNombre" placeholder="Ej: 10° E1 ELECTRICIDAD" maxlength="60"></div>
+            <div class="field"><label for="gNivel">Nivel</label><input id="gNivel" list="nivelesList" placeholder="Ej: DÉCIMO"></div>
+            <div class="field"><label for="gDocente">Docente / consejero</label><input id="gDocente"></div>
+            <div class="field" style="max-width:150px"><label for="gTurno">Turno</label>
+              <select id="gTurno"><option value="">—</option><option>MATUTINO</option><option>VESPERTINO</option><option>NOCTURNO</option><option>SABATINO</option></select></div>
+            <button class="btn-small primary" id="gGuardar">Guardar grupo</button>
+            <button class="btn-small" id="gCancelar" hidden>Cancelar</button>
+          </div>
+          <div class="modal-error" id="gError" style="margin-top:10px"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="t">
+            <thead><tr><th>Grupo</th><th>Nivel</th><th>Docente</th><th>Turno</th><th>Estudiantes</th><th></th></tr></thead>
+            <tbody id="gruposBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Reportes -->
+      <section class="tab-pane" id="tabReportes">
+        <div class="card">
+          <h3>Reporte de asistencia</h3>
+          <p class="sub">Lista ordenada por primer apellido, segundo apellido, primer nombre y segundo nombre. General (todos los grupos, cada uno en su sección) o de un solo grupo.</p>
+          <div class="seg" id="repTipo" style="max-width:360px">
+            <button class="on" data-tipo="dia">Diario</button>
+            <button data-tipo="rango">Por período</button>
+          </div>
+          <div class="form-row">
+            <div class="field" id="repFechaWrap"><label for="repFecha">Fecha</label><input type="date" id="repFecha"></div>
+            <div class="field" id="repDesdeWrap" hidden><label for="repDesde">Desde</label><input type="date" id="repDesde"></div>
+            <div class="field" id="repHastaWrap" hidden><label for="repHasta">Hasta</label><input type="date" id="repHasta"></div>
+            <div class="field"><label for="repGrupo">Grupo</label><select id="repGrupo"></select></div>
+            <div class="field" style="max-width:150px"><label for="repLimite">Tarde después de</label><input type="time" id="repLimite"></div>
+          </div>
+          <div class="form-row" style="margin-top:14px">
+            <label class="check"><input type="checkbox" id="repPaginaNueva" checked> Cada grupo en página nueva</label>
+            <label class="check"><input type="checkbox" id="repFirmas" checked> Línea de firma del docente</label>
+            <label class="check"><input type="checkbox" id="repDocumento"> Incluir documento</label>
+          </div>
+          <div class="modal-actions" style="max-width:560px">
+            <button class="btn-ghost" id="repVer">👁 Ver resumen</button>
+            <button class="btn-primary" id="repPdf">📄 Descargar PDF</button>
+            <button class="btn-ghost" id="repCsv">📊 Excel (CSV)</button>
+          </div>
+          <div class="modal-error" id="repError" style="margin-top:12px"></div>
+        </div>
+        <div id="repResumen"></div>
+      </section>
+
+      <!-- Carnets -->
+      <section class="tab-pane" id="tabCarnets">
+        <div class="two-col">
+          <div class="card">
+            <h3>Carnets imprimibles</h3>
+            <p class="sub">PDF tamaño carta con 8 carnets por hoja (tamaño tarjeta de crédito, 85.6 × 54 mm). El QR contiene la cédula o pasaporte, el nombre, el grupo y el nivel.</p>
+            <div class="form-row">
+              <div class="field"><label for="carGrupo">Grupo</label><select id="carGrupo"></select></div>
+              <div class="field" style="max-width:130px"><label for="carAnio">Año lectivo</label><input id="carAnio" maxlength="9"></div>
+              <div class="field" style="max-width:120px"><label for="carColor">Color</label><input type="color" id="carColor" value="#1d3f8f" style="height:44px;padding:4px"></div>
+            </div>
+            <div class="form-row" style="margin-top:14px;flex-direction:column;align-items:flex-start;gap:10px">
+              <label class="check"><input type="checkbox" id="carReverso"> Incluir reverso (imprimir a doble cara, borde largo)</label>
+              <label class="check"><input type="checkbox" id="carSoloConDoc"> Solo estudiantes con cédula/pasaporte registrado</label>
+              <label class="check"><input type="checkbox" id="carMarcas" checked> Marcas de corte</label>
+            </div>
+            <div class="modal-actions" style="max-width:420px">
+              <button class="btn-primary" id="carPdf">🪪 Generar carnets PDF</button>
+            </div>
+            <div class="modal-error" id="carError" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <h3>Vista previa</h3>
+            <p class="sub" id="carPreviewSub">Primer estudiante del grupo elegido.</p>
+            <div id="carPreview"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cuenta -->
+      <section class="tab-pane" id="tabCuenta">
+        <div class="card" style="max-width:480px">
+          <h3>Cambiar contraseña</h3>
+          <p class="sub">Mínimo 10 caracteres, con letras y números. Se guarda cifrada en el servidor (solo su huella).</p>
+          <div class="field"><label for="pwActual">Contraseña actual</label><input type="password" id="pwActual" autocomplete="current-password"></div>
+          <div class="field"><label for="pwNueva">Nueva contraseña</label><input type="password" id="pwNueva" autocomplete="new-password"></div>
+          <div class="field"><label for="pwNueva2">Repite la nueva contraseña</label><input type="password" id="pwNueva2" autocomplete="new-password"></div>
+          <div class="modal-error" id="pwError"></div>
+          <div class="modal-actions"><button class="btn-primary" id="pwGuardar">Guardar contraseña</button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Agregar / editar estudiante ============ -->
+<div class="modal-overlay" id="estOverlay" role="dialog" aria-modal="true" aria-labelledby="estTitle">
+  <div class="modal-box wide">
+    <h3 id="estTitle">Agregar estudiante</h3>
+    <p class="sub" id="estSub">El documento es opcional: si lo dejas vacío, el estudiante lo registra la primera vez que marque asistencia.</p>
+    <div class="grid2">
+      <div class="field req"><label for="fA1">Primer apellido</label><input id="fA1" autocapitalize="characters"></div>
+      <div class="field"><label for="fA2">Segundo apellido</label><input id="fA2" autocapitalize="characters"></div>
+      <div class="field req"><label for="fN1">Primer nombre</label><input id="fN1" autocapitalize="characters"></div>
+      <div class="field"><label for="fN2">Segundo nombre</label><input id="fN2" autocapitalize="characters"></div>
+      <div class="field"><label for="fTipo">Tipo de documento</label><select id="fTipo"><option value="CEDULA">Cédula</option><option value="PASAPORTE">Pasaporte</option></select></div>
+      <div class="field"><label for="fDoc">Número</label><input id="fDoc" class="mono" placeholder="8-123-4567" autocapitalize="characters" spellcheck="false"></div>
+      <div class="field req"><label for="fGrupo">Grupo</label><select id="fGrupo"></select></div>
+      <div class="field"><label for="fNivel">Nivel</label><input id="fNivel" list="nivelesList"></div>
+    </div>
+    <div class="field"><label for="fEmail">Email (opcional)</label><input type="email" id="fEmail"></div>
+    <div class="modal-error" id="estError"></div>
+    <div class="modal-actions">
+      <button class="btn-warn" id="estResetDoc" hidden>Borrar documento</button>
+      <button class="btn-ghost" id="estCancel">Cancelar</button>
+      <button class="btn-primary" id="estSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Importar ============ -->
+<div class="modal-overlay" id="impOverlay" role="dialog" aria-modal="true" aria-labelledby="impTitle">
+  <div class="modal-box wide">
+    <h3 id="impTitle">Importar lista de estudiantes</h3>
+    <p class="sub">Copia desde Excel o Google Sheets y pega aquí. Columnas en este orden:<br>
+      <b>Primer apellido · Segundo apellido · Primer nombre · Segundo nombre · Cédula/Pasaporte · Grupo · Nivel · Email</b><br>
+      Solo el primer apellido, el primer nombre y el grupo son obligatorios. Los grupos nuevos se crean solos.</p>
+    <div class="field"><label for="impTexto">Datos</label><textarea id="impTexto" placeholder="PÉREZ	GÓMEZ	JUAN	CARLOS	8-123-4567	10° E1	DÉCIMO"></textarea></div>
+    <div class="field"><label for="impArchivo">…o elige un archivo CSV</label><input type="file" id="impArchivo" accept=".csv,.txt,text/csv"></div>
+    <div class="modal-error" id="impError"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="impCancel">Cancelar</button>
+      <button class="btn-primary" id="impGo">Importar</button>
+    </div>
+  </div>
+</div>
+
+<datalist id="nivelesList"></datalist>
+
+<script>
+/* ======================================================================
+   CONFIGURACIÓN — edita estas líneas para tu institución
+   ====================================================================== */
+const CONFIG = {
+  // URL de implementación ("Aplicación web") de tu Google Apps Script.
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxSoxP3QVehEJEwyeaK_JRMbjbG_IUunctMVSEkBsCLW9eNYYwapRkJ8IalFl-x5h6zXw/exec",
+  INSTITUCION: "Control de Asistencia Estudiantil",
+  SUBTITULO_CARNET: "CARNET ESTUDIANTIL",
+  CONTACTO_CARNET: "",            // ej.: "Tel. 6000-0000 · Ciudad de Panamá" (aparece en el reverso)
+  LOGO: "",                       // ej.: "logo.png" en esta misma carpeta (PNG o JPG). Vacío = sin logo
+  COLOR_CARNET: "#1d3f8f",
+  HORA_LIMITE_TARDE: "07:15",     // después de esta hora el reporte marca "Tarde"
+  REFRESCAR_HISTORIAL_MS: 8000,
+  VOLVER_AL_INICIO_SEG: 8         // el resultado se cierra solo (modo quiosco)
+};
+
+const VENDOR = {
+  jspdf: 'vendor/jspdf-2.5.1.umd.min.js',
+  autotable: 'vendor/jspdf-autotable-3.8.2.min.js',
+  jsqr: 'vendor/jsqr-1.4.0.min.js'
+};
+
+/* ======================================================================
+   UTILIDADES
+   ====================================================================== */
+const $ = id => document.getElementById(id);
+document.getElementById('institucionNombre').textContent = CONFIG.INSTITUCION;
+document.title = 'Asistencia · ' + CONFIG.INSTITUCION;
+if(!CONFIG.APPS_SCRIPT_URL) $('setupNote').style.display = 'block';
+
+function esc(v){
+  return (v ?? '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function normalizar(t){ return (t || '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function mayus(t){ return (t || '').toString().replace(/\s+/g,' ').trim().toUpperCase(); }
+function normDoc(t){ return (t || '').toString().toUpperCase().replace(/\s+/g,'').replace(/[‐–—]/g,'-'); }
+function isoLocal(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function hoyISO(){ return isoLocal(new Date()); }
+function fechaLarga(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  return new Date(y, m-1, d).toLocaleDateString('es-PA',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+function hora12(h){
+  if(!h || !/^\d{1,2}:\d{2}/.test(h)) return h || '—';
+  let [H,M] = h.split(':').map(Number);
+  const ap = H >= 12 ? 'p. m.' : 'a. m.';
+  H = H % 12 || 12;
+  return `${H}:${String(M).padStart(2,'0')} ${ap}`;
+}
+function storeGet(k, def){ try{ const v = localStorage.getItem(k); return v === null ? def : v; }catch(e){ return def; } }
+function storeSet(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+
+// Nombre de estudiante
+function apellidos(e){ return [e.primerApellido, e.segundoApellido].filter(Boolean).join(' '); }
+function nombres(e){ return [e.primerNombre, e.segundoNombre].filter(Boolean).join(' '); }
+function nombreCompleto(e){
+  const a = apellidos(e), n = nombres(e);
+  return a && n ? `${a}, ${n}` : (a || n || e.nombre || '');
+}
+function iniciales(e){ return ((e.primerNombre||'').charAt(0) + (e.primerApellido||'').charAt(0)).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase() || '?'; }
+const COLL = new Intl.Collator('es', {sensitivity:'base', numeric:true});
+function compararEst(a, b){
+  return COLL.compare(a.primerApellido||'', b.primerApellido||'')
+      || COLL.compare(a.segundoApellido||'', b.segundoApellido||'')
+      || COLL.compare(a.primerNombre||'', b.primerNombre||'')
+      || COLL.compare(a.segundoNombre||'', b.segundoNombre||'');
+}
+function padId(id){ return String(id).padStart(4,'0'); }
+
+/* Contenido del QR del carnet (una sola línea: compatible con lectores USB).
+   Ej.: "CI:8-123-4567 | PÉREZ GÓMEZ, JUAN CARLOS | GRUPO: 10° E1 | NIVEL: DÉCIMO" */
+function textoQR(e){
+  const clave = e.documento ? `${e.tipoDoc === 'PASAPORTE' ? 'PAS' : 'CI'}:${e.documento}` : `ID:${e.id}`;
+  return [clave, nombreCompleto(e), `GRUPO: ${e.grupo || '-'}`, `NIVEL: ${e.nivel || '-'}`].join(' | ');
+}
+function leerQR(texto){
+  const t = (texto || '').trim();
+  if(!t) return null;
+  const primero = t.split('|')[0].trim();
+  const m = primero.match(/^(CI|PAS|ID)\s*:\s*(\S+)/i);
+  if(m){
+    return m[1].toUpperCase() === 'ID' ? { id: m[2] } : { documento: normDoc(m[2]) };
+  }
+  if(/^(PE|E|N|[0-9]{1,2}(AV|PI)?)-\d{1,4}-\d{1,6}$/i.test(primero)) return { documento: normDoc(primero) };
+  return null;
+}
+
+// QR → matriz de módulos (qrcode-generator, UTF-8 para tildes y ñ)
+qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+function qrMatriz(texto){
+  const q = qrcode(0, 'M');
+  q.addData(texto, 'Byte');
+  q.make();
+  const n = q.getModuleCount(), m = [];
+  for(let r = 0; r < n; r++){ const fila = []; for(let c = 0; c < n; c++) fila.push(q.isDark(r, c)); m.push(fila); }
+  return m;
+}
+function qrSVG(texto){
+  const m = qrMatriz(texto), n = m.length, q = 2;
+  let d = '';
+  m.forEach((fila, r) => {
+    let c = 0;
+    while(c < n){
+      if(fila[c]){ let k = c; while(k < n && fila[k]) k++; d += `M${c+q} ${r+q}h${k-c}v1h-${k-c}z`; c = k; } else c++;
+    }
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n+2*q} ${n+2*q}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
+}
+
+// Carga perezosa de librerías pesadas (el quiosco no las necesita)
+const cargadas = {};
+function cargarScript(src){
+  if(!cargadas[src]){
+    cargadas[src] = new Promise((ok, mal) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = ok; s.onerror = () => { delete cargadas[src]; mal(new Error('No se pudo cargar ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  return cargadas[src];
+}
+async function cargarPDF(){ await cargarScript(VENDOR.jspdf); await cargarScript(VENDOR.autotable); return window.jspdf.jsPDF; }
+
+// Sonido de confirmación (sin archivos)
+let audioCtx = null;
+function pitido(tipo){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const notas = tipo === 'ok' ? [880, 1320] : tipo === 'warn' ? [660, 660] : [220];
+    notas.forEach((f, i) => {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.frequency.value = f; o.type = 'sine';
+      g.gain.setValueAtTime(0.0001, audioCtx.currentTime + i*0.13);
+      g.gain.exponentialRampToValueAtTime(0.25, audioCtx.currentTime + i*0.13 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + i*0.13 + 0.12);
+      o.connect(g).connect(audioCtx.destination);
+      o.start(audioCtx.currentTime + i*0.13); o.stop(audioCtx.currentTime + i*0.13 + 0.13);
+    });
+    if(navigator.vibrate) navigator.vibrate(tipo === 'ok' ? 60 : [60, 60, 60]);
+  }catch(e){}
+}
+
+/* ---------- API ---------- */
+let adminToken = null;
+try{ adminToken = sessionStorage.getItem('asist_token'); }catch(e){}
+
+async function api(action, params = {}, opts = {}){
+  if(!CONFIG.APPS_SCRIPT_URL) return { ok:false, mensaje:'Falta configurar la conexión con Google Sheets (APPS_SCRIPT_URL).' };
+  let resp;
+  try{
+    if(opts.get){
+      const q = new URLSearchParams({ action, ...params, _: Date.now() });
+      resp = await fetch(CONFIG.APPS_SCRIPT_URL + '?' + q);
+    } else {
+      const body = new URLSearchParams({ action, ...params });
+      if(opts.admin) body.set('token', adminToken || '');
+      resp = await fetch(CONFIG.APPS_SCRIPT_URL, { method:'POST', body });
+    }
+    const data = await resp.json();
+    if(opts.admin && data.sesionVencida){
+      cerrarSesionLocal();
+      abrirLoginAdmin('Tu sesión venció. Vuelve a entrar.');
+    }
+    return data;
+  }catch(err){
+    return { ok:false, red:true, mensaje:'No se pudo conectar con el servidor. Revisa la conexión a internet.' };
+  }
+}
+
+/* ======================================================================
+   QUIOSCO: reloj, búsqueda y registro
+   ====================================================================== */
+function actualizarReloj(){
+  const ahora = new Date();
+  $('clock').textContent = ahora.toLocaleTimeString('es-PA', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+  $('dateLabel').textContent = ahora.toLocaleDateString('es-PA', {weekday:'long', day:'numeric', month:'long'});
+}
+actualizarReloj();
+setInterval(actualizarReloj, 1000);
+
+let roster = [];
+let estudianteSeleccionado = null;
+let tipoDoc = 'CEDULA';
+const pasos = ['stepBuscar','stepCedula','stepResultado','stepScan'].map($);
+function mostrarPaso(paso){ pasos.forEach(s => s.classList.toggle('active', s === paso)); }
+
+async function cargarRoster(){
+  const hint = $('rosterHint');
+  const data = await api('roster', {}, { get:true });
+  if(data.ok){
+    roster = (data.estudiantes || []).map(e => ({ ...e, _busq: normalizar(nombreCompleto(e) + ' ' + (e.grupo||'')) }));
+    if(hint) hint.textContent = 'Escribe al menos 2 letras de tu apellido o nombre.';
+  } else if(hint){
+    hint.textContent = data.mensaje || 'No se pudo cargar la lista de estudiantes.';
+  }
+}
+cargarRoster();
+setInterval(cargarRoster, 5 * 60 * 1000);
+
+const searchInput = $('searchInput');
+const resultsList = $('resultsList');
+searchInput.addEventListener('input', renderResultados);
+searchInput.addEventListener('keydown', e => {
+  if(e.key !== 'Enter') return;
+  // Lector de código USB/Bluetooth: escribe el contenido del QR y pulsa Enter
+  const qr = leerQR(searchInput.value);
+  if(qr){ e.preventDefault(); searchInput.value = ''; renderResultados(); registrarPorQR(qr); return; }
+  const primero = resultsList.querySelector('.result-row');
+  if(primero) primero.click();
+});
+
+function renderResultados(){
+  const tokens = normalizar(searchInput.value.trim()).split(/\s+/).filter(Boolean);
+  if(tokens.join('').length < 2){
+    resultsList.innerHTML = '<div class="empty-hint">Escribe al menos 2 letras de tu apellido o nombre.</div>';
+    return;
+  }
+  if(searchInput.value.includes('|')) return; // probablemente un lector de QR escribiendo
+  const coincidencias = roster.filter(e => tokens.every(t => e._busq.includes(t))).slice(0, 10);
+  if(!coincidencias.length){
+    resultsList.innerHTML = '<div class="empty-hint">No se encontró ningún estudiante. Prueba solo con tu primer apellido.</div>';
+    return;
+  }
+  resultsList.innerHTML = coincidencias.map(e => `
+    <button class="result-row" data-id="${esc(e.id)}">
+      <span class="result-info">
+        <span class="result-name">${esc(nombreCompleto(e))}</span>
+        <span class="result-group">${esc(e.grupo)}${e.nivel ? ' · ' + esc(e.nivel) : ''}</span>
+      </span>
+      <span class="result-badge ${e.tieneCedula ? 'activo' : 'nuevo'}">${e.tieneCedula ? 'registrado' : 'primera vez'}</span>
+    </button>`).join('');
+}
+
+resultsList.addEventListener('click', e => {
+  const row = e.target.closest('.result-row');
+  if(!row) return;
+  const est = roster.find(x => String(x.id) === row.dataset.id);
+  if(est) seleccionarEstudiante(est);
+});
+
+function seleccionarEstudiante(est){
+  estudianteSeleccionado = est;
+  $('selectedName').textContent = nombreCompleto(est);
+  $('selectedGroup').textContent = [est.grupo, est.nivel].filter(Boolean).join(' · ');
+  $('avatarInitial').textContent = iniciales(est);
+  $('bannerNuevo').hidden = !!est.tieneCedula;
+  $('bannerActivo').hidden = !est.tieneCedula;
+  submitBtn.textContent = textoBotonRegistro();
+  setTipoDoc('CEDULA');
+  cedulaInput.value = '';
+  $('errorText').textContent = '';
+  mostrarPaso($('stepCedula'));
+  cedulaInput.focus();
+}
+function textoBotonRegistro(){ return estudianteSeleccionado && estudianteSeleccionado.tieneCedula ? 'Confirmar asistencia' : 'Guardar y registrar asistencia'; }
+
+$('backBtn').addEventListener('click', volverABuscar);
+function volverABuscar(){
+  clearTimeout(timerVolver); clearInterval(timerCuenta);
+  estudianteSeleccionado = null;
+  searchInput.value = '';
+  renderResultados();
+  mostrarPaso($('stepBuscar'));
+  searchInput.focus();
+}
+
+const cedulaInput = $('cedulaInput');
+const submitBtn = $('submitBtn');
+
+function setTipoDoc(t){
+  tipoDoc = t;
+  document.querySelectorAll('#docTipo button').forEach(b => b.classList.toggle('on', b.dataset.tipo === t));
+  cedulaInput.inputMode = t === 'CEDULA' ? 'numeric' : 'text';
+  cedulaInput.placeholder = t === 'CEDULA' ? 'Ej: 8-123-4567' : 'Ej: PA1234567';
+  $('keypad').style.display = t === 'CEDULA' ? '' : 'none';
+}
+$('docTipo').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  setTipoDoc(b.dataset.tipo); cedulaInput.focus();
+});
+$('keypad').addEventListener('click', e => {
+  const btn = e.target.closest('button'); if(!btn) return;
+  const k = btn.dataset.k;
+  cedulaInput.value = k === 'borrar' ? cedulaInput.value.slice(0, -1) : cedulaInput.value + k;
+  cedulaInput.focus();
+});
+$('clearBtn').addEventListener('click', () => { cedulaInput.value = ''; cedulaInput.focus(); });
+cedulaInput.addEventListener('keydown', e => { if(e.key === 'Enter') registrar(); });
+submitBtn.addEventListener('click', registrar);
+
+function validarDocumento(tipo, doc){
+  if(!doc) return 'Escribe tu número de ' + (tipo === 'PASAPORTE' ? 'pasaporte.' : 'cédula.');
+  if(tipo === 'PASAPORTE') return /^[A-Z0-9]{5,20}$/.test(doc) ? '' : 'Pasaporte no válido: solo letras y números (5 a 20).';
+  return /^(PE|E|N|[0-9]{1,2}(AV|PI)?)-[0-9]{1,4}-[0-9]{1,6}$/.test(doc) ? '' : 'Cédula no válida. Escríbela con guiones, ej.: 8-123-4567.';
+}
+
+async function registrar(){
+  const errorText = $('errorText');
+  errorText.textContent = '';
+  if(!estudianteSeleccionado){ mostrarPaso($('stepBuscar')); return; }
+  const doc = normDoc(cedulaInput.value);
+  if(!estudianteSeleccionado.tieneCedula){
+    const err = validarDocumento(tipoDoc, doc);
+    if(err){ errorText.textContent = err; cedulaInput.focus(); return; }
+  } else if(!doc){
+    errorText.textContent = 'Escribe tu número de documento.'; cedulaInput.focus(); return;
+  }
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Verificando…';
+  const data = await api('registrar', { id: estudianteSeleccionado.id, cedula: doc, tipoDoc });
+  submitBtn.disabled = false;
+  submitBtn.textContent = textoBotonRegistro();
+  if(!data.ok){ errorText.textContent = data.mensaje || 'No se pudo registrar la asistencia.'; pitido('err'); return; }
+  if(data.primerRegistro) estudianteSeleccionado.tieneCedula = true;
+  mostrarResultado(data);
+  cargarHistorial();
+}
+
+let timerVolver = null, timerCuenta = null;
+function mostrarResultado(data){
+  const face = $('faceBack');
+  face.classList.remove('status-ok','status-warn','status-err','show');
+  const estado = !data.ok ? 'err' : data.duplicado ? 'warn' : 'ok';
+  face.classList.add('status-' + estado);
+  $('resultIcon').textContent = estado === 'ok' ? '✓' : estado === 'warn' ? '⚠' : '✕';
+  $('resultName').textContent = data.nombre || (data.ok ? '¡Bienvenido/a!' : 'No registrado');
+  $('resultMeta').textContent = [data.grupo, data.nivel, data.hora ? hora12(data.hora) : ''].filter(Boolean).join('  ·  ');
+  $('resultMsg').textContent = data.mensaje || '';
+  mostrarPaso($('stepResultado'));
+  requestAnimationFrame(() => face.classList.add('show'));
+  pitido(estado);
+
+  clearTimeout(timerVolver); clearInterval(timerCuenta);
+  let s = CONFIG.VOLVER_AL_INICIO_SEG;
+  $('countdown').textContent = `Volviendo al inicio en ${s} s`;
+  timerCuenta = setInterval(() => { s--; $('countdown').textContent = s > 0 ? `Volviendo al inicio en ${s} s` : ''; }, 1000);
+  timerVolver = setTimeout(volverABuscar, CONFIG.VOLVER_AL_INICIO_SEG * 1000);
+}
+$('againBtn').addEventListener('click', volverABuscar);
+
+async function registrarPorQR(qr){
+  const data = await api('registrarQR', qr);
+  mostrarResultado(data.ok ? data : { ok:false, mensaje: data.mensaje });
+  if(data.ok) cargarHistorial();
+  return data;
+}
+
+/* ---------- Escáner con cámara ---------- */
+let scanStream = null, scanActivo = false, detector = null, ultimoCodigo = '', ultimoCodigoT = 0, ocupado = false;
+const scanCanvas = document.createElement('canvas');
+const scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
+
+$('openScanBtn').addEventListener('click', abrirEscaner);
+$('closeScanBtn').addEventListener('click', () => { cerrarEscaner(); volverABuscar(); });
+
+async function abrirEscaner(){
+  clearTimeout(timerVolver); clearInterval(timerCuenta);
+  mostrarPaso($('stepScan'));
+  const status = $('scanStatus');
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    status.textContent = 'Este navegador no permite usar la cámara. Abre la página con https:// o usa un lector USB.';
+    return;
+  }
+  status.textContent = 'Iniciando cámara…';
+  try{
+    if('BarcodeDetector' in window){
+      try{
+        const formatos = await BarcodeDetector.getSupportedFormats();
+        if(formatos.includes('qr_code')) detector = new BarcodeDetector({ formats:['qr_code'] });
+      }catch(e){ detector = null; }
+    }
+    if(!detector) await cargarScript(VENDOR.jsqr);
+    scanStream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment', width:{ideal:1280}, height:{ideal:720} }, audio:false });
+    const v = $('scanVideo');
+    v.srcObject = scanStream;
+    await v.play();
+    scanActivo = true;
+    status.textContent = 'Acerca el QR del carnet al recuadro.';
+    bucleEscaneo();
+  }catch(err){
+    status.textContent = err && err.name === 'NotAllowedError'
+      ? 'Permiso de cámara denegado. Actívalo en la configuración del navegador.'
+      : 'No se pudo abrir la cámara: ' + (err && err.message ? err.message : err);
+  }
+}
+
+function cerrarEscaner(){
+  scanActivo = false;
+  if(scanStream){ scanStream.getTracks().forEach(t => t.stop()); scanStream = null; }
+  $('scanVideo').srcObject = null;
+  $('scanToast').className = 'scan-toast';
+}
+
+async function bucleEscaneo(){
+  if(!scanActivo) return;
+  const v = $('scanVideo');
+  if(!ocupado && v.readyState >= 2){
+    let texto = null;
+    try{
+      if(detector){
+        const r = await detector.detect(v);
+        if(r && r.length) texto = r[0].rawValue;
+      } else if(window.jsQR){
+        const w = 640, h = Math.round(640 * v.videoHeight / v.videoWidth) || 480;
+        scanCanvas.width = w; scanCanvas.height = h;
+        scanCtx.drawImage(v, 0, 0, w, h);
+        const img = scanCtx.getImageData(0, 0, w, h);
+        const r = jsQR(img.data, w, h, { inversionAttempts:'dontInvert' });
+        if(r) texto = r.data;
+      }
+    }catch(e){}
+    if(texto) await procesarEscaneo(texto);
+  }
+  setTimeout(() => requestAnimationFrame(bucleEscaneo), 140);
+}
+
+async function procesarEscaneo(texto){
+  const ahora = Date.now();
+  if(texto === ultimoCodigo && ahora - ultimoCodigoT < 6000) return; // evita marcar dos veces seguidas
+  ultimoCodigo = texto; ultimoCodigoT = ahora;
+  const toast = $('scanToast');
+  const qr = leerQR(texto);
+  if(!qr){
+    toast.className = 'scan-toast show err'; toast.innerHTML = '<b>QR no válido</b>Este código no es un carnet del sistema.';
+    pitido('err'); return;
+  }
+  ocupado = true;
+  $('scanStatus').textContent = 'Verificando…';
+  const data = await api('registrarQR', qr);
+  ocupado = false;
+  const tipo = !data.ok ? 'err' : data.duplicado ? 'warn' : 'ok';
+  toast.className = 'scan-toast show ' + tipo;
+  toast.innerHTML = data.ok
+    ? `<b>${tipo === 'ok' ? '✓' : '⚠'} ${esc(data.nombre)}</b>${esc([data.grupo, hora12(data.hora)].filter(Boolean).join(' · '))} — ${esc(data.mensaje)}`
+    : `<b>✕ No registrado</b>${esc(data.mensaje)}`;
+  pitido(tipo);
+  $('scanStatus').textContent = 'Listo para el siguiente carnet.';
+  if(data.ok) cargarHistorial();
+  clearTimeout(procesarEscaneo.t);
+  procesarEscaneo.t = setTimeout(() => { toast.className = 'scan-toast'; }, 3500);
+}
+
+/* ---------- Historial de hoy ---------- */
+async function cargarHistorial(){
+  if(!CONFIG.APPS_SCRIPT_URL) return;
+  const data = await api('historial', {}, { get:true });
+  if(data.red) return;
+  const list = $('logList');
+  $('logCount').textContent = data.ok && data.total ? `${data.total} presente${data.total === 1 ? '' : 's'}` : '';
+  if(!data.ok || !data.registros || !data.registros.length){
+    list.innerHTML = '<div class="log-empty">Aún no hay asistencias registradas hoy.</div>';
+    return;
+  }
+  list.innerHTML = data.registros.map(r => `
+    <div class="log-item">
+      <span class="log-time">${esc(hora12(r.hora))}</span>
+      <span class="log-main"><span class="log-name">${esc(r.nombre)}</span><span class="log-group">${esc(r.grupo)}</span></span>
+    </div>`).join('');
+}
+cargarHistorial();
+setInterval(() => { if(!document.hidden) cargarHistorial(); }, CONFIG.REFRESCAR_HISTORIAL_MS);
+
+/* ======================================================================
+   ADMINISTRADOR
+   Cómo abrirlo: 5 clics rápidos sobre el ícono "ID" o Ctrl + Alt + A.
+   ====================================================================== */
+let clicksLogo = 0, clicksTimer = null;
+document.querySelector('.brand-mark').addEventListener('click', () => {
+  clicksLogo++;
+  clearTimeout(clicksTimer);
+  clicksTimer = setTimeout(() => clicksLogo = 0, 2500);
+  if(clicksLogo >= 5){ clicksLogo = 0; adminToken ? abrirPanelAdmin() : abrirLoginAdmin(); }
+});
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && e.altKey && (e.key === 'a' || e.key === 'A')){ e.preventDefault(); adminToken ? abrirPanelAdmin() : abrirLoginAdmin(); }
+  if(e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+});
+
+function abrirLoginAdmin(msg){
+  $('adminUser').value = '';
+  $('adminPass').value = '';
+  $('adminLoginError').textContent = msg || '';
+  $('adminLoginOverlay').classList.add('open');
+  $('adminUser').focus();
+}
+$('adminLoginCancel').addEventListener('click', () => $('adminLoginOverlay').classList.remove('open'));
+$('adminPass').addEventListener('keydown', e => { if(e.key === 'Enter') intentarLoginAdmin(); });
+$('adminUser').addEventListener('keydown', e => { if(e.key === 'Enter') $('adminPass').focus(); });
+$('adminLoginSubmit').addEventListener('click', intentarLoginAdmin);
+
+async function intentarLoginAdmin(){
+  const usuario = $('adminUser').value.trim();
+  const clave = $('adminPass').value;
+  const errBox = $('adminLoginError');
+  if(!usuario || !clave){ errBox.textContent = 'Completa usuario y contraseña.'; return; }
+  errBox.textContent = 'Verificando…';
+  $('adminLoginSubmit').disabled = true;
+  const data = await api('adminLogin', { usuario, clave });
+  $('adminLoginSubmit').disabled = false;
+  $('adminPass').value = '';
+  if(!data.ok){ errBox.textContent = data.mensaje || 'Usuario o contraseña incorrectos.'; return; }
+  adminToken = data.token;
+  try{ sessionStorage.setItem('asist_token', adminToken); }catch(e){}
+  $('adminLoginOverlay').classList.remove('open');
+  abrirPanelAdmin();
+}
+
+function cerrarSesionLocal(){
+  adminToken = null;
+  try{ sessionStorage.removeItem('asist_token'); }catch(e){}
+  $('adminPanel').classList.remove('open');
+}
+$('adminLogoutBtn').addEventListener('click', async () => {
+  if(adminToken) api('adminLogout', {}, { admin:true });
+  cerrarSesionLocal();
+  cargarRoster();
+  searchInput.focus();
+});
+
+function abrirPanelAdmin(){
+  cerrarEscaner();
+  $('adminPanel').classList.add('open');
+  cargarListaAdmin();
+}
+
+$('adminTabs').addEventListener('click', e => {
+  const b = e.target.closest('button[data-tab]'); if(!b) return;
+  document.querySelectorAll('#adminTabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('on', p.id === b.dataset.tab));
+  estado('');
+  if(b.dataset.tab === 'tabCarnets') renderPreviewCarnet();
+});
+
+function estado(msg, tipo){
+  const s = $('adminStatus');
+  s.textContent = msg || '';
+  s.style.color = tipo === 'ok' ? 'var(--green)' : tipo === 'err' ? 'var(--coral)' : 'var(--muted)';
+}
+
+let estudiantesAdmin = [];
+let gruposAdmin = [];
+
+async function cargarListaAdmin(){
+  estado('Cargando…');
+  const data = await api('adminListar', {}, { admin:true });
+  if(!data.ok){ estado(data.mensaje || 'No se pudo cargar la lista.', 'err'); return; }
+  estudiantesAdmin = (data.estudiantes || []).sort(compararEst);
+  gruposAdmin = data.grupos || [];
+  const sinDoc = estudiantesAdmin.filter(e => !e.documento).length;
+  estado(`${estudiantesAdmin.length} estudiante(s) en ${gruposAdmin.length} grupo(s)` + (sinDoc ? ` · ${sinDoc} sin documento registrado` : ''));
+  llenarSelectsGrupos();
+  renderTablaAdmin();
+  renderGrupos();
+  renderPreviewCarnet();
+}
+$('adminRefreshBtn').addEventListener('click', cargarListaAdmin);
+
+function llenarSelectsGrupos(){
+  const opts = gruposAdmin.map(g => `<option value="${esc(g.grupo)}">${esc(g.grupo)}${g.nivel ? ' · ' + esc(g.nivel) : ''}</option>`).join('');
+  const conservar = (id, html) => { const s = $(id), v = s.value; s.innerHTML = html; if([...s.options].some(o => o.value === v)) s.value = v; };
+  conservar('adminGroupFilter', '<option value="">Todos los grupos</option>' + opts);
+  conservar('repGrupo', '<option value="">Todos los grupos (general)</option>' + opts);
+  conservar('carGrupo', '<option value="">Todos los grupos</option>' + opts);
+  conservar('fGrupo', '<option value="">— Elige un grupo —</option>' + opts);
+  const niveles = [...new Set(gruposAdmin.map(g => g.nivel).concat(estudiantesAdmin.map(e => e.nivel)).filter(Boolean))].sort(COLL.compare);
+  $('nivelesList').innerHTML = niveles.map(n => `<option value="${esc(n)}">`).join('');
+}
+
+/* ---------- Estudiantes ---------- */
+$('adminSearch').addEventListener('input', renderTablaAdmin);
+$('adminGroupFilter').addEventListener('change', renderTablaAdmin);
+
+function ordenarPorGrupo(lista){
+  return [...lista].sort((a, b) => COLL.compare(a.grupo || '', b.grupo || '') || compararEst(a, b));
+}
+
+function renderTablaAdmin(){
+  const tokens = normalizar($('adminSearch').value.trim()).split(/\s+/).filter(Boolean);
+  const g = $('adminGroupFilter').value;
+  const filtrados = ordenarPorGrupo(estudiantesAdmin.filter(e => {
+    if(g && e.grupo !== g) return false;
+    if(!tokens.length) return true;
+    const t = normalizar(nombreCompleto(e) + ' ' + (e.documento || '') + ' ' + (e.grupo || ''));
+    return tokens.every(x => t.includes(x));
+  }));
+  const tbody = $('adminTableBody');
+  if(!filtrados.length){
+    tbody.innerHTML = `<tr><td colspan="7"><div class="admin-empty">${estudiantesAdmin.length ? 'No se encontraron estudiantes.' : 'Aún no hay estudiantes. Crea un grupo y luego agrega o importa estudiantes.'}</div></td></tr>`;
+    return;
+  }
+  let html = '', grupoActual = null, n = 0;
+  filtrados.forEach(e => {
+    if(e.grupo !== grupoActual){
+      grupoActual = e.grupo; n = 0;
+      const total = filtrados.filter(x => x.grupo === grupoActual).length;
+      html += `<tr class="grp-row"><td colspan="7">${esc(grupoActual || 'Sin grupo')} <span class="num">· ${total} estudiante(s)</span></td></tr>`;
+    }
+    n++;
+    html += `<tr data-id="${esc(e.id)}">
+      <td class="num">${n}</td>
+      <td><b>${esc(apellidos(e))}</b></td>
+      <td>${esc(nombres(e))}</td>
+      <td>${e.documento ? `<span class="mono">${esc(e.documento)}</span>${e.tipoDoc === 'PASAPORTE' ? ' <span class="chip no">PAS</span>' : ''}` : '<span class="chip no">pendiente</span>'}</td>
+      <td>${esc(e.grupo)}</td>
+      <td>${esc(e.nivel)}</td>
+      <td><div class="row-actions">
+        <button data-accion="editar">✎ Editar</button>
+        <button data-accion="carnet">🪪 Carnet</button>
+        <button data-accion="marcar" title="Marcar asistencia de hoy">✔ Hoy</button>
+        <button class="danger" data-accion="eliminar">🗑</button>
+      </div></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+$('adminTableBody').addEventListener('click', async e => {
+  const btn = e.target.closest('button[data-accion]'); if(!btn) return;
+  const id = btn.closest('tr').dataset.id;
+  const est = estudiantesAdmin.find(x => String(x.id) === id);
+  if(!est) return;
+  const accion = btn.dataset.accion;
+  if(accion === 'editar') return abrirFormEstudiante(est);
+  if(accion === 'carnet'){
+    btn.disabled = true;
+    try{ await generarCarnetsPDF([est], { nombreArchivo: 'carnet_' + mayus(apellidos(est)).replace(/\W+/g,'_') }); }
+    catch(err){ estado('Error generando el carnet: ' + err.message, 'err'); }
+    btn.disabled = false;
+    return;
+  }
+  if(accion === 'marcar'){
+    if(!confirm(`¿Marcar asistencia de HOY para ${nombreCompleto(est)}?`)) return;
+    btn.disabled = true;
+    const data = await api('adminMarcar', { id }, { admin:true });
+    btn.disabled = false;
+    estado(data.ok ? `${data.nombre}: ${data.mensaje}` : data.mensaje, data.ok ? 'ok' : 'err');
+    if(data.ok) cargarHistorial();
+    return;
+  }
+  if(accion === 'eliminar'){
+    if(!confirm(`¿Eliminar a "${nombreCompleto(est)}"? Su historial de asistencia se conserva, pero no podrá volver a marcar.`)) return;
+    btn.disabled = true;
+    const data = await api('adminEliminar', { id }, { admin:true });
+    estado(data.mensaje || (data.ok ? 'Eliminado.' : 'Error al eliminar.'), data.ok ? 'ok' : 'err');
+    if(data.ok) cargarListaAdmin(); else btn.disabled = false;
+  }
+});
+
+let estEditando = null;
+$('adminAddBtn').addEventListener('click', () => abrirFormEstudiante(null));
+function abrirFormEstudiante(est){
+  if(!gruposAdmin.length && !est){
+    estado('Primero crea un grupo en la pestaña Grupos.', 'err');
+    $('adminTabs').querySelector('[data-tab="tabGrupos"]').click();
+    $('gNombre').focus();
+    return;
+  }
+  estEditando = est;
+  $('estTitle').textContent = est ? 'Editar estudiante' : 'Agregar estudiante';
+  $('fA1').value = est ? est.primerApellido : '';
+  $('fA2').value = est ? est.segundoApellido : '';
+  $('fN1').value = est ? est.primerNombre : '';
+  $('fN2').value = est ? est.segundoNombre : '';
+  $('fTipo').value = est && est.tipoDoc === 'PASAPORTE' ? 'PASAPORTE' : 'CEDULA';
+  $('fDoc').value = est ? (est.documento || '') : '';
+  const filtro = $('adminGroupFilter').value;
+  $('fGrupo').value = est ? est.grupo : (filtro || '');
+  $('fNivel').value = est ? (est.nivel || '') : nivelDeGrupo($('fGrupo').value);
+  $('fEmail').value = est ? (est.email || '') : '';
+  $('estResetDoc').hidden = !(est && est.documento);
+  $('estError').textContent = '';
+  $('estError').className = 'modal-error';
+  $('estOverlay').classList.add('open');
+  $('fA1').focus();
+}
+function nivelDeGrupo(nombre){ const g = gruposAdmin.find(x => x.grupo === nombre); return g ? (g.nivel || '') : ''; }
+$('fGrupo').addEventListener('change', () => { const n = nivelDeGrupo($('fGrupo').value); if(n) $('fNivel').value = n; });
+$('estCancel').addEventListener('click', () => $('estOverlay').classList.remove('open'));
+$('estSave').addEventListener('click', () => guardarEstudiante(false));
+$('estResetDoc').addEventListener('click', () => {
+  if(confirm('¿Borrar el documento de este estudiante? Tendrá que registrarlo de nuevo la próxima vez que marque asistencia, y su carnet actual dejará de funcionar.')) guardarEstudiante(true);
+});
+
+async function guardarEstudiante(resetDoc, forzar){
+  const err = $('estError');
+  err.className = 'modal-error';
+  const datos = {
+    primerApellido: mayus($('fA1').value), segundoApellido: mayus($('fA2').value),
+    primerNombre: mayus($('fN1').value), segundoNombre: mayus($('fN2').value),
+    tipoDoc: $('fTipo').value, documento: normDoc($('fDoc').value),
+    grupo: $('fGrupo').value, nivel: $('fNivel').value.trim(), email: $('fEmail').value.trim()
+  };
+  if(!datos.primerApellido){ err.textContent = 'El primer apellido es obligatorio.'; $('fA1').focus(); return; }
+  if(!datos.primerNombre){ err.textContent = 'El primer nombre es obligatorio.'; $('fN1').focus(); return; }
+  if(!datos.grupo){ err.textContent = 'Elige un grupo.'; $('fGrupo').focus(); return; }
+  if(datos.documento && !resetDoc){
+    const e2 = validarDocumento(datos.tipoDoc, datos.documento);
+    if(e2){ err.textContent = e2; $('fDoc').focus(); return; }
+  }
+  const params = { ...datos };
+  if(resetDoc){ params.resetCedula = '1'; delete params.documento; }
+  if(forzar) params.forzar = '1';
+  if(estEditando) params.id = estEditando.id;
+  err.textContent = 'Guardando…';
+  $('estSave').disabled = true;
+  const data = await api(estEditando ? 'adminGuardar' : 'adminAgregar', params, { admin:true });
+  $('estSave').disabled = false;
+  if(!data.ok){
+    if(data.duplicadoNombre && confirm(data.mensaje + '\n¿Guardar de todas formas?')) return guardarEstudiante(resetDoc, true);
+    err.textContent = data.mensaje || 'No se pudo guardar.';
+    return;
+  }
+  $('estOverlay').classList.remove('open');
+  estado(data.mensaje || 'Guardado.', 'ok');
+  cargarListaAdmin();
+}
+
+/* ---------- Importar ---------- */
+$('adminImportBtn').addEventListener('click', () => {
+  $('impTexto').value = ''; $('impArchivo').value = '';
+  $('impError').textContent = ''; $('impError').className = 'modal-error';
+  $('impOverlay').classList.add('open');
+  $('impTexto').focus();
+});
+$('impCancel').addEventListener('click', () => $('impOverlay').classList.remove('open'));
+$('impArchivo').addEventListener('change', async () => {
+  const f = $('impArchivo').files[0]; if(!f) return;
+  $('impTexto').value = await f.text();
+});
+
+function parsearTabla(texto){
+  const lineas = texto.replace(/\r/g,'').split('\n').filter(l => l.trim());
+  if(!lineas.length) return [];
+  const sep = lineas[0].includes('\t') ? '\t' : (lineas[0].split(';').length > lineas[0].split(',').length ? ';' : ',');
+  const partir = l => {
+    if(sep === '\t') return l.split('\t');
+    const out = []; let cur = '', q = false;
+    for(let i = 0; i < l.length; i++){
+      const c = l[i];
+      if(c === '"'){ if(q && l[i+1] === '"'){ cur += '"'; i++; } else q = !q; }
+      else if(c === sep && !q){ out.push(cur); cur = ''; }
+      else cur += c;
+    }
+    out.push(cur); return out;
+  };
+  let filas = lineas.map(partir).map(r => r.map(c => c.trim()));
+  if(filas.length && /apellido/i.test(filas[0].join(' '))) filas = filas.slice(1); // encabezado
+  return filas.map(r => ({
+    primerApellido: mayus(r[0]), segundoApellido: mayus(r[1]), primerNombre: mayus(r[2]), segundoNombre: mayus(r[3]),
+    documento: normDoc(r[4]), tipoDoc: /^[A-Z0-9]{5,20}$/i.test(normDoc(r[4])) && !/-/.test(r[4] || '') ? 'PASAPORTE' : 'CEDULA',
+    grupo: mayus(r[5]), nivel: (r[6] || '').trim(), email: (r[7] || '').trim()
+  })).filter(r => r.primerApellido || r.primerNombre);
+}
+
+$('impGo').addEventListener('click', async () => {
+  const err = $('impError');
+  err.className = 'modal-error';
+  const filas = parsearTabla($('impTexto').value);
+  if(!filas.length){ err.textContent = 'No hay datos para importar.'; return; }
+  if(!confirm(`Se importarán ${filas.length} estudiante(s). ¿Continuar?`)) return;
+  err.textContent = 'Importando…';
+  $('impGo').disabled = true;
+  const data = await api('adminImportar', { filas: JSON.stringify(filas) }, { admin:true });
+  $('impGo').disabled = false;
+  if(!data.ok){ err.textContent = data.mensaje || 'No se pudo importar.'; return; }
+  if(data.errores && data.errores.length){
+    err.innerHTML = esc(data.mensaje) + '<br>' + data.errores.slice(0, 12).map(esc).join('<br>') + (data.errores.length > 12 ? '<br>…' : '');
+  } else {
+    $('impOverlay').classList.remove('open');
+  }
+  estado(data.mensaje, 'ok');
+  cargarListaAdmin();
+});
+
+/* ---------- Grupos ---------- */
+let grupoEditando = null;
+function renderGrupos(){
+  const tb = $('gruposBody');
+  if(!gruposAdmin.length){ tb.innerHTML = '<tr><td colspan="6"><div class="admin-empty">Aún no hay grupos. Crea el primero arriba.</div></td></tr>'; return; }
+  tb.innerHTML = gruposAdmin.map(g => `
+    <tr data-g="${esc(g.grupo)}">
+      <td><b>${esc(g.grupo)}</b>${g.sinRegistrar ? ' <span class="chip no" title="Usado por estudiantes pero no está en la hoja Grupos">sin datos</span>' : ''}</td>
+      <td>${esc(g.nivel)}</td><td>${esc(g.docente)}</td><td>${esc(g.turno)}</td>
+      <td class="mono">${g.total}</td>
+      <td><div class="row-actions">
+        <button data-acc="editar">✎ Editar</button>
+        <button data-acc="ver">👩‍🎓 Ver</button>
+        <button data-acc="carnets">🪪 Carnets</button>
+        <button data-acc="reporte">📄 Hoy</button>
+        <button class="danger" data-acc="eliminar">🗑</button>
+      </div></td>
+    </tr>`).join('');
+}
+$('gruposBody').addEventListener('click', async e => {
+  const b = e.target.closest('button[data-acc]'); if(!b) return;
+  const g = gruposAdmin.find(x => x.grupo === b.closest('tr').dataset.g); if(!g) return;
+  const acc = b.dataset.acc;
+  if(acc === 'editar'){
+    grupoEditando = g;
+    $('grupoFormTitle').textContent = 'Editar grupo: ' + g.grupo;
+    $('gNombre').value = g.grupo; $('gNivel').value = g.nivel || ''; $('gDocente').value = g.docente || ''; $('gTurno').value = g.turno || '';
+    $('gCancelar').hidden = false; $('gError').textContent = '';
+    $('gNombre').focus();
+    $('tabGrupos').scrollIntoView({ behavior:'smooth' });
+  } else if(acc === 'ver'){
+    $('adminGroupFilter').value = g.grupo; $('adminSearch').value = '';
+    $('adminTabs').querySelector('[data-tab="tabEstudiantes"]').click();
+    renderTablaAdmin();
+  } else if(acc === 'carnets'){
+    $('carGrupo').value = g.grupo;
+    $('adminTabs').querySelector('[data-tab="tabCarnets"]').click();
+  } else if(acc === 'reporte'){
+    $('repGrupo').value = g.grupo; setRepTipo('dia'); $('repFecha').value = hoyISO();
+    $('adminTabs').querySelector('[data-tab="tabReportes"]').click();
+    verResumen();
+  } else if(acc === 'eliminar'){
+    if(g.total){ estado(`El grupo tiene ${g.total} estudiante(s). Muévelos a otro grupo antes de eliminarlo.`, 'err'); return; }
+    if(!confirm(`¿Eliminar el grupo "${g.grupo}"?`)) return;
+    const data = await api('grupoEliminar', { grupo: g.grupo }, { admin:true });
+    estado(data.mensaje, data.ok ? 'ok' : 'err');
+    if(data.ok) cargarListaAdmin();
+  }
+});
+function limpiarFormGrupo(){
+  grupoEditando = null;
+  $('grupoFormTitle').textContent = 'Nuevo grupo';
+  ['gNombre','gNivel','gDocente'].forEach(id => $(id).value = '');
+  $('gTurno').value = ''; $('gCancelar').hidden = true;
+}
+$('gCancelar').addEventListener('click', () => { limpiarFormGrupo(); $('gError').textContent = ''; });
+$('gGuardar').addEventListener('click', async () => {
+  const err = $('gError'); err.className = 'modal-error';
+  const grupo = mayus($('gNombre').value);
+  if(!grupo){ err.textContent = 'Escribe el nombre del grupo.'; $('gNombre').focus(); return; }
+  if(grupoEditando && grupoEditando.grupo !== grupo && grupoEditando.total &&
+     !confirm(`Se cambiará el grupo de ${grupoEditando.total} estudiante(s) a "${grupo}". Los carnets ya impresos mostrarán el nombre anterior. ¿Continuar?`)) return;
+  err.textContent = 'Guardando…';
+  $('gGuardar').disabled = true;
+  const data = await api('grupoGuardar', {
+    grupo, nivel: mayus($('gNivel').value), docente: mayus($('gDocente').value), turno: $('gTurno').value,
+    original: grupoEditando ? grupoEditando.grupo : ''
+  }, { admin:true });
+  $('gGuardar').disabled = false;
+  if(!data.ok){ err.textContent = data.mensaje; return; }
+  err.className = 'modal-error ok'; err.textContent = data.mensaje;
+  limpiarFormGrupo();
+  cargarListaAdmin();
+});
+$('gNombre').addEventListener('keydown', e => { if(e.key === 'Enter') $('gGuardar').click(); });
+
+/* ======================================================================
+   REPORTES
+   ====================================================================== */
+let repTipo = 'dia';
+$('repFecha').value = hoyISO();
+(() => { const d = new Date(); d.setDate(1); $('repDesde').value = isoLocal(d); $('repHasta').value = hoyISO(); })();
+$('repLimite').value = storeGet('asist_limite', CONFIG.HORA_LIMITE_TARDE);
+$('repLimite').addEventListener('change', () => storeSet('asist_limite', $('repLimite').value));
+function setRepTipo(t){
+  repTipo = t;
+  document.querySelectorAll('#repTipo button').forEach(b => b.classList.toggle('on', b.dataset.tipo === t));
+  $('repFechaWrap').hidden = t !== 'dia';
+  $('repDesdeWrap').hidden = $('repHastaWrap').hidden = t !== 'rango';
+}
+$('repTipo').addEventListener('click', e => { const b = e.target.closest('button'); if(b) setRepTipo(b.dataset.tipo); });
+
+function estadoDe(reg, limite){
+  if(!reg) return 'Ausente';
+  if(limite && /^\d{2}:\d{2}/.test(reg.hora) && reg.hora.slice(0,5) > limite) return 'Tarde';
+  return 'Presente';
+}
+
+async function obtenerDatosReporte(){
+  const err = $('repError'); err.className = 'modal-error'; err.textContent = '';
+  let data;
+  if(repTipo === 'dia'){
+    if(!$('repFecha').value){ err.textContent = 'Elige una fecha.'; return null; }
+    err.textContent = 'Consultando…';
+    data = await api('reporteDia', { fecha: $('repFecha').value }, { admin:true });
+  } else {
+    const d = $('repDesde').value, h = $('repHasta').value;
+    if(!d || !h){ err.textContent = 'Elige el período.'; return null; }
+    if(d > h){ err.textContent = 'La fecha inicial es posterior a la final.'; return null; }
+    err.textContent = 'Consultando…';
+    data = await api('reporteRango', { desde: d, hasta: h }, { admin:true });
+  }
+  if(!data.ok){ err.textContent = data.mensaje || 'No se pudo generar el reporte.'; return null; }
+  err.textContent = '';
+
+  const filtroGrupo = $('repGrupo').value;
+  const limite = $('repLimite').value;
+  const grupos = (data.grupos || []).filter(g => !filtroGrupo || g.grupo === filtroGrupo)
+                  .sort((a, b) => COLL.compare(a.grupo, b.grupo));
+  const est = (data.estudiantes || []).filter(e => !filtroGrupo || e.grupo === filtroGrupo);
+  if(!est.length){ err.textContent = 'No hay estudiantes en la selección.'; return null; }
+
+  // registros por estudiante (por ID; si el registro viejo no tiene ID, por documento o nombre)
+  const porId = {}, porDoc = {}, porNombre = {};
+  (data.registros || []).forEach(r => {
+    if(r.id) (porId[r.id] = porId[r.id] || []).push(r);
+    else if(r.documento) (porDoc[normDoc(r.documento)] = porDoc[normDoc(r.documento)] || []).push(r);
+    else (porNombre[normalizar(r.nombre)] = porNombre[normalizar(r.nombre)] || []).push(r);
+  });
+  const regsDe = e => (porId[e.id] || []).concat(e.documento ? (porDoc[normDoc(e.documento)] || []) : [], porNombre[normalizar(nombreCompleto(e))] || []);
+
+  const secciones = grupos.map(g => {
+    const lista = est.filter(e => e.grupo === g.grupo).sort(compararEst);
+    if(!lista.length) return null;
+    let filas, dias = [];
+    if(repTipo === 'dia'){
+      filas = lista.map((e, i) => {
+        const r = regsDe(e).sort((a, b) => a.hora < b.hora ? -1 : 1)[0];
+        return { n: i+1, e, estado: estadoDe(r, limite), hora: r ? r.hora : '', metodo: r ? r.metodo : '' };
+      });
+    } else {
+      // días con clases = fechas en las que al menos un estudiante del grupo marcó
+      const fechas = new Set();
+      lista.forEach(e => regsDe(e).forEach(r => fechas.add(r.fecha)));
+      dias = [...fechas].sort();
+      filas = lista.map((e, i) => {
+        const porFecha = {};
+        regsDe(e).forEach(r => { if(!porFecha[r.fecha] || r.hora < porFecha[r.fecha].hora) porFecha[r.fecha] = r; });
+        let p = 0, t = 0;
+        dias.forEach(f => { const s = estadoDe(porFecha[f], limite); if(s === 'Presente') p++; else if(s === 'Tarde') t++; });
+        const a = dias.length - p - t;
+        return { n: i+1, e, presentes: p, tardes: t, ausentes: a, pct: dias.length ? Math.round((p + t) * 100 / dias.length) : 0 };
+      });
+    }
+    return { g, filas, dias };
+  }).filter(Boolean);
+
+  // estudiantes con grupo que no existe en la lista de grupos
+  const conocidos = new Set(secciones.map(s => s.g.grupo));
+  const huerfanos = est.filter(e => !conocidos.has(e.grupo) && !grupos.some(g => g.grupo === e.grupo));
+  if(huerfanos.length && !filtroGrupo) console.warn('Estudiantes sin grupo registrado:', huerfanos.length);
+
+  return { tipo: repTipo, data, secciones, limite, filtroGrupo };
+}
+
+function resumenSeccion(s, tipo){
+  if(tipo === 'dia'){
+    const p = s.filas.filter(f => f.estado === 'Presente').length;
+    const t = s.filas.filter(f => f.estado === 'Tarde').length;
+    const a = s.filas.length - p - t;
+    return { total: s.filas.length, p, t, a, pct: s.filas.length ? Math.round((p + t) * 100 / s.filas.length) : 0 };
+  }
+  const tot = s.filas.reduce((x, f) => ({ p: x.p + f.presentes, t: x.t + f.tardes, a: x.a + f.ausentes }), { p:0, t:0, a:0 });
+  const posibles = s.filas.length * s.dias.length;
+  return { total: s.filas.length, ...tot, dias: s.dias.length, pct: posibles ? Math.round((tot.p + tot.t) * 100 / posibles) : 0 };
+}
+
+function tituloReporte(r){
+  return r.tipo === 'dia'
+    ? 'Reporte diario de asistencia — ' + fechaLarga(r.data.desde)
+    : `Reporte de asistencia por período — del ${r.data.desde} al ${r.data.hasta}`;
+}
+
+$('repVer').addEventListener('click', verResumen);
+async function verResumen(){
+  const r = await obtenerDatosReporte(); if(!r) return;
+  const res = r.secciones.map(s => ({ s, m: resumenSeccion(s, r.tipo) }));
+  const T = res.reduce((x, { m }) => ({ total: x.total + m.total, p: x.p + m.p, t: x.t + m.t, a: x.a + m.a }), { total:0, p:0, t:0, a:0 });
+  const pctGlobal = r.tipo === 'dia'
+    ? (T.total ? Math.round((T.p + T.t) * 100 / T.total) : 0)
+    : (() => { const pos = res.reduce((x, { s }) => x + s.filas.length * s.dias.length, 0); return pos ? Math.round((T.p + T.t) * 100 / pos) : 0; })();
+  $('repResumen').innerHTML = `
+    <div class="card">
+      <h3>${esc(tituloReporte(r))}</h3>
+      <div class="kpis">
+        <div class="kpi"><b>${T.total}</b><span>Estudiantes</span></div>
+        <div class="kpi"><b style="color:var(--green)">${T.p}</b><span>${r.tipo === 'dia' ? 'Presentes' : 'Asistencias'}</span></div>
+        <div class="kpi"><b style="color:var(--amber)">${T.t}</b><span>Tardanzas</span></div>
+        <div class="kpi"><b style="color:var(--coral)">${T.a}</b><span>Ausencias</span></div>
+        <div class="kpi"><b>${pctGlobal}%</b><span>Asistencia</span></div>
+      </div>
+      <div class="table-wrap"><table class="t">
+        <thead><tr><th>Grupo</th><th>Nivel</th><th>Matrícula</th>${r.tipo === 'rango' ? '<th>Días</th>' : ''}<th>Presentes</th><th>Tarde</th><th>Ausentes</th><th>%</th><th></th></tr></thead>
+        <tbody>${res.map(({ s, m }) => `<tr>
+          <td><b>${esc(s.g.grupo)}</b></td><td>${esc(s.g.nivel)}</td><td class="mono">${m.total}</td>
+          ${r.tipo === 'rango' ? `<td class="mono">${m.dias}</td>` : ''}
+          <td class="mono" style="color:var(--green)">${m.p}</td><td class="mono" style="color:var(--amber)">${m.t}</td>
+          <td class="mono" style="color:var(--coral)">${m.a}</td><td class="mono">${m.pct}%</td>
+          <td><div class="bar"><i style="width:${m.pct}%"></i></div></td></tr>`).join('')}</tbody>
+      </table></div>
+    </div>`;
+}
+
+$('repPdf').addEventListener('click', async () => {
+  const btn = $('repPdf'); btn.disabled = true; btn.textContent = 'Generando…';
+  try{
+    const r = await obtenerDatosReporte();
+    if(r) await reportePDF(r);
+  }catch(err){ $('repError').textContent = 'Error generando el PDF: ' + err.message; }
+  btn.disabled = false; btn.textContent = '📄 Descargar PDF';
+});
+
+async function reportePDF(r){
+  const jsPDF = await cargarPDF();
+  const doc = new jsPDF({ unit:'pt', format:'letter' });
+  const M = 40, W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+  const azul = hexRGB(CONFIG.COLOR_CARNET);
+  const conDoc = $('repDocumento').checked, firmas = $('repFirmas').checked, paginaNueva = $('repPaginaNueva').checked;
+
+  const conEncabezado = new Set();
+  const encabezado = () => {
+    const pag = doc.getCurrentPageInfo().pageNumber;
+    if(conEncabezado.has(pag)) return 74;
+    conEncabezado.add(pag);
+    doc.setFillColor(...azul); doc.rect(0, 0, W, 6, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(20);
+    doc.text(CONFIG.INSTITUCION, M, 34);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(90);
+    doc.text(tituloReporte(r), M, 50);
+    if(r.limite) { doc.setFontSize(8); doc.text(`Tarde: después de las ${hora12(r.limite)}`, W - M, 50, { align:'right' }); }
+    doc.setDrawColor(220); doc.line(M, 58, W - M, 58);
+    doc.setTextColor(0);
+    return 74;
+  };
+
+  let y = encabezado();
+
+  // Resumen general cuando hay más de un grupo
+  if(r.secciones.length > 1){
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.text('Resumen por grupo', M, y); y += 6;
+    const filas = r.secciones.map(s => { const m = resumenSeccion(s, r.tipo); return [s.g.grupo, s.g.nivel || '', m.total, ...(r.tipo === 'rango' ? [m.dias] : []), m.p, m.t, m.a, m.pct + '%']; });
+    doc.autoTable({
+      startY: y, margin: { left:M, right:M, top:74 },
+      head: [['Grupo','Nivel','Matrícula', ...(r.tipo === 'rango' ? ['Días'] : []), r.tipo === 'dia' ? 'Presentes' : 'Asistencias','Tarde','Ausentes','%']],
+      body: filas, theme:'grid', styles:{ fontSize:9, cellPadding:4 }, headStyles:{ fillColor: azul },
+      foot: [(() => {
+        const t = r.secciones.map(s => resumenSeccion(s, r.tipo)).reduce((x, m) => ({ total: x.total + m.total, p: x.p + m.p, t: x.t + m.t, a: x.a + m.a }), { total:0, p:0, t:0, a:0 });
+        const pos = r.tipo === 'dia' ? t.total : r.secciones.reduce((x, s) => x + s.filas.length * s.dias.length, 0);
+        return ['TOTAL', '', t.total, ...(r.tipo === 'rango' ? [''] : []), t.p, t.t, t.a, (pos ? Math.round((t.p + t.t) * 100 / pos) : 0) + '%'];
+      })()],
+      footStyles:{ fillColor:[235,239,246], textColor:20, fontStyle:'bold' },
+      didDrawPage: () => encabezado()
+    });
+    y = doc.lastAutoTable.finalY + 26;
+    if(paginaNueva){ doc.addPage(); y = encabezado(); }
+  }
+
+  r.secciones.forEach((s, idx) => {
+    if(idx > 0 && paginaNueva){ doc.addPage(); y = encabezado(); }
+    if(y > H - 160){ doc.addPage(); y = encabezado(); }
+    const m = resumenSeccion(s, r.tipo);
+    doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(...azul);
+    doc.text(s.g.grupo, M, y);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(80);
+    const det = [s.g.nivel && 'Nivel: ' + s.g.nivel, s.g.docente && 'Docente: ' + s.g.docente, s.g.turno && 'Turno: ' + s.g.turno].filter(Boolean).join('   ·   ');
+    if(det){ y += 14; doc.text(det, M, y); }
+    y += 13;
+    doc.text(r.tipo === 'dia'
+      ? `Matrícula: ${m.total}   ·   Presentes: ${m.p}   ·   Tarde: ${m.t}   ·   Ausentes: ${m.a}   ·   Asistencia: ${m.pct}%`
+      : `Matrícula: ${m.total}   ·   Días con clases: ${m.dias}   ·   Asistencia promedio: ${m.pct}%`, M, y);
+    doc.setTextColor(0);
+    y += 6;
+
+    let head, body;
+    if(r.tipo === 'dia'){
+      head = ['N°','Primer apellido','Segundo apellido','Primer nombre','Segundo nombre', ...(conDoc ? ['Documento'] : []), 'Estado','Hora'];
+      body = s.filas.map(f => [f.n, f.e.primerApellido, f.e.segundoApellido, f.e.primerNombre, f.e.segundoNombre, ...(conDoc ? [f.e.documento || ''] : []), f.estado, f.hora ? hora12(f.hora) : '—']);
+    } else {
+      head = ['N°','Primer apellido','Segundo apellido','Primer nombre','Segundo nombre', ...(conDoc ? ['Documento'] : []), 'Pres.','Tarde','Aus.','%'];
+      body = s.filas.map(f => [f.n, f.e.primerApellido, f.e.segundoApellido, f.e.primerNombre, f.e.segundoNombre, ...(conDoc ? [f.e.documento || ''] : []), f.presentes, f.tardes, f.ausentes, f.pct + '%']);
+    }
+    const colEstado = head.indexOf('Estado'), colPct = head.indexOf('%');
+    doc.autoTable({
+      startY: y, margin: { left:M, right:M, top:74, bottom:50 },
+      head: [head], body, theme:'striped',
+      styles:{ fontSize:8.5, cellPadding:4 }, headStyles:{ fillColor: azul, fontSize:8 },
+      columnStyles:{ 0:{ cellWidth:24, halign:'right', textColor:[120,120,120] } },
+      didParseCell: h => {
+        if(h.section !== 'body') return;
+        if(h.column.index === colEstado){
+          h.cell.styles.fontStyle = 'bold';
+          h.cell.styles.textColor = h.cell.raw === 'Presente' ? [30,140,90] : h.cell.raw === 'Tarde' ? [200,130,0] : [200,60,80];
+        }
+        if(h.column.index === colPct){
+          const v = parseInt(h.cell.raw, 10);
+          h.cell.styles.fontStyle = 'bold';
+          h.cell.styles.textColor = v >= 90 ? [30,140,90] : v >= 75 ? [200,130,0] : [200,60,80];
+        }
+      },
+      didDrawPage: () => encabezado()
+    });
+    y = doc.lastAutoTable.finalY + 30;
+    if(firmas){
+      if(y > H - 80){ doc.addPage(); y = encabezado() + 30; }
+      doc.setDrawColor(120); doc.line(M, y, M + 200, y); doc.line(W - M - 200, y, W - M, y);
+      doc.setFontSize(8); doc.setTextColor(100);
+      doc.text('Firma del docente', M, y + 11); doc.text('Fecha de revisión', W - M - 200, y + 11);
+      doc.setTextColor(0);
+      y += 36;
+    }
+  });
+
+  // Pie de página: número de página y fecha de generación
+  const total = doc.getNumberOfPages();
+  const generado = 'Generado el ' + new Date().toLocaleString('es-PA');
+  for(let i = 1; i <= total; i++){
+    doc.setPage(i);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(130);
+    doc.text(generado, M, H - 22);
+    doc.text(`Página ${i} de ${total}`, W - M, H - 22, { align:'right' });
+  }
+  const sufGrupo = r.filtroGrupo ? '_' + r.filtroGrupo.replace(/[^\wÁÉÍÓÚÑáéíóúñ]+/g,'_') : '_general';
+  doc.save(r.tipo === 'dia' ? `asistencia_${r.data.desde}${sufGrupo}.pdf` : `asistencia_${r.data.desde}_a_${r.data.hasta}${sufGrupo}.pdf`);
+}
+
+$('repCsv').addEventListener('click', async () => {
+  const r = await obtenerDatosReporte(); if(!r) return;
+  const filas = [];
+  if(r.tipo === 'dia'){
+    filas.push(['Fecha','Grupo','Nivel','N°','Primer apellido','Segundo apellido','Primer nombre','Segundo nombre','Tipo doc.','Documento','Estado','Hora','Método']);
+    r.secciones.forEach(s => s.filas.forEach(f => filas.push([r.data.desde, s.g.grupo, s.g.nivel, f.n, f.e.primerApellido, f.e.segundoApellido, f.e.primerNombre, f.e.segundoNombre, f.e.tipoDoc, f.e.documento, f.estado, f.hora, f.metodo])));
+  } else {
+    filas.push(['Desde','Hasta','Grupo','Nivel','N°','Primer apellido','Segundo apellido','Primer nombre','Segundo nombre','Tipo doc.','Documento','Días','Presente','Tarde','Ausente','% asistencia']);
+    r.secciones.forEach(s => s.filas.forEach(f => filas.push([r.data.desde, r.data.hasta, s.g.grupo, s.g.nivel, f.n, f.e.primerApellido, f.e.segundoApellido, f.e.primerNombre, f.e.segundoNombre, f.e.tipoDoc, f.e.documento, s.dias.length, f.presentes, f.tardes, f.ausentes, f.pct])));
+  }
+  const csv = '﻿' + filas.map(r => r.map(c => {
+    const v = (c ?? '').toString();
+    return /[",;\n]/.test(v) || /^[=+\-@]/.test(v) ? '"' + (/^[=+@]/.test(v) ? "'" : '') + v.replace(/"/g,'""') + '"' : v;
+  }).join(',')).join('\r\n');
+  descargar(new Blob([csv], { type:'text/csv;charset=utf-8' }),
+    r.tipo === 'dia' ? `asistencia_${r.data.desde}.csv` : `asistencia_${r.data.desde}_a_${r.data.hasta}.csv`);
+});
+
+function descargar(blob, nombre){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = nombre;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+/* ======================================================================
+   CARNETS
+   ====================================================================== */
+$('carAnio').value = storeGet('asist_anio', String(new Date().getFullYear()));
+$('carColor').value = storeGet('asist_color', CONFIG.COLOR_CARNET);
+$('carAnio').addEventListener('input', () => { storeSet('asist_anio', $('carAnio').value); renderPreviewCarnet(); });
+$('carColor').addEventListener('input', () => { storeSet('asist_color', $('carColor').value); renderPreviewCarnet(); });
+$('carGrupo').addEventListener('change', renderPreviewCarnet);
+$('carSoloConDoc').addEventListener('change', renderPreviewCarnet);
+
+function hexRGB(h){ h = (h || '#1d3f8f').replace('#',''); return [0,2,4].map(i => parseInt(h.slice(i, i+2), 16)); }
+function tinte(rgb, f){ return rgb.map(c => Math.round(c + (255 - c) * f)); }
+
+function seleccionCarnets(){
+  const g = $('carGrupo').value;
+  let lista = estudiantesAdmin.filter(e => !g || e.grupo === g);
+  if($('carSoloConDoc').checked) lista = lista.filter(e => e.documento);
+  return ordenarPorGrupo(lista);
+}
+
+function renderPreviewCarnet(){
+  const cont = $('carPreview');
+  const lista = seleccionCarnets();
+  const sinDoc = lista.filter(e => !e.documento).length;
+  $('carPreviewSub').textContent = lista.length
+    ? `${lista.length} carnet(s) · ${Math.ceil(lista.length / 8)} hoja(s)` + (sinDoc ? ` · ⚠ ${sinDoc} sin documento (su QR usará el ID interno)` : '')
+    : 'No hay estudiantes en la selección.';
+  if(!lista.length){ cont.innerHTML = ''; return; }
+  const e = lista[0];
+  const rgb = hexRGB($('carColor').value);
+  cont.innerHTML = `
+    <div class="carnet" style="--cc:${esc($('carColor').value)};--ct:rgb(${tinte(rgb, .86).join(',')})">
+      <div class="c-head"><div class="c-inst">${esc(CONFIG.INSTITUCION.toUpperCase())}</div><div class="c-sub">${esc(CONFIG.SUBTITULO_CARNET)} · ${esc($('carAnio').value)}</div></div>
+      <div class="c-photo">${esc(iniciales(e))}</div>
+      <div class="c-data">
+        <div class="c-lbl">APELLIDOS</div><div class="c-val">${esc(apellidos(e))}</div>
+        <div class="c-lbl">NOMBRES</div><div class="c-val">${esc(nombres(e))}</div>
+        <div class="c-lbl">${e.tipoDoc === 'PASAPORTE' ? 'PASAPORTE' : 'CÉDULA'}</div><div class="c-val doc">${esc(e.documento || 'PENDIENTE')}</div>
+      </div>
+      <div class="c-qr">${qrSVG(textoQR(e))}<div class="c-id">ID ${esc(padId(e.id))}</div></div>
+      <div class="c-band"><div>GRUPO<b>${esc(e.grupo)}</b></div><div>NIVEL<b>${esc(e.nivel || '—')}</b></div></div>
+      <div class="c-foot">Personal e intransferible · Año lectivo ${esc($('carAnio').value)}</div>
+    </div>
+    <p class="tip" style="word-break:break-word">Contenido del QR: <span class="mono">${esc(textoQR(e))}</span></p>`;
+}
+
+$('carPdf').addEventListener('click', async () => {
+  const err = $('carError'); err.className = 'modal-error';
+  const lista = seleccionCarnets();
+  if(!lista.length){ err.textContent = 'No hay estudiantes en la selección.'; return; }
+  const btn = $('carPdf'); btn.disabled = true; btn.textContent = 'Generando…';
+  try{
+    const g = $('carGrupo').value;
+    await generarCarnetsPDF(lista, { nombreArchivo: 'carnets_' + (g ? g.replace(/[^\wÁÉÍÓÚÑáéíóúñ]+/g,'_') : 'todos') });
+    err.className = 'modal-error ok'; err.textContent = `Listo: ${lista.length} carnet(s). Imprime al 100 % (tamaño real, sin "ajustar a página").`;
+  }catch(e){ err.textContent = 'Error generando los carnets: ' + e.message; }
+  btn.disabled = false; btn.textContent = '🪪 Generar carnets PDF';
+});
+
+let logoCache;
+async function cargarLogo(){
+  if(logoCache !== undefined) return logoCache;
+  logoCache = null;
+  if(!CONFIG.LOGO) return null;
+  try{
+    const img = await new Promise((ok, mal) => { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => ok(i); i.onerror = mal; i.src = CONFIG.LOGO; });
+    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    logoCache = c.toDataURL('image/png');
+  }catch(e){ logoCache = null; }
+  return logoCache;
+}
+
+function textoAjustado(doc, texto, x, y, maxW, tam, min, opts){
+  let t = tam;
+  doc.setFontSize(t);
+  while(doc.getTextWidth(texto) > maxW && t > min){ t -= 0.25; doc.setFontSize(t); }
+  if(doc.getTextWidth(texto) <= maxW){ doc.text(texto, x, y, opts); return { lineas:1, tam:t }; }
+  const lineas = doc.splitTextToSize(texto, maxW).slice(0, 2);
+  doc.text(lineas, x, y, opts);
+  return { lineas: lineas.length, tam: t };
+}
+
+function qrPDF(doc, texto, x, y, lado){
+  const m = qrMatriz(texto), n = m.length, c = lado / n;
+  doc.setFillColor(255, 255, 255); doc.rect(x - 1, y - 1, lado + 2, lado + 2, 'F');
+  doc.setFillColor(0, 0, 0);
+  m.forEach((fila, r) => {
+    let k = 0;
+    while(k < n){
+      if(fila[k]){ let j = k; while(j < n && fila[j]) j++; doc.rect(x + k*c, y + r*c, (j-k)*c + 0.02, c + 0.02, 'F'); k = j; } else k++;
+    }
+  });
+}
+
+const CW = 85.6, CH = 54; // tamaño CR80 en mm
+
+function carnetFrente(doc, x, y, e, o){
+  const col = o.color;
+  doc.setLineWidth(0.15); doc.setDrawColor(190, 196, 206); doc.setFillColor(255, 255, 255);
+  doc.roundedRect(x, y, CW, CH, 3, 3, 'FD');
+  // encabezado
+  doc.setFillColor(...col);
+  doc.roundedRect(x, y, CW, 13, 3, 3, 'F'); doc.rect(x, y + 6, CW, 7, 'F');
+  let tx = x + 4;
+  if(o.logo){ try{ doc.addImage(o.logo, 'PNG', x + 3, y + 2, 9, 9); tx = x + 14; }catch(err){} }
+  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold');
+  textoAjustado(doc, CONFIG.INSTITUCION.toUpperCase(), tx, y + 5.8, CW - (tx - x) - 4, 8.5, 5.5);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(5.8);
+  doc.text(`${CONFIG.SUBTITULO_CARNET} · ${o.anio}`, tx, y + 10.3);
+  // foto (marco para pegar foto, con iniciales)
+  doc.setFillColor(238, 242, 248); doc.setDrawColor(205, 214, 228);
+  doc.roundedRect(x + 4, y + 16, 19, 23, 1.5, 1.5, 'FD');
+  doc.setTextColor(150, 165, 190); doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
+  doc.text(iniciales(e), x + 13.5, y + 29.5, { align:'center' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(4.3); doc.text('FOTO', x + 13.5, y + 37, { align:'center' });
+  // datos
+  const cx = x + 26, cw = 30.3;
+  let cy = y + 17.6;
+  const campo = (etq, valor, tam, fuente) => {
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(4.6); doc.setTextColor(107, 119, 140);
+    doc.text(etq, cx, cy); cy += 3.2;
+    doc.setFont(fuente || 'helvetica', 'bold'); doc.setTextColor(17, 17, 17);
+    const r = textoAjustado(doc, valor || '—', cx, cy, cw, tam, 5.4);
+    cy += (r.lineas - 1) * r.tam * 0.38 + 3.6;
+  };
+  campo('APELLIDOS', apellidos(e), 8.2);
+  campo('NOMBRES', nombres(e), 7.8);
+  campo(e.tipoDoc === 'PASAPORTE' ? 'PASAPORTE' : 'CÉDULA', e.documento || 'PENDIENTE', 8, 'courier');
+  // QR
+  const ql = 23, qx = x + CW - 4 - ql, qy = y + 16;
+  qrPDF(doc, textoQR(e), qx, qy, ql);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(4.6); doc.setTextColor(110, 110, 110);
+  doc.text('ID ' + padId(e.id), qx + ql / 2, qy + ql + 2.4, { align:'center' });
+  // banda grupo / nivel
+  doc.setFillColor(...tinte(col, .86)); doc.rect(x, y + 42.5, CW, 7, 'F');
+  const banda = (etq, valor, bx, bw) => {
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(4.4); doc.setTextColor(91, 101, 119);
+    doc.text(etq, bx, y + 44.9);
+    doc.setFont('helvetica', 'bold'); doc.setTextColor(17, 17, 17);
+    textoAjustado(doc, valor || '—', bx, y + 48.2, bw, 7, 4.8);
+  };
+  banda('GRUPO', e.grupo, x + 4, 44);
+  banda('NIVEL', e.nivel, x + 51, 30);
+  // pie
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(4.3); doc.setTextColor(140, 140, 140);
+  doc.text(`Personal e intransferible · Año lectivo ${o.anio}`, x + CW / 2, y + 52.4, { align:'center' });
+}
+
+function carnetReverso(doc, x, y, e, o){
+  const col = o.color;
+  doc.setLineWidth(0.15); doc.setDrawColor(190, 196, 206); doc.setFillColor(255, 255, 255);
+  doc.roundedRect(x, y, CW, CH, 3, 3, 'FD');
+  doc.setFillColor(...col); doc.roundedRect(x, y, CW, 8, 3, 3, 'F'); doc.rect(x, y + 4, CW, 4, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(6.5);
+  doc.text('NORMAS DE USO', x + CW / 2, y + 5.4, { align:'center' });
+  doc.setTextColor(40, 40, 40); doc.setFont('helvetica', 'normal'); doc.setFontSize(5.6);
+  const normas = [
+    '• Este carnet es personal e intransferible.',
+    '• Debe portarse visible dentro de la institución.',
+    '• Preséntalo al marcar tu asistencia (código QR).',
+    '• En caso de pérdida, notifícalo de inmediato a la administración.'
+  ];
+  let yy = y + 13;
+  normas.forEach(t => { const l = doc.splitTextToSize(t, CW - 10); doc.text(l, x + 5, yy); yy += l.length * 2.6 + 0.6; });
+  yy += 1.5;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(5.4);
+  doc.text('Si encuentras este carnet, devuélvelo a:', x + 5, yy); yy += 2.7;
+  doc.setFont('helvetica', 'normal');
+  const dev = doc.splitTextToSize(CONFIG.INSTITUCION + (CONFIG.CONTACTO_CARNET ? ' · ' + CONFIG.CONTACTO_CARNET : ''), CW - 10);
+  doc.text(dev.slice(0, 2), x + 5, yy);
+  doc.setDrawColor(120, 120, 120); doc.setLineWidth(0.2);
+  doc.line(x + CW / 2 - 20, y + 47, x + CW / 2 + 20, y + 47);
+  doc.setFontSize(4.8); doc.setTextColor(100, 100, 100);
+  doc.text('Firma y sello de la dirección', x + CW / 2, y + 49.8, { align:'center' });
+  // referencia para comprobar que frente y reverso coinciden al imprimir a doble cara
+  doc.setFontSize(3.8); doc.setTextColor(170, 170, 170);
+  doc.text(`ID ${padId(e.id)} · ${apellidos(e)}`, x + CW - 4, y + 52.4, { align:'right' });
+}
+
+function marcasCorte(doc, x, y){
+  doc.setDrawColor(160, 160, 160); doc.setLineWidth(0.1);
+  const L = 3, g = 1.2;
+  [[x, y], [x + CW, y], [x, y + CH], [x + CW, y + CH]].forEach(([px, py], i) => {
+    const sx = i % 2 === 0 ? -1 : 1, sy = i < 2 ? -1 : 1;
+    doc.line(px + sx * g, py, px + sx * (g + L), py);
+    doc.line(px, py + sy * g, px, py + sy * (g + L));
+  });
+}
+
+async function generarCarnetsPDF(lista, opts = {}){
+  const jsPDF = await cargarPDF();
+  const doc = new jsPDF({ unit:'mm', format:'letter', orientation:'portrait' });
+  const PW = doc.internal.pageSize.getWidth(), PH = doc.internal.pageSize.getHeight();
+  const COLS = 2, FILAS = 4, POR_HOJA = COLS * FILAS, GX = 8, GY = 7;
+  const mx = (PW - (COLS * CW + (COLS - 1) * GX)) / 2;
+  const my = (PH - (FILAS * CH + (FILAS - 1) * GY)) / 2 + 3;
+  const o = { color: hexRGB($('carColor').value || CONFIG.COLOR_CARNET), anio: $('carAnio').value || new Date().getFullYear(), logo: await cargarLogo() };
+  const reverso = $('carReverso').checked, marcas = $('carMarcas').checked;
+  const hojas = Math.ceil(lista.length / POR_HOJA);
+  const pos = (i, espejo) => {
+    const c = i % COLS, f = Math.floor(i / COLS);
+    return [mx + (espejo ? COLS - 1 - c : c) * (CW + GX), my + f * (CH + GY)];
+  };
+  for(let h = 0; h < hojas; h++){
+    if(h > 0) doc.addPage();
+    const lote = lista.slice(h * POR_HOJA, (h + 1) * POR_HOJA);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
+    const grupos = [...new Set(lote.map(e => e.grupo))].join(', ');
+    doc.text(`${CONFIG.INSTITUCION} · Carnets ${o.anio} · ${grupos}`, mx, my - 8);
+    doc.text(`Hoja ${h + 1} de ${hojas}${reverso ? ' · FRENTE' : ''}`, PW - mx, my - 8, { align:'right' });
+    lote.forEach((e, i) => { const [x, y] = pos(i, false); carnetFrente(doc, x, y, e, o); if(marcas) marcasCorte(doc, x, y); });
+    if(reverso){
+      doc.addPage();
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
+      doc.text(`Hoja ${h + 1} de ${hojas} · REVERSO (doble cara, borde largo)`, PW - mx, my - 8, { align:'right' });
+      lote.forEach((e, i) => { const [x, y] = pos(i, true); carnetReverso(doc, x, y, e, o); if(marcas) marcasCorte(doc, x, y); });
+    }
+  }
+  doc.save((opts.nombreArchivo || 'carnets') + '.pdf');
+}
+
+/* ---------- Cuenta ---------- */
+$('pwGuardar').addEventListener('click', async () => {
+  const err = $('pwError'); err.className = 'modal-error';
+  const actual = $('pwActual').value, nueva = $('pwNueva').value, nueva2 = $('pwNueva2').value;
+  if(!actual || !nueva){ err.textContent = 'Completa todos los campos.'; return; }
+  if(nueva !== nueva2){ err.textContent = 'Las contraseñas nuevas no coinciden.'; return; }
+  if(nueva.length < 10 || !/[A-Za-z]/.test(nueva) || !/\d/.test(nueva)){ err.textContent = 'Mínimo 10 caracteres, con letras y números.'; return; }
+  err.textContent = 'Guardando…';
+  const data = await api('adminCambiarClave', { actual, nueva }, { admin:true });
+  ['pwActual','pwNueva','pwNueva2'].forEach(id => $(id).value = '');
+  err.className = 'modal-error' + (data.ok ? ' ok' : '');
+  err.textContent = data.mensaje || (data.ok ? 'Contraseña actualizada.' : 'No se pudo cambiar.');
+});
+
+searchInput.focus();
+</script>
+</body>
+</html>
