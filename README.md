@@ -35,6 +35,14 @@ Luego crea el usuario administrador en Authentication → Users y desactiva "All
 - `robots.txt`, `sitemap.xml`, `404.html` — para Google y para enlaces rotos.
 - `netlify.toml` — cabeceras de seguridad (CSP, HSTS, etc.) y caché.
 
+## Control de asistencia (`/asistencia/`)
+Aplicación aparte para registrar la asistencia de estudiantes con carnet QR, grupos, reportes y carnets
+imprimibles. Guarda los datos en Google Sheets mediante Google Apps Script.
+- `asistencia/` — la página (se publica en `/asistencia/`).
+- `asistencia-apps-script/` — el código del servidor (`Code.gs`) y la guía de instalación. **No se publica.**
+
+Instrucciones y recomendaciones: [`asistencia-apps-script/README.md`](asistencia-apps-script/README.md).
+
 ## Configuración
 En `index.html`, sección `CFG`: número de Yappy, datos bancarios, horario de oficina y enlaces de pago.
 
