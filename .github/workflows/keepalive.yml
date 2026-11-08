@@ -1,0 +1,33 @@
+# Mantiene despierta la base de datos de Supabase (el plan gratis la pausa tras días sin uso)
+# y vigila que la web y la base de datos respondan. Si algo falla, GitHub te avisa por correo.
+name: Mantener activo y vigilar
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'   # cada 6 horas
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SB_URL: https://ufybfbydbregtrvdsscw.supabase.co
+      # Clave pública (anon): es la misma que ya está en index.html
+      SB_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmeWJmYnlkYnJlZ3RydmRzc2N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMzg4NzMsImV4cCI6MjA4ODkxNDg3M30.jJikFNnRpSH6-c9SwX34Kyu5Gepanbfvh2LMSWSOzRk
+      SITE: https://bizlaunchpanama.netlify.app
+    steps:
+      - name: Base de datos (consulta real para que cuente como actividad)
+        run: |
+          for i in 1 2 3; do
+            code=$(curl -s -o /tmp/r.json -w '%{http_code}' --max-time 30 \
+              "$SB_URL/rest/v1/negocios?select=id&active=eq.true&limit=1" \
+              -H "apikey: $SB_KEY" -H "Authorization: Bearer $SB_KEY")
+            echo "Supabase respondió $code"; [ "$code" = "200" ] && exit 0; sleep 60
+          done
+          echo "::error::Supabase no responde (¿proyecto pausado?). Entra a supabase.com y pulsa Restore."; exit 1
+      - name: Web
+        run: |
+          code=$(curl -s -o /tmp/w.html -w '%{http_code}' --max-time 30 "$SITE/")
+          echo "La web respondió $code"
+          [ "$code" = "200" ] && grep -q 'BizLaunch' /tmp/w.html || { echo "::error::La web no responde bien ($code)"; exit 1; }

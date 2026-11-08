@@ -809,6 +809,16 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 .quiz-res p{flex:1;min-width:220px;font-size:.9rem}
 .quiz-res p b{color:var(--acc)}
 .swipe-hint{display:none}
+.trust{max-width:1000px;margin:22px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.trust-i{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--bdr)}
+.trust-i i{font-style:normal;font-size:1.25rem;line-height:1;width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:rgba(0,245,200,.08)}
+.trust-t{display:flex;flex-direction:column;min-width:0}
+.trust-t b{display:block;font-size:.9rem;color:var(--txt)}
+.trust-t small{display:block;color:var(--mut);font-size:.78rem;margin-top:2px;line-height:1.4}
+.trust-pay{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+.trust-pay:before{content:'Aceptamos';color:var(--dim);font-size:.78rem;margin-right:4px}
+.pm{padding:5px 12px;border-radius:8px;background:#F4F6FB;color:#0B1530;font-size:.78rem;font-weight:800;letter-spacing:.01em}
+@media(max-width:760px){.trust{grid-template-columns:1fr}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 .plan-dots{display:none}
 .incl{max-width:1000px;margin:26px auto 0;padding:20px 22px;border-radius:18px;border:1px dashed var(--bdr2);text-align:center}
@@ -1161,6 +1171,12 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       </div>
     </div>
     <div class="plan-dots" id="plan-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="trust rv-in" id="trust">
+      <div class="trust-i"><i>⚡</i><div class="trust-t"><b>Activación en menos de 24 h</b><small>Hábiles, después de confirmar tu pago</small></div></div>
+      <div class="trust-i"><i>🛡️</i><div class="trust-t"><b>Garantía de devolución</b><small>Si no activamos tu perfil a tiempo, te devolvemos el dinero</small></div></div>
+      <div class="trust-i"><i>🔒</i><div class="trust-t"><b>Pago seguro</b><small>Procesado por PayPal, no guardamos tu tarjeta</small></div></div>
+      <div class="trust-pay" aria-label="Formas de pago aceptadas"><span class="pm">PayPal</span><span class="pm">Visa</span><span class="pm">Mastercard</span><span class="pm js-pm-yappy" hidden>Yappy</span><span class="pm js-pm-bank" hidden>Transferencia</span></div>
+    </div>
     <div class="incl rv-in">
       <b class="incl-t">Incluido en todos los planes</b>
       <div class="incl-g">
@@ -1178,10 +1194,6 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <div class="addon-ico">⚡</div>
       <div class="grow"><b>Complemento: Destacar</b><p>Para cualquier plan. Tu negocio sale de primero en el directorio y en “Negocios destacados” de la portada, con la etiqueta ⚡ Destacado.</p></div>
       <div class="addon-opts" id="addon-opts"></div>
-    </div>
-    <div class="guarantee rv-in">
-      <span style="font-size:1.8rem">🛡️</span>
-      <div><b>Garantía de activación en 24 horas</b><p>Si no activamos tu perfil en 24 horas hábiles después de confirmar tu pago, te devolvemos el dinero.</p></div>
     </div>
   </div>
 </section>
@@ -1537,7 +1549,10 @@ function safeUrl(u) {
   if (!/^https?:\/\//i.test(u)) { if (/^[\w-]+(\.[\w-]+)+(\/\S*)?$/i.test(u)) u = 'https://' + u; else return ''; }
   try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; }
 }
-function toast(msg, type) { const t = byId('toast'); t.textContent = msg; t.className = 'toast on ' + (type || ''); clearTimeout(t._t); t._t = setTimeout(() => t.className = 'toast', 3200); }
+const NET_MSG = 'No hay conexión con el servidor en este momento. Si estuvo inactivo puede tardar 2 o 3 minutos en despertar: espera un poco y vuelve a intentar.';
+const isNetErr = m => /failed to fetch|networkerror|load failed|fetch failed|network request failed|tiempo de espera|timed? ?out|not accessible|\b50[234]\b|upstream/i.test(String(m || ''));
+const niceErr = (m, fb) => isNetErr(m) ? NET_MSG : (m || fb || 'Ocurrió un error. Intenta de nuevo.');
+function toast(msg, type) { const t = byId('toast'); msg = niceErr(msg); t.textContent = msg; t.className = 'toast on ' + (type || ''); clearTimeout(t._t); t._t = setTimeout(() => t.className = 'toast', msg === NET_MSG ? 7000 : 3200); }
 const REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 let LOCKS = 0;
 function lock(on) { LOCKS = Math.max(0, LOCKS + (on ? 1 : -1)); document.body.style.overflow = LOCKS ? 'hidden' : ''; }
@@ -1549,7 +1564,8 @@ function loadScript(src) { return new Promise((res, rej) => { if (document.query
 
 /* ---------- services ---------- */
 let SB = null;
-try { SB = window.supabase.createClient(CFG.SB_URL, CFG.SB_KEY); } catch (e) { console.error('Supabase no disponible', e); }
+const sbFetch = (url, opts) => Promise.race([fetch(url, opts), new Promise((_, rej) => setTimeout(() => rej(new TypeError('Failed to fetch: tiempo de espera agotado')), 25000))]);
+try { SB = window.supabase.createClient(CFG.SB_URL, CFG.SB_KEY, { global: { fetch: sbFetch } }); } catch (e) { console.error('Supabase no disponible', e); }
 let EJS = false;
 try { if (window.emailjs) { emailjs.init({ publicKey: CFG.EJS.key }); EJS = true; } } catch (e) { console.warn('EmailJS', e); }
 
@@ -1721,6 +1737,7 @@ function renderPlanExtras() {
   const ao = byId('addon-opts');
   if (ao) ao.innerHTML = (SITE.boost || BOOST_DEFAULT).map(o => `<a href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, quiero destacar mi negocio por ' + o.d + ' días (' + money2(o.p) + ').'))}" target="_blank" rel="noopener"><small>${o.d} ${o.d === 1 ? 'día' : 'días'}</small><b>${money2(o.p)}</b></a>`).join('');
   const cmp = byId('compare'); if (cmp && !cmp.hidden) cmp.innerHTML = compareTable();
+  try { $$('.js-pm-yappy').forEach(e => e.hidden = !yappyReady()); $$('.js-pm-bank').forEach(e => e.hidden = !bankReady()); } catch (e) {}
 }
 function compareTable() {
   const ks = Object.keys(PLANS).filter(k => !PLANS[k].free || freeOn());
@@ -1802,7 +1819,7 @@ function renderPlanProof(review) {
 /* =====================================================================
    PUBLIC DIRECTORY
    ===================================================================== */
-let ALL = [], LIMIT = 12, OFFERS = [];
+let ALL = [], LIMIT = 12, OFFERS = [], DIR_TRIES = 0;
 const F = { q:'', cat:'', prov:'', fav:false };
 
 function fillSelects() {
@@ -1821,10 +1838,12 @@ async function loadDirectory() {
     // fall back to older column sets if a newer SQL update has not been applied yet
     for (const cols of [PUB_COLS_V4, PUB_COLS_OLD]) { if (!res.error || PUBC === PUB_COLS_OLD) break; if (cols.length < PUBC.length) { PUBC = cols; res = await SB.from('negocios').select(PUBC).eq('active', true); } }
     if (res.error) throw res.error;
-    ALL = (res.data || []).map(norm).filter(isLive);
+    ALL = (res.data || []).map(norm).filter(isLive); DIR_TRIES = 0;
   } catch (e) {
     console.error('directorio', e); ALL = [];
-    byId('dir-grid').innerHTML = '<div class="empty" style="grid-column:1/-1">⚠️<b>No pudimos cargar el directorio</b>Revisa tu conexión e intenta de nuevo en unos minutos.</div>';
+    DIR_TRIES = (DIR_TRIES || 0) + 1; clearTimeout(loadDirectory.t);
+    if (DIR_TRIES <= 6) loadDirectory.t = setTimeout(loadDirectory, 30000);
+    byId('dir-grid').innerHTML = '<div class="empty" style="grid-column:1/-1">⏳<b>Estamos conectando con el servidor</b>Puede tardar 2 o 3 minutos si estuvo inactivo. ' + (DIR_TRIES <= 6 ? 'Lo intentaremos de nuevo automáticamente.' : 'Intenta de nuevo en unos minutos.') + '<br><br><button class="btn btn-ghost btn-sm" data-act="dir-retry">Reintentar ahora</button></div>';
     byId('result-info').textContent = ''; routeFromHash(); return;
   }
   await loadOffers();
@@ -2413,8 +2432,9 @@ async function openOwnerPanel(token, push) {
   if (push !== false) history.replaceState(null, '', '#panel/' + token);
   const body = byId('op-body');
   body.innerHTML = '<div class="skel" style="height:90px;margin-bottom:16px"></div><div class="kpis">' + '<div class="skel" style="height:90px"></div>'.repeat(4) + '</div><div class="skel" style="height:260px"></div>';
-  let d = null;
-  try { const { data, error } = await SB.rpc('panel_negocio', { p_token: token }); if (error) throw error; d = data; } catch (e) { console.error(e); }
+  let d = null, net = false;
+  try { const { data, error } = await SB.rpc('panel_negocio', { p_token: token }); if (error) throw error; d = data; } catch (e) { console.error(e); net = isNetErr(e && e.message) || !SB; }
+  if (!d && net) { body.innerHTML = `<div class="empty" style="margin-top:40px">⏳<b>El servidor está despertando</b>${NET_MSG}<br><br><button class="btn btn-pri btn-sm" data-act="op-retry" data-token="${esc(token)}">Reintentar</button></div>`; return; }
   if (!d) { body.innerHTML = `<div class="empty" style="margin-top:40px">🔒<b>Link no válido</b>Revisa que copiaste el link completo o escríbenos para enviártelo de nuevo.<br><br><a class="btn btn-wa btn-sm" href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, necesito el link de mi panel de estadísticas.'))}" target="_blank" rel="noopener">${WA_SVG}Pedir mi link</a></div>`; return; }
   OP = { token, d }; renderOwnerPanel();
 }
@@ -2630,7 +2650,7 @@ function goStep(n) {
   if (n === 4) { buildSummary(); renderPays(); }
   byId('reg').scrollTo({ top: 0, behavior: 'smooth' });
 }
-function stepErr(n, msg) { const e = document.querySelector('[data-err="' + n + '"]'); e.textContent = msg || ''; e.classList.toggle('on', !!msg); return !msg; }
+function stepErr(n, msg) { const e = document.querySelector('[data-err="' + n + '"]'); if (msg && isNetErr(msg)) msg = NET_MSG; e.textContent = msg || ''; e.classList.toggle('on', !!msg); return !msg; }
 const v = id => (byId(id).value || '').trim();
 
 function validate(n) {
@@ -2849,7 +2869,7 @@ async function adminLogin(e) {
     if (error) throw error;
     if (!isAdminEmail(data.user.email)) { await SB.auth.signOut(); throw new Error('Esta cuenta no tiene permisos de administrador.'); }
     byId('adm-pass').value = ''; await enterAdmin();
-  } catch (x) { err.textContent = x.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : x.message; err.classList.add('on'); }
+  } catch (x) { err.textContent = x.message === 'Invalid login credentials' ? 'Correo o contraseña incorrectos.' : niceErr(x.message); err.classList.add('on'); }
   finally { btn.disabled = false; }
 }
 async function adminForgot() {
@@ -2860,7 +2880,7 @@ async function adminForgot() {
     const { error } = await SB.auth.resetPasswordForEmail(em, { redirectTo: SITE_ROOT() });
     if (error) throw error;
     toast('Listo: revisa ' + em + ' (también la carpeta de spam).', 'ok');
-  } catch (x) { err.textContent = /rate|seconds|limit/i.test(x.message || '') ? 'Ya se envió un enlace hace poco. Espera unos minutos y revisa tu correo (también spam).' : (x.message || 'No se pudo enviar el enlace.'); err.classList.add('on'); }
+  } catch (x) { err.textContent = /rate|seconds|limit/i.test(x.message || '') ? 'Ya se envió un enlace hace poco. Espera unos minutos y revisa tu correo (también spam).' : niceErr(x.message, 'No se pudo enviar el enlace.'); err.classList.add('on'); }
 }
 function showNewPassword() {
   show('admin', true);
@@ -2882,7 +2902,7 @@ async function saveNewPassword(e) {
     byId('adm-newpass').hidden = true; byId('adm-form').hidden = false;
     toast('Contraseña actualizada ✓', 'ok');
     if (data && data.user && isAdminEmail(data.user.email)) { history.replaceState(null, '', '#admin'); await enterAdmin(); }
-  } catch (x) { fail(/session|expired|jwt/i.test(x.message || '') ? 'El enlace venció. Vuelve a pedir uno con “¿Olvidaste tu contraseña?”.' : /same|different/i.test(x.message || '') ? 'Usa una contraseña distinta a la anterior.' : (x.message || 'No se pudo guardar.')); }
+  } catch (x) { fail(/session|expired|jwt/i.test(x.message || '') ? 'El enlace venció. Vuelve a pedir uno con “¿Olvidaste tu contraseña?”.' : /same|different/i.test(x.message || '') ? 'Usa una contraseña distinta a la anterior.' : niceErr(x.message, 'No se pudo guardar.')); }
   finally { btn.disabled = false; }
 }
 async function adminLogout() { await SB.auth.signOut(); byId('adm-panel').hidden = true; byId('adm-login').hidden = false; byId('adm-logout').hidden = true; toast('Sesión cerrada'); }
@@ -3702,6 +3722,8 @@ document.addEventListener('click', e => {
     case 'hook-save': saveHook(); break;
     case 'pages-rebuild': rebuildPages(true); break;
     case 'compare': toggleCompare(t); break;
+    case 'dir-retry': clearTimeout(loadDirectory.t); loadDirectory(); break;
+    case 'op-retry': openOwnerPanel(t.dataset.token, false); break;
     case 'quiz': quizPick(t); break;
     case 'free-toggle': { const was = SITE.gratis_off; SITE.gratis_off = !was; saveSettings(SITE.promo, SITE.gratis_off ? '✓ Plan Gratis deshabilitado' : '✓ Plan Gratis habilitado').then(ok => { if (!ok) { SITE.gratis_off = was; if (ATAB === 'ajustes') adminTab('ajustes'); } applyFree(); }); break; }
     case 'atab': adminTab(t.dataset.tab); break;
