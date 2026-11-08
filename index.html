@@ -3746,10 +3746,10 @@ function aEdit(id) {
     <div class="eh">Redes sociales</div><div id="e-socs"></div><button class="btn btn-ghost btn-xs" data-act="e-soc-add" style="margin-bottom:16px">＋ Agregar red</button>
     <div class="eh">Fotos <span id="e-pc" style="color:var(--mut)"></span></div><div class="thumbs" id="e-thumbs"></div>
     <button class="btn btn-ghost btn-sm" style="margin-top:10px" data-act="e-photo-add">📷 Agregar fotos</button><input type="file" id="e-files" accept="image/*" multiple hidden>
-    <div class="eh" style="margin-top:22px">Menú / servicios y precios</div><div id="e-menu"></div>
-    <div class="eh" style="margin-top:22px">Reservas y Yappy</div><div id="e-extras"></div>`;
+    <div class="eh" style="margin-top:22px">Menú, precios y pedidos en línea</div><div id="e-menu"></div>
+    <div class="eh" style="margin-top:22px">Agenda en línea y Yappy</div><div id="e-extras"></div>`;
   eRenderPlans(); eRenderSocs(); eRenderPhotos();
-  menuEditor(byId('e-menu'), b.menu, { food: isFood(b.category), limit: 200 });
+  menuEditor(byId('e-menu'), b.menu, { food: isFood(b.category), limit: 200, pedidos: true });
   extrasEditor(byId('e-extras'), b.extras, { prefix: 'ex', note: 'Se muestran en el perfil solo si el plan es Pro o Premium.' });
   byId('e-files').addEventListener('change', ev => { addPhotos(ev.target.files, EDIT.photos, 30, eRenderPhotos); ev.target.value = ''; });
   byId('edit-save').textContent = id ? 'Guardar cambios' : 'Crear negocio';
