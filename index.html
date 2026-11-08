@@ -619,6 +619,100 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 .rsv-slots button:hover,.rsv-days button:hover{border-color:var(--acc)}
 .rsv-lbl{font-size:.74rem;font-weight:700;color:var(--mut);letter-spacing:.04em;margin-bottom:8px}
 .rsv-ppl{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.rsv-servs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:16px}
+.rsv-servs button{text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--bdr2);transition:border-color .15s,background .15s}
+.rsv-servs button b{display:block;font-size:.88rem}
+.rsv-servs button small{color:var(--mut);font-size:.74rem}
+.rsv-servs button:hover{border-color:var(--acc)}
+.rsv-servs button.on{border-color:var(--acc);background:rgba(0,245,200,.1)}
+.rsv-servs button.on b{color:var(--acc)}
+.rsv-slots button.off,.rsv-slots button.off:hover{opacity:.35;text-decoration:line-through;cursor:not-allowed;background:transparent!important;border-color:var(--bdr2)!important;color:var(--mut)!important;box-shadow:none!important}
+.rsv-free{color:var(--acc);font-weight:600;letter-spacing:0}
+.rsv-hint{color:var(--mut);font-size:.86rem;margin-bottom:16px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px dashed var(--bdr2)}
+.done-box{text-align:center}
+.done-ico{font-size:2.6rem;line-height:1;margin-bottom:8px;animation:pop .5s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.done-box h4{font-family:'Syne',sans-serif;font-size:1.3rem;margin-bottom:6px}
+.done-box>p{color:var(--mut);font-size:.88rem;margin-bottom:14px}
+.code-pill{display:inline-flex;gap:8px;align-items:center;padding:8px 16px;border-radius:999px;background:rgba(0,245,200,.08);border:1px solid rgba(0,245,200,.3);color:var(--mut);font-size:.82rem;margin-bottom:14px}
+.code-pill b{font-family:ui-monospace,Menlo,monospace;font-size:1.05rem;color:var(--acc);letter-spacing:.12em}
+.done-sum{list-style:none;text-align:left;border:1px solid var(--bdr);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.done-sum li{display:flex;justify-content:space-between;gap:12px;padding:9px 14px;font-size:.86rem;border-bottom:1px solid var(--bdr)}
+.done-sum li:last-child{border-bottom:none}
+.done-sum li span{color:var(--mut)}
+.done-sum li b{text-align:right}
+.done-sum li.tot{background:rgba(255,255,255,.03)}
+.done-sum li.tot b{color:var(--acc);font-size:1rem}
+.ord-items{border:1px solid var(--bdr);border-radius:14px;margin-bottom:16px}
+.ord-it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--bdr)}
+.ord-it:last-child{border-bottom:none}
+.ord-it b{font-size:.88rem}
+.ord-it small{display:block;color:var(--mut);font-size:.74rem}
+.ord-it .qty span{display:inline-block;min-width:22px;text-align:center;font-weight:700}
+.ord-p{min-width:64px;text-align:right}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.seg2 button{padding:11px 10px;border-radius:12px;border:1.5px solid var(--bdr2);font-weight:600;font-size:.86rem;transition:border-color .15s,background .15s}
+.seg2 button.on{border-color:var(--acc);background:rgba(0,245,200,.1);color:var(--acc)}
+.ord-tot{border-top:1px dashed var(--bdr2);padding-top:12px}
+.ord-tot div{display:flex;justify-content:space-between;font-size:.88rem;color:var(--mut);margin-bottom:4px}
+.ord-tot div b{color:var(--txt)}
+.ord-tot div.big{font-size:1.05rem;color:var(--txt);margin-top:4px}
+.ord-tot div.big b{color:var(--acc);font-family:'Syne',sans-serif;font-size:1.25rem}
+.ord-tot p{color:var(--mut);font-size:.8rem;margin-top:6px}
+.ord-badges{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 14px}
+.ord-badges span{font-size:.76rem;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(0,245,200,.08);border:1px solid rgba(0,245,200,.22);color:var(--txt)}
+.trk-hd{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:16px}
+.trk-hd small{display:block;color:var(--mut);font-size:.76rem}
+.trk-hd b{font-family:'Syne',sans-serif;font-size:1.15rem}
+.steps{list-style:none;display:flex;gap:4px;margin-bottom:18px;position:relative}
+.steps li{flex:1;text-align:center;position:relative;color:var(--dim);font-size:.74rem;font-weight:600}
+.steps li i{font-style:normal;display:grid;place-items:center;width:40px;height:40px;margin:0 auto 6px;border-radius:50%;background:rgba(255,255,255,.04);border:2px solid var(--bdr2);font-size:1.05rem;position:relative;z-index:1;filter:grayscale(1);opacity:.6}
+.steps li:not(:first-child):before{content:'';position:absolute;top:20px;right:50%;width:100%;height:2px;background:var(--bdr2)}
+.steps li.ok,.steps li.now{color:var(--txt)}
+.steps li.ok i,.steps li.now i{filter:none;opacity:1;border-color:var(--acc);background:rgba(0,245,200,.1)}
+.steps li.ok:before,.steps li.now:before{background:var(--acc)!important}
+.steps li.now i{box-shadow:0 0 0 6px rgba(0,245,200,.12);animation:pulseRing 2s ease-in-out infinite}
+.steps li.now span{color:var(--acc)}
+@keyframes pulseRing{50%{box-shadow:0 0 0 10px rgba(0,245,200,.04)}}
+.ib-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.ib-hd h3{margin:0}
+.ib-tabs{display:flex;gap:6px;margin-bottom:12px}
+.ib-tabs button{padding:8px 14px;border-radius:999px;border:1px solid var(--bdr2);font-weight:700;font-size:.84rem;display:inline-flex;gap:6px;align-items:center}
+.ib-tabs button.on{background:var(--acc);border-color:var(--acc);color:#04121A}
+.ib-n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:.72rem}
+.ib-it{border:1px solid var(--bdr);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:rgba(255,255,255,.015)}
+.ib-it.new{border-color:rgba(255,176,32,.5);box-shadow:inset 3px 0 0 var(--amb)}
+.ib-it.done{opacity:.6}
+.ib-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ib-top small{color:var(--dim);font-size:.74rem}
+.ib-code{font-family:ui-monospace,Menlo,monospace;letter-spacing:.06em}
+.ib-time{font-family:'Syne',sans-serif;font-size:1.05rem}
+.ib-tot{margin-left:auto;color:var(--acc)}
+.ib-tot small{color:var(--mut);font-weight:500}
+.ib-who{font-size:.84rem;color:var(--mut);margin-bottom:6px}
+.ib-who a{color:var(--txt)}
+.ib-items{list-style:none;font-size:.86rem;margin:6px 0 8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.03)}
+.ib-items li{display:flex;gap:6px;padding:2px 0}
+.ib-items li span{margin-left:auto;color:var(--mut)}
+.ib-items li.mut{color:var(--mut);border-top:1px dashed var(--bdr);margin-top:4px;padding-top:6px}
+.ib-note{font-size:.84rem;margin-bottom:8px;padding:6px 10px;border-radius:8px;background:rgba(255,200,61,.08)}
+.ib-act{display:flex;gap:6px;flex-wrap:wrap}
+.ib-day{font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:14px 0 8px}
+.ib-day:first-child{margin-top:0}
+.ib-day small{text-transform:none;letter-spacing:0;font-weight:500;color:var(--dim);margin-left:6px}
+.ib-empty{text-align:center;color:var(--mut);font-size:.86rem;padding:18px 10px}
+.ib-empty b{display:block;color:var(--txt);margin:6px 0 4px}
+.xe-sv{display:grid;grid-template-columns:1fr 84px 96px 34px;gap:6px;margin-bottom:6px}
+.xe-sv input,.xe-sv select{background:var(--card);color:var(--txt);border:1.5px solid var(--bdr2);border-radius:9px;padding:8px 10px;font-size:.86rem;outline:none;width:100%;min-width:0}
+.xe-sv input:focus,.xe-sv select:focus{border-color:var(--pur)}
+@media(max-width:520px){.xe-sv{grid-template-columns:1fr 1fr 34px}.xe-sv [data-sv="n"]{grid-column:1/-1}}
+.pe-opt{display:inline-flex;gap:8px;align-items:center;font-size:.88rem;cursor:pointer}
+.pe-opt input{width:auto!important;accent-color:var(--acc)}
+.pe-box{border:1px solid var(--bdr);border-radius:14px;padding:14px;margin-bottom:16px;background:rgba(0,245,200,.03)}
+.mis{display:grid;gap:8px}
+.mis button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--bdr2);text-align:left;font-size:.86rem}
+.mis button:hover{border-color:var(--acc)}
+.mis small{color:var(--mut);font-family:ui-monospace,Menlo,monospace;font-size:.74rem}
 .rsv-ppl b{font-family:'Syne',sans-serif;font-size:1.4rem;min-width:30px;text-align:center}
 .yappy-card{text-align:center;border-color:rgba(91,200,255,.35)}
 .yappy-card .y-num{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;margin:6px 0 2px;word-break:break-all}
@@ -1005,6 +1099,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#planes">Planes</a>
       <a href="#faq">Preguntas</a>
+      <a href="#seguir" class="js-mis" data-act="track-open" data-c="" hidden>🧾 Mis pedidos</a>
     </nav>
     <div class="nav-cta">
       <a class="btn btn-ghost btn-sm" href="#directorio">Buscar negocios</a>
@@ -1146,7 +1241,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <ul>
           <li>Perfil profesional y página propia en Google</li>
           <li>WhatsApp directo, mapa y código QR</li>
-          <li>Menú o lista de precios con pedidos por WhatsApp</li>
+          <li>Menú con pedidos en línea: entrega o retiro</li>
           <li>5 fotos, 1 red social y 1 oferta activa</li>
           <li>Panel de estadísticas de visitas y clics</li>
         </ul>
@@ -1162,7 +1257,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <div class="plan-month js-month" data-plan="pro"></div>
         <ul>
           <li><b>Todo lo del Básico, y además:</b></li>
-          <li>Reservas o citas por WhatsApp</li>
+          <li>Agenda en línea: citas y reservas sin cruces</li>
           <li>Botón de pago con Yappy</li>
           <li>Horario con “abierto ahora” y botón de llamada</li>
           <li>10 fotos, 2 redes, 2 ofertas y menú más grande</li>
@@ -1276,6 +1371,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <a href="#directorio">Directorio</a>
         <a href="#planes">Planes y precios</a>
         <a href="#faq">Preguntas frecuentes</a>
+        <a href="#seguir" data-act="track-open" data-c="">Seguir mi pedido o reserva</a>
       </div>
       <div>
         <h4>Contacto</h4>
@@ -1307,6 +1403,19 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   <div class="modal-box" style="max-width:560px">
     <div class="modal-hd"><h3 id="rsv-title">Reservar</h3><button class="x" data-act="rsv-close" aria-label="Cerrar">✕</button></div>
     <div class="modal-bd" id="rsv-body"></div>
+  </div>
+</div>
+
+<div class="modal" id="ord-modal" role="dialog" aria-modal="true" aria-labelledby="ord-title">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hd"><h3 id="ord-title">Tu pedido</h3><button class="x" data-act="ord-close" aria-label="Cerrar">✕</button></div>
+    <div class="modal-bd" id="ord-body"></div>
+  </div>
+</div>
+<div class="modal" id="trk-modal" role="dialog" aria-modal="true" aria-labelledby="trk-title">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hd"><h3 id="trk-title">Seguimiento</h3><button class="x" data-act="track-close" aria-label="Cerrar">✕</button></div>
+    <div class="modal-bd" id="trk-body"></div>
   </div>
 </div>
 
@@ -1606,14 +1715,20 @@ function normMenu(m) {
   m = m && typeof m === 'object' ? m : {};
   const secciones = (Array.isArray(m.secciones) ? m.secciones : []).map(s => ({ nombre: String((s && s.nombre) || ''),
     items: (Array.isArray(s && s.items) ? s.items : []).filter(i => i && i.n).map(i => ({ n: String(i.n), d: i.d ? String(i.d) : '', p: (i.p === null || i.p === undefined || i.p === '' || isNaN(+i.p)) ? null : +i.p, top: !!i.top })) }));
-  return { secciones, fotos: (Array.isArray(m.fotos) ? m.fotos : []).filter(f => typeof f === 'string'), nota: m.nota ? String(m.nota) : '' };
+  const pe = m.pedidos && typeof m.pedidos === 'object' ? m.pedidos : {};
+  const nn = v => (v === null || v === undefined || v === '' || isNaN(+v)) ? null : +v;
+  const pedidos = { activo: !!pe.activo, entrega: !!pe.entrega, retiro: pe.retiro !== false, envio: nn(pe.envio), minimo: nn(pe.minimo), zona: pe.zona ? String(pe.zona) : '', tiempo: pe.tiempo ? String(pe.tiempo) : '' };
+  if (!pedidos.entrega && !pedidos.retiro) pedidos.retiro = true;
+  return { secciones, fotos: (Array.isArray(m.fotos) ? m.fotos : []).filter(f => typeof f === 'string'), nota: m.nota ? String(m.nota) : '', pedidos };
 }
 function normExtras(e) {
   e = e && typeof e === 'object' ? e : {};
   const r = e.reservas && typeof e.reservas === 'object' ? e.reservas : {}, y = e.yappy && typeof e.yappy === 'object' ? e.yappy : {};
   const tm = s => /^([01]\d|2[0-3]):[0-5]\d$/.test(s || '') ? s : null;
   return { reservas: { activo: !!r.activo, tipo: r.tipo === 'mesa' ? 'mesa' : 'cita', dias: Array.isArray(r.dias) ? r.dias.filter(d => d >= 0 && d <= 6) : [1, 2, 3, 4, 5, 6],
-      desde: tm(r.desde) || '09:00', hasta: tm(r.hasta) || '18:00', intervalo: +r.intervalo || 30, max_personas: +r.max_personas || 10, anticipacion: +r.anticipacion || 14, nota: r.nota ? String(r.nota) : '' },
+      desde: tm(r.desde) || '09:00', hasta: tm(r.hasta) || '18:00', intervalo: +r.intervalo || 30, max_personas: +r.max_personas || 10, anticipacion: +r.anticipacion || 14, nota: r.nota ? String(r.nota) : '',
+      cupo: Math.max(1, Math.min(50, +r.cupo || (r.tipo === 'mesa' ? 4 : 1))),
+      servicios: (Array.isArray(r.servicios) ? r.servicios : []).filter(v => v && v.n).map(v => ({ n: String(v.n), p: (v.p === null || v.p === undefined || v.p === '' || isNaN(+v.p)) ? null : +v.p, min: Math.max(5, Math.min(480, +v.min || +r.intervalo || 30)) })) },
     yappy: { numero: y.numero ? String(y.numero) : '', nombre: y.nombre ? String(y.nombre) : '', qr: typeof y.qr === 'string' ? y.qr : '' } };
 }
 const isBoosted = b => !!(b && b.boostUntil && Date.now() < b.boostUntil);
@@ -1786,9 +1901,11 @@ function compareTable() {
     ['Redes sociales', k => PLANS[k].s ? String(PLANS[k].s) : N],
     ['Mapa y ubicación', yn(k => !PLANS[k].free)],
     ['g', 'Ventas'],
-    ['Menú o lista de precios con pedidos', k => MENU_LIMIT[k] ? 'Hasta ' + MENU_LIMIT[k] : N],
+    ['Menú con pedidos en línea (entrega o retiro)', k => MENU_LIMIT[k] ? 'Hasta ' + MENU_LIMIT[k] : N],
     ['Ofertas activas', k => OFFER_LIMIT[k] ? String(OFFER_LIMIT[k]) : N],
-    ['Reservas o citas por WhatsApp', yn(hasExtras)],
+    ['Agenda en línea de citas y reservas', yn(hasExtras)],
+    ['Panel de pedidos y reservas con estados', yn(k => (MENU_LIMIT[k] ?? 0) > 0)],
+    ['Seguimiento del pedido para tu cliente', yn(k => (MENU_LIMIT[k] ?? 0) > 0)],
     ['Botón de pago con Yappy', yn(hasExtras)],
     ['Horario con “abierto ahora” y botón de llamada', yn(k => PLANS[k].hours && PLANS[k].call)],
     ['Botón destacado a tu sitio web', yn(k => PLANS[k].webBtn)],
@@ -1817,7 +1934,7 @@ function quizPick(btn) {
   const k = QUIZ.g === 'primero' ? 'premium' : QUIZ.g === 'reservas' ? 'pro' : (QUIZ.t === 'comida' || QUIZ.t === 'citas') ? 'pro' : 'basico';
   const why = {
     basico: 'Te da tu perfil, página en Google, WhatsApp, mapa, QR y menú con pedidos: todo lo necesario para que te encuentren y te escriban.',
-    pro: QUIZ.g === 'reservas' ? 'Incluye reservas o citas por WhatsApp y botón de Yappy para que te paguen directo.' : 'Para ' + (QUIZ.t === 'comida' ? 'restaurantes' : 'negocios con citas') + ' lo más útil es mostrar si estás “abierto ahora”, recibir reservas y cobrar con Yappy.',
+    pro: QUIZ.g === 'reservas' ? 'Incluye agenda en línea: tus clientes apartan su hora libre, tú la confirmas desde tu panel, y cobras con Yappy.' : 'Para ' + (QUIZ.t === 'comida' ? 'restaurantes' : 'negocios con citas') + ' lo más útil es mostrar si estás “abierto ahora”, recibir reservas y cobrar con Yappy.',
     premium: 'Sales en los primeros lugares, con la insignia ✓ Verificado y un botón destacado a tu web.'
   }[k];
   const r = byId('quiz-res');
@@ -2184,7 +2301,9 @@ function menuHTML(b, T) {
   if (!lim) return '';
   const food = isFood(b.category), canOrder = !!b.wa;
   const secs = m.secciones.map(s => ({ nombre: s.nombre, items: s.items.filter(() => ++n <= lim) })).filter(s => s.items.length);
+  const pe = m.pedidos;
   return `<div class="pf-sec" id="pf-menu"><h2>${food ? '🍽' : '📋'} ${menuLabel(b.category)}</h2>
+    ${pedidosOn(b) ? `<div class="ord-badges">${pe.entrega ? `<span>🛵 Entrega a domicilio${pe.envio === 0 ? ' gratis' : pe.envio ? ' · ' + fmtP(pe.envio) : ''}</span>` : ''}${pe.retiro ? '<span>🏪 Retiro en el local</span>' : ''}${pe.tiempo ? `<span>⏱ ${esc(pe.tiempo)}</span>` : ''}${pe.minimo ? `<span>Mínimo ${fmtP(pe.minimo)}</span>` : ''}</div>` : ''}
     ${secs.length > 1 ? `<div class="mn-tabs">${secs.map((s, i) => `<button data-act="menu-jump" data-s="${i}">${esc(s.nombre || 'Sección ' + (i + 1))}</button>`).join('')}</div>` : ''}
     ${secs.map((s, si) => `<div class="mn-sec" id="mn-s${si}">${s.nombre ? `<h3>${esc(s.nombre)}</h3>` : ''}${s.items.map((it, ii) => {
       const k = si + '-' + ii;
@@ -2194,14 +2313,14 @@ function menuHTML(b, T) {
     }).join('')}</div>`).join('')}
     ${m.fotos.length ? `<p style="color:var(--mut);font-size:.82rem;margin-top:4px">${food ? 'Menú impreso' : 'Lista de precios'}:</p><div class="mn-photos">${m.fotos.map((f, i) => `<button data-act="lb-menu" data-i="${i}" aria-label="Ver foto ${i + 1} del menú"><img src="${esc(safeUrl(f))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
     ${m.nota ? `<p style="color:var(--dim);font-size:.78rem;margin-top:10px">${esc(m.nota)}</p>` : ''}
-    ${canOrder && menuCount(m) ? `<p style="color:var(--dim);font-size:.78rem;margin-top:10px">Toca <b style="color:var(--acc)">+</b> para armar tu ${food ? 'pedido' : 'cotización'} y envíalo por WhatsApp.</p>` : ''}
+    ${canOrder && menuCount(m) ? (pedidosOn(b) ? `<p style="color:var(--dim);font-size:.78rem;margin-top:10px">Toca <b style="color:var(--acc)">+</b> para armar tu pedido y envíalo en línea.</p>` : `<p style="color:var(--dim);font-size:.78rem;margin-top:10px">Toca <b style="color:var(--acc)">+</b> para armar tu ${food ? 'pedido' : 'cotización'} y envíalo por WhatsApp.</p>`) : ''}
   </div>`;
 }
 function cartItems() {
   if (!CUR) return [];
   const lim = MENU_LIMIT[CUR.plan] ?? 25; let n = 0;
   const secs = CUR.menu.secciones.map(s => ({ items: s.items.filter(() => ++n <= lim) })).filter(s => s.items.length);
-  return Object.keys(CART).filter(k => CART[k] > 0).map(k => { const [si, ii] = k.split('-').map(Number); const it = secs[si] && secs[si].items[ii]; return it ? { it, q: CART[k] } : null; }).filter(Boolean);
+  return Object.keys(CART).filter(k => CART[k] > 0).map(k => { const [si, ii] = k.split('-').map(Number); const it = secs[si] && secs[si].items[ii]; return it ? { it, q: CART[k], k } : null; }).filter(Boolean);
 }
 function cartChange(k, d) {
   CART[k] = Math.max(0, Math.min(50, (CART[k] || 0) + d)); if (!CART[k]) delete CART[k];
@@ -2209,6 +2328,7 @@ function cartChange(k, d) {
   if (q) { q.textContent = CART[k] || 0; q.hidden = !CART[k]; }
   if (box) box.querySelector('.rm').hidden = !CART[k];
   renderCart();
+  if (byId('ord-modal').classList.contains('open')) renderCheckout();
 }
 function renderCart() {
   const bar = byId('cart-bar'); const items = cartItems();
@@ -2218,7 +2338,7 @@ function renderCart() {
     items.map(x => `• ${x.q} × ${x.it.n} — ${fmtP(x.q * x.it.p)}`).join('\n') +
     `\n\nTotal: ${fmtP(total)}\n\nMi nombre: \n${food ? '¿Para recoger o entrega a domicilio?: ' : '¿Cuándo lo necesito?: '}`;
   bar.innerHTML = `<div class="ci">🛒 <b>${fmtP(total)}</b><div style="color:var(--mut);font-size:.76rem">${count} artículo${count > 1 ? 's' : ''} · <button class="linkbtn" data-act="cart-clear">vaciar</button></div></div>
-    <a class="btn btn-wa btn-sm" href="${esc(waLink(CUR.wa, msg))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}${food ? 'Pedir' : 'Cotizar'} por WhatsApp</a>`;
+    ${pedidosOn(CUR) ? `<button class="btn btn-pri btn-sm" data-act="ord-open">Continuar pedido →</button>` : `<a class="btn btn-wa btn-sm" href="${esc(waLink(CUR.wa, msg))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}${food ? 'Pedir' : 'Cotizar'} por WhatsApp</a>`}`;
   bar.classList.add('on');
   cartFeedback();
 }
@@ -2226,15 +2346,37 @@ function renderCart() {
 /* =====================================================================
    RESERVATIONS (Pro/Premium) — the customer picks day + time, it goes to WhatsApp
    ===================================================================== */
-let RSV = { day: '', time: '', ppl: 2 };
+/* customer's own details + their orders and bookings (only in this browser) */
+const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? d : v; } catch (e) { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const ME = Object.assign({ name: '', phone: '', dir: '' }, lsGet('bl_me', {}));
+const saveMe = o => { Object.assign(ME, o); lsSet('bl_me', ME); };
+const misList = () => { const a = lsGet('bl_mis', []); return Array.isArray(a) ? a.filter(x => x && /^[A-Z0-9]{6,12}$/.test(x.c || '')) : []; };
+function misAdd(it) { const a = misList().filter(x => x.c !== it.c); a.unshift(Object.assign({ at: Date.now() }, it)); lsSet('bl_mis', a.slice(0, 20)); renderMisBtn(); }
+function renderMisBtn() { const n = misList().length; $$('.js-mis').forEach(b => { b.hidden = !n; }); }
+const trackUrl = c => SITE_ROOT() + '#seguir/' + c;
+const isMissingFn = e => !!e && (e.code === 'PGRST202' || e.code === '42883' || /could not find the function|does not exist/i.test(e.message || ''));
+const telOk = t => { const d = String(t || '').replace(/\D/g, ''); return d.length >= 7 && d.length <= 15; };
+const keepVal = (id, d) => { const e = byId(id); return e ? e.value : (d || ''); };
+
+/* =====================================================================
+   RESERVATIONS (Pro/Premium) — real agenda: services, free slots, saved bookings
+   ===================================================================== */
+let RSV = { day: '', time: '', ppl: 2, serv: '', busy: {}, done: null, sending: false };
+let RSV_ONLINE = true;
 const DAY_NAMES = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
 const t2min = s => { const [a, b] = s.split(':').map(Number); return a * 60 + b; };
 const ymd = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
 const canReserve = b => b && hasExtras(b.plan) && b.extras.reservas.activo && b.extras.reservas.dias.length && !!b.wa;
-function rsvSlots(r, dayStr) {
+const rsvServs = r => r.tipo === 'cita' && r.servicios && r.servicios.length ? r.servicios : null;
+const rsvServ = r => { const s = rsvServs(r); return s ? s.find(v => v.n === RSV.serv) || null : null; };
+const rsvDur = r => { const v = rsvServ(r); return v ? v.min : (r.intervalo || 30); };
+const durLabel = m => m < 60 ? m + ' min' : (m % 60 ? Math.floor(m / 60) + ' h ' + (m % 60) + ' min' : m / 60 + (m === 60 ? ' hora' : ' horas'));
+function rsvSlots(r, dayStr, dur) {
+  dur = dur || r.intervalo || 30;
   const from = t2min(r.desde); let to = t2min(r.hasta); if (to <= from) to += 1440;
   const step = r.intervalo || 30, out = [], now = new Date(), isToday = dayStr === ymd(now), nowMin = now.getHours() * 60 + now.getMinutes();
-  for (let m = from; m + (r.tipo === 'cita' ? step : 0) <= to; m += step) {
+  for (let m = from; m + (r.tipo === 'cita' ? dur : 0) <= to; m += step) {
     if (isToday && m < nowMin + 60) continue;              // at least 1 hour ahead
     out.push(pad2(Math.floor(m / 60) % 24) + ':' + pad2(m % 60));
   }
@@ -2242,49 +2384,272 @@ function rsvSlots(r, dayStr) {
 }
 function rsvDays(r) {
   const out = [], base = new Date(); base.setHours(12, 0, 0, 0);
-  for (let i = 0; i < (r.anticipacion || 14) && out.length < 21; i++) {
+  for (let i = 0; i <= (r.anticipacion || 14) && out.length < 21; i++) {
     const d = new Date(base.getTime() + i * DAY);
     if (r.dias.includes(d.getDay()) && rsvSlots(r, ymd(d)).length) out.push({ key: ymd(d), d, i });
   }
   return out;
 }
+function slotFree(r, day, t, dur) {
+  const busy = RSV.busy[day]; if (!busy) return true;
+  const m = t2min(t); return busy.filter(b => b.s < m + dur && b.s + b.d > m).length < (r.cupo || 1);
+}
+function loadBusy(day, force) {
+  if (!RSV_ONLINE || !CUR || (!force && RSV.busy[day])) return;
+  const id = CUR.id; RSV.busy[day] = null; RSV.loading = day;
+  SB.rpc('horas_ocupadas', { p_id: id, p_fecha: day }).then(({ data, error }) => {
+    if (!CUR || CUR.id !== id) return;
+    if (error) { if (isMissingFn(error)) RSV_ONLINE = false; RSV.busy[day] = []; }
+    else RSV.busy[day] = (data || []).map(x => ({ s: t2min(x.h), d: +x.d || 30 }));
+    if (RSV.loading === day) RSV.loading = '';
+    if (byId('rsv-modal').classList.contains('open') && RSV.day === day && !RSV.done) renderReservation();
+  }, () => { RSV.busy[day] = []; RSV.loading = ''; if (RSV.day === day) renderReservation(); });
+}
 const timeLabel = (day, t) => new Date(day + 'T' + t + ':00').toLocaleTimeString('es-PA', { hour: 'numeric', minute: '2-digit' });
 const dayLabel = (d, i) => i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : d.toLocaleDateString('es-PA', { weekday: 'long', day: 'numeric', month: 'long' });
+const dayLabelStr = day => { const d = new Date(day + 'T12:00:00'); return dayLabel(d, Math.round((d - new Date(ymd(new Date()) + 'T12:00:00')) / DAY)); };
 function openReservation() {
   if (!canReserve(CUR)) return;
-  const r = CUR.extras.reservas, days = rsvDays(r);
-  RSV = { day: days[0] ? days[0].key : '', time: '', ppl: Math.min(2, r.max_personas) };
+  const r = CUR.extras.reservas, days = rsvDays(r), sv = rsvServs(r);
+  RSV = { day: days[0] ? days[0].key : '', time: '', ppl: Math.min(2, r.max_personas), serv: sv && sv.length === 1 ? sv[0].n : '', busy: {}, done: null, sending: false };
   byId('rsv-title').textContent = (r.tipo === 'mesa' ? '📅 Reservar mesa · ' : '📅 Agendar cita · ') + CUR.name;
   renderReservation(); show('rsv-modal', true);
 }
 function renderReservation() {
-  const r = CUR.extras.reservas, days = rsvDays(r), mesa = r.tipo === 'mesa';
-  if (!days.length) { byId('rsv-body').innerHTML = `<div class="empty">📅<b>No hay horarios disponibles</b>Escríbeles directo por WhatsApp para coordinar.<br><br><a class="btn btn-wa btn-sm" href="${esc(waLink(CUR.wa, 'Hola ' + CUR.name + ', quisiera hacer una reserva.'))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}Escribir</a></div>`; return; }
-  const slots = RSV.day ? rsvSlots(r, RSV.day) : [];
-  const keep = { name: byId('rsv-name') ? byId('rsv-name').value : '', note: byId('rsv-note') ? byId('rsv-note').value : '' };
-  byId('rsv-body').innerHTML = `
+  const r = CUR.extras.reservas, mesa = r.tipo === 'mesa', body = byId('rsv-body');
+  if (RSV.done) return renderReservationDone();
+  const days = rsvDays(r);
+  if (!days.length) { body.innerHTML = `<div class="empty">📅<b>No hay horarios disponibles</b>Escríbeles directo por WhatsApp para coordinar.<br><br><a class="btn btn-wa btn-sm" href="${esc(waLink(CUR.wa, 'Hola ' + CUR.name + ', quisiera hacer una reserva.'))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}Escribir</a></div>`; return; }
+  const keep = { name: keepVal('rsv-name', ME.name), phone: keepVal('rsv-phone', ME.phone), note: keepVal('rsv-note') };
+  const sv = rsvServs(r), dur = rsvDur(r), needServ = sv && !RSV.serv;
+  if (RSV.day && RSV_ONLINE && !RSV.busy[RSV.day] && RSV.loading !== RSV.day) loadBusy(RSV.day);
+  const loading = RSV_ONLINE && RSV.day && !RSV.busy[RSV.day];
+  const slots = RSV.day && !needServ ? rsvSlots(r, RSV.day, dur) : [];
+  const free = slots.filter(t => slotFree(r, RSV.day, t, dur));
+  if (RSV.time && !free.includes(RSV.time)) RSV.time = '';
+  body.innerHTML = `
+    ${sv ? `<div class="rsv-lbl">Servicio</div><div class="rsv-servs">${sv.map((v, i) => `<button type="button" class="${v.n === RSV.serv ? 'on' : ''}" data-act="rsv-serv" data-i="${i}"><b>${esc(v.n)}</b><small>${v.p !== null ? fmtP(v.p) + ' · ' : ''}${durLabel(v.min)}</small></button>`).join('')}</div>` : ''}
     <div class="rsv-lbl">Día</div>
     <div class="rsv-days">${days.map(x => `<button type="button" class="${x.key === RSV.day ? 'on' : ''}" data-act="rsv-day" data-d="${x.key}"><small>${x.i === 0 ? 'Hoy' : x.i === 1 ? 'Mañana' : DAY_NAMES[x.d.getDay()]}</small><b>${x.d.getDate()}</b><small>${x.d.toLocaleDateString('es-PA', { month: 'short' })}</small></button>`).join('')}</div>
-    <div class="rsv-lbl">Hora</div>
-    <div class="rsv-slots">${slots.map(t => `<button type="button" class="${t === RSV.time ? 'on' : ''}" data-act="rsv-time" data-t="${t}">${esc(timeLabel(RSV.day, t))}</button>`).join('')}</div>
+    <div class="rsv-lbl">Hora${RSV_ONLINE && !needServ && !loading && slots.length ? ` <span class="rsv-free">· ${free.length} ${free.length === 1 ? 'horario libre' : 'horarios libres'}</span>` : ''}</div>
+    ${needServ ? '<p class="rsv-hint">👆 Elige un servicio para ver las horas libres.</p>'
+      : loading ? `<div class="rsv-slots">${'<span class="skel" style="height:38px;border-radius:10px"></span>'.repeat(8)}</div>`
+      : !free.length ? `<p class="rsv-hint">😕 Este día ya está lleno. Elige otro día.</p>`
+      : `<div class="rsv-slots">${slots.map(t => { const ok = free.includes(t); return `<button type="button" class="${t === RSV.time ? 'on' : ''}${ok ? '' : ' off'}" ${ok ? `data-act="rsv-time" data-t="${t}"` : 'disabled aria-label="Ocupado"'}>${esc(timeLabel(RSV.day, t))}</button>`; }).join('')}</div>`}
     ${mesa ? `<div class="rsv-lbl">Personas</div><div class="rsv-ppl"><div class="qty"><button type="button" class="rm" data-act="rsv-ppl" data-d="-1" aria-label="Menos personas">−</button></div><b id="rsv-ppl">${RSV.ppl}</b><div class="qty"><button type="button" class="add" data-act="rsv-ppl" data-d="1" aria-label="Más personas">+</button></div><small style="color:var(--mut)">máx. ${r.max_personas}</small></div>` : ''}
-    <div class="fgrid"><div class="f"><label for="rsv-name">Tu nombre <span class="req">*</span></label><input id="rsv-name" maxlength="60" autocomplete="name" value="${esc(keep.name)}"></div></div>
-    <div class="fgrid"><div class="f"><label for="rsv-note">${mesa ? 'Comentario (opcional)' : '¿Qué servicio necesitas? (opcional)'}</label><input id="rsv-note" maxlength="140" value="${esc(keep.note)}" placeholder="${mesa ? 'Cumpleaños, terraza, silla para bebé…' : 'Corte + barba, consulta, revisión…'}"></div></div>
+    <div class="fgrid${RSV_ONLINE ? ' g2' : ''}"><div class="f"><label for="rsv-name">Tu nombre <span class="req">*</span></label><input id="rsv-name" maxlength="60" autocomplete="name" value="${esc(keep.name)}"></div>
+      ${RSV_ONLINE ? `<div class="f"><label for="rsv-phone">Tu WhatsApp <span class="req">*</span></label><input id="rsv-phone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="6000-0000" value="${esc(keep.phone)}"></div>` : ''}</div>
+    <div class="fgrid"><div class="f"><label for="rsv-note">${mesa ? 'Comentario (opcional)' : 'Comentario (opcional)'}</label><input id="rsv-note" maxlength="140" value="${esc(keep.note)}" placeholder="${mesa ? 'Cumpleaños, terraza, silla para bebé…' : 'Algo que debamos saber…'}"></div></div>
     ${r.nota ? `<p class="note" style="margin-bottom:14px">ℹ️ ${esc(r.nota)}</p>` : ''}
-    <a class="btn btn-wa btn-block" id="rsv-send" target="_blank" rel="noopener" data-track="reserva" data-id="${esc(CUR.id)}">${WA_SVG}Enviar solicitud por WhatsApp</a>
-    <p style="color:var(--dim);font-size:.76rem;text-align:center;margin-top:10px">${esc(CUR.name)} te confirma la ${mesa ? 'reserva' : 'cita'} por WhatsApp.</p>`;
+    ${RSV_ONLINE
+      ? `<button class="btn btn-pri btn-block" id="rsv-go" data-act="rsv-submit">✓ Confirmar ${mesa ? 'reserva' : 'cita'}</button>
+         <p style="color:var(--dim);font-size:.76rem;text-align:center;margin-top:10px">Tu ${mesa ? 'reserva' : 'cita'} queda apartada al instante y ${esc(CUR.name)} te confirma por WhatsApp.</p>`
+      : `<a class="btn btn-wa btn-block" id="rsv-send" target="_blank" rel="noopener" data-track="reserva" data-id="${esc(CUR.id)}">${WA_SVG}Enviar solicitud por WhatsApp</a>
+         <p style="color:var(--dim);font-size:.76rem;text-align:center;margin-top:10px">${esc(CUR.name)} te confirma la ${mesa ? 'reserva' : 'cita'} por WhatsApp.</p>`}`;
   updateReservationLink();
 }
+function rsvReady() {
+  const r = CUR.extras.reservas, name = (keepVal('rsv-name')).trim();
+  if (rsvServs(r) && !RSV.serv) return 'Elige un servicio';
+  if (!RSV.day || !RSV.time) return 'Elige una hora';
+  if (name.length < 2) return 'Escribe tu nombre';
+  if (RSV_ONLINE && !telOk(keepVal('rsv-phone'))) return 'Escribe tu número de WhatsApp';
+  return '';
+}
 function updateReservationLink() {
-  const a = byId('rsv-send'); if (!a || !CUR) return;
-  const r = CUR.extras.reservas, mesa = r.tipo === 'mesa', name = (byId('rsv-name').value || '').trim(), note = (byId('rsv-note').value || '').trim();
-  const ready = RSV.day && RSV.time && name.length >= 2;
-  a.classList.toggle('disabled', !ready); a.style.opacity = ready ? 1 : .5; a.style.pointerEvents = ready ? '' : 'none';
-  a.setAttribute('aria-disabled', !ready);
-  if (!ready) { a.removeAttribute('href'); a.title = !RSV.time ? 'Elige una hora' : 'Escribe tu nombre'; return; }
-  const d = new Date(RSV.day + 'T12:00:00'), di = Math.round((d - new Date(ymd(new Date()) + 'T12:00:00')) / DAY);
-  const msg = `Hola ${CUR.name} 👋 Quiero ${mesa ? 'reservar una mesa' : 'agendar una cita'} (lo vi en BizLaunch):\n\n📅 ${dayLabel(d, di)}\n🕒 ${timeLabel(RSV.day, RSV.time)}\n${mesa ? `👥 ${RSV.ppl} persona${RSV.ppl > 1 ? 's' : ''}\n` : ''}👤 ${name}${note ? '\n📝 ' + note : ''}\n\n¿Me confirman, por favor?`;
+  if (!CUR) return;
+  const why = rsvReady(), go = byId('rsv-go');
+  if (go) { go.disabled = !!why || RSV.sending; go.title = why; return; }
+  const a = byId('rsv-send'); if (!a) return;
+  const r = CUR.extras.reservas, mesa = r.tipo === 'mesa', name = keepVal('rsv-name').trim(), note = keepVal('rsv-note').trim();
+  a.style.opacity = why ? .5 : 1; a.style.pointerEvents = why ? 'none' : ''; a.setAttribute('aria-disabled', !!why);
+  if (why) { a.removeAttribute('href'); a.title = why; return; }
+  const v = rsvServ(r);
+  const msg = `Hola ${CUR.name} 👋 Quiero ${mesa ? 'reservar una mesa' : 'agendar una cita'} (lo vi en BizLaunch):\n\n${v ? '💈 ' + v.n + '\n' : ''}📅 ${dayLabelStr(RSV.day)}\n🕒 ${timeLabel(RSV.day, RSV.time)}\n${mesa ? `👥 ${RSV.ppl} persona${RSV.ppl > 1 ? 's' : ''}\n` : ''}👤 ${name}${note ? '\n📝 ' + note : ''}\n\n¿Me confirman, por favor?`;
   a.href = waLink(CUR.wa, msg); a.title = '';
+}
+async function submitReservation() {
+  if (RSV.sending || rsvReady()) return updateReservationLink();
+  const r = CUR.extras.reservas, b = CUR, name = keepVal('rsv-name').trim(), phone = keepVal('rsv-phone').trim(), note = keepVal('rsv-note').trim();
+  RSV.sending = true; const go = byId('rsv-go'); go.disabled = true; go.textContent = 'Apartando tu horario…';
+  try {
+    const { data, error } = await SB.rpc('crear_cita', { p_id: b.id, p_cliente: name, p_telefono: phone, p_servicio: RSV.serv || null, p_fecha: RSV.day, p_hora: RSV.time, p_personas: RSV.ppl, p_nota: note || null });
+    if (error) throw error;
+    saveMe({ name, phone });
+    RSV.done = { code: data.codigo, name, note, day: RSV.day, time: RSV.time, ppl: RSV.ppl, serv: rsvServ(r), dur: data.duracion };
+    misAdd({ c: data.codigo, n: b.name, t: r.tipo });
+    if (typeof confetti === 'function') try { confetti(); } catch (e) {}
+  } catch (e) {
+    if (isMissingFn(e)) { RSV_ONLINE = false; toast('Envía tu solicitud por WhatsApp, por favor.'); }
+    else { toast(niceErr(e.message), 'bad'); if (/llen|disponible/i.test(e.message || '')) { RSV.time = ''; loadBusy(RSV.day, true); } }
+  } finally { RSV.sending = false; if (CUR === b) renderReservation(); }
+}
+function renderReservationDone() {
+  const D = RSV.done, r = CUR.extras.reservas, mesa = r.tipo === 'mesa';
+  const msg = `Hola ${CUR.name} 👋 Acabo de ${mesa ? 'reservar una mesa' : 'agendar una cita'} en BizLaunch:\n\n${D.serv ? '💈 ' + D.serv.n + '\n' : ''}📅 ${dayLabelStr(D.day)}\n🕒 ${timeLabel(D.day, D.time)}\n${mesa ? `👥 ${D.ppl} persona${D.ppl > 1 ? 's' : ''}\n` : ''}👤 ${D.name}${D.note ? '\n📝 ' + D.note : ''}\n🔖 Código: ${D.code}\n\n¿Me confirman, por favor?`;
+  byId('rsv-body').innerHTML = `<div class="done-box">
+    <div class="done-ico">✅</div><h4>¡${mesa ? 'Reserva' : 'Cita'} apartada!</h4>
+    <p>${esc(CUR.name)} ya la ve en su agenda y te confirmará por WhatsApp.</p>
+    <div class="code-pill">Tu código <b>${esc(D.code)}</b></div>
+    <ul class="done-sum">${D.serv ? `<li><span>Servicio</span><b>${esc(D.serv.n)}${D.serv.p !== null ? ' · ' + fmtP(D.serv.p) : ''}</b></li>` : ''}<li><span>Día</span><b>${esc(dayLabelStr(D.day))}</b></li><li><span>Hora</span><b>${esc(timeLabel(D.day, D.time))}${D.dur && !mesa ? ' · ' + durLabel(D.dur) : ''}</b></li>${mesa ? `<li><span>Personas</span><b>${D.ppl}</b></li>` : ''}</ul>
+    <a class="btn btn-wa btn-block" href="${esc(waLink(CUR.wa, msg))}" target="_blank" rel="noopener" data-track="whatsapp" data-id="${esc(CUR.id)}">${WA_SVG}Avisar por WhatsApp</a>
+    <button class="btn btn-ghost btn-block" style="margin-top:8px" data-act="track-open" data-c="${esc(D.code)}">Ver el estado de mi ${mesa ? 'reserva' : 'cita'}</button>
+  </div>`;
+}
+
+/* =====================================================================
+   ORDERS — checkout with delivery or pick-up, saved for the owner's panel
+   ===================================================================== */
+let ORD = { modo: 'retiro', loc: '', sending: false, done: null };
+let ORD_ONLINE = true;
+const pedidosOn = b => !!(b && ORD_ONLINE && b.wa && b.menu && b.menu.pedidos && b.menu.pedidos.activo && (MENU_LIMIT[b.plan] ?? 25) > 0);
+function menuSecMap(b) { const lim = MENU_LIMIT[b.plan] ?? 25; let n = 0; return b.menu.secciones.map((s, raw) => ({ raw, c: s.items.filter(() => ++n <= lim).length })).filter(x => x.c).map(x => x.raw); }
+function openCheckout() {
+  if (!pedidosOn(CUR) || !cartItems().length) return;
+  const pe = CUR.menu.pedidos;
+  ORD = { modo: pe.entrega && pe.retiro ? (ME.modo === 'entrega' ? 'entrega' : 'retiro') : pe.entrega ? 'entrega' : 'retiro', loc: '', sending: false, done: null };
+  byId('ord-title').textContent = '🛒 Tu pedido · ' + CUR.name;
+  renderCheckout(); show('ord-modal', true);
+}
+function ordTotals() {
+  const pe = CUR.menu.pedidos, items = cartItems(), sub = Math.round(items.reduce((s, x) => s + x.q * x.it.p, 0) * 100) / 100;
+  const env = ORD.modo === 'entrega' ? pe.envio : 0;
+  return { items, sub, env, total: sub + (env || 0), falta: pe.minimo !== null && sub < pe.minimo ? Math.round((pe.minimo - sub) * 100) / 100 : 0 };
+}
+function renderCheckout() {
+  if (!CUR) return;
+  if (ORD.done) return renderCheckoutDone();
+  const pe = CUR.menu.pedidos, T = ordTotals(), body = byId('ord-body');
+  if (!T.items.length) { show('ord-modal', false); return; }
+  const keep = { name: keepVal('ord-name', ME.name), phone: keepVal('ord-phone', ME.phone), dir: keepVal('ord-dir', ME.dir), note: keepVal('ord-note') };
+  body.innerHTML = `
+    <div class="ord-items">${T.items.map(x => `<div class="ord-it"><div class="grow"><b>${esc(x.it.n)}</b><small>${fmtP(x.it.p)} c/u</small></div>
+      <div class="qty" data-k="${x.k}"><button class="rm" data-act="cart-rm" data-k="${x.k}" aria-label="Quitar uno">−</button><span>${x.q}</span><button class="add" data-act="cart-add" data-k="${x.k}" aria-label="Agregar uno">+</button></div><b class="ord-p">${fmtP(x.q * x.it.p)}</b></div>`).join('')}</div>
+    ${pe.entrega && pe.retiro ? `<div class="rsv-lbl">¿Cómo lo quieres?</div><div class="seg2"><button type="button" class="${ORD.modo === 'entrega' ? 'on' : ''}" data-act="ord-modo" data-m="entrega">🛵 Entrega a domicilio</button><button type="button" class="${ORD.modo === 'retiro' ? 'on' : ''}" data-act="ord-modo" data-m="retiro">🏪 Paso a retirar</button></div>`
+      : `<p class="note" style="margin-bottom:14px">${pe.entrega ? '🛵 Este negocio solo hace <b>entregas a domicilio</b>.' : '🏪 Este pedido es para <b>retirar en el local</b>.'}</p>`}
+    <div class="fgrid g2"><div class="f"><label for="ord-name">Tu nombre <span class="req">*</span></label><input id="ord-name" maxlength="60" autocomplete="name" value="${esc(keep.name)}"></div>
+      <div class="f"><label for="ord-phone">Tu WhatsApp <span class="req">*</span></label><input id="ord-phone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="6000-0000" value="${esc(keep.phone)}"></div></div>
+    ${ORD.modo === 'entrega' ? `<div class="fgrid"><div class="f"><label for="ord-dir">Dirección de entrega <span class="req">*</span></label><input id="ord-dir" maxlength="300" autocomplete="street-address" placeholder="Barrio, calle, edificio o casa, punto de referencia" value="${esc(keep.dir)}">
+        ${pe.zona ? `<small style="color:var(--mut);font-size:.76rem;display:block;margin-top:4px">📍 Zona de entrega: ${esc(pe.zona)}</small>` : ''}</div></div>
+      <div style="margin:-4px 0 14px"><button type="button" class="btn btn-ghost btn-xs" data-act="ord-loc">${ORD.loc ? '✓ Ubicación agregada · actualizar' : '📍 Agregar mi ubicación exacta'}</button></div>` : ''}
+    <div class="fgrid"><div class="f"><label for="ord-note">Indicaciones (opcional)</label><input id="ord-note" maxlength="200" placeholder="Sin cebolla, cambio para $20, tocar el timbre…" value="${esc(keep.note)}"></div></div>
+    <div class="ord-tot"><div><span>Subtotal</span><b>${fmtP(T.sub)}</b></div>
+      ${ORD.modo === 'entrega' ? `<div><span>Envío</span><b>${T.env === null ? 'A coordinar' : T.env === 0 ? 'Gratis' : fmtP(T.env)}</b></div>` : ''}
+      <div class="big"><span>Total${ORD.modo === 'entrega' && T.env === null ? ' + envío' : ''}</span><b>${fmtP(T.total)}</b></div>
+      ${pe.tiempo ? `<p>⏱ Tiempo estimado: ${esc(pe.tiempo)}</p>` : ''}</div>
+    ${T.falta ? `<p class="note" style="margin:12px 0 0;border-color:rgba(255,176,32,.35)">El pedido mínimo es de <b>${fmtP(pe.minimo)}</b>. Te faltan ${fmtP(T.falta)}.</p>` : ''}
+    <button class="btn btn-pri btn-block" style="margin-top:14px" id="ord-go" data-act="ord-submit">Enviar pedido · ${fmtP(T.total)}</button>
+    <p style="color:var(--dim);font-size:.76rem;text-align:center;margin-top:10px">Pagas al recibir o como acuerdes con ${esc(CUR.name)}.</p>`;
+  updateCheckout();
+}
+function ordReady() {
+  const T = ordTotals();
+  if (!T.items.length) return 'Tu pedido está vacío';
+  if (T.falta) return 'Aún no llegas al pedido mínimo';
+  if (keepVal('ord-name').trim().length < 2) return 'Escribe tu nombre';
+  if (!telOk(keepVal('ord-phone'))) return 'Escribe tu número de WhatsApp';
+  if (ORD.modo === 'entrega' && keepVal('ord-dir').trim().length < 5) return 'Escribe la dirección de entrega';
+  return '';
+}
+function updateCheckout() { const go = byId('ord-go'); if (!go) return; const why = ordReady(); go.disabled = !!why || ORD.sending; go.title = why; }
+function ordLocate(btn) {
+  if (!navigator.geolocation) return toast('Tu navegador no permite compartir la ubicación.', 'bad');
+  btn.disabled = true; btn.textContent = 'Buscando tu ubicación…';
+  navigator.geolocation.getCurrentPosition(p => { ORD.loc = p.coords.latitude.toFixed(6) + ',' + p.coords.longitude.toFixed(6); toast('📍 Ubicación agregada', 'ok'); renderCheckout(); },
+    () => { toast('No pudimos obtener tu ubicación. Escribe un punto de referencia.', 'bad'); renderCheckout(); }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
+}
+async function submitOrder() {
+  if (ORD.sending || ordReady()) return updateCheckout();
+  const b = CUR, T = ordTotals(), map = menuSecMap(b);
+  const name = keepVal('ord-name').trim(), phone = keepVal('ord-phone').trim(), dir = keepVal('ord-dir').trim(), note = keepVal('ord-note').trim();
+  const items = T.items.map(x => { const [si, ii] = x.k.split('-').map(Number); return { s: map[si], i: ii, q: x.q }; });
+  ORD.sending = true; const go = byId('ord-go'); go.disabled = true; go.textContent = 'Enviando tu pedido…';
+  try {
+    const { data, error } = await SB.rpc('crear_pedido', { p_id: b.id, p_cliente: name, p_telefono: phone, p_items: items, p_modo: ORD.modo,
+      p_direccion: ORD.modo === 'entrega' ? dir : null, p_ubicacion: ORD.modo === 'entrega' && ORD.loc ? ORD.loc : null, p_nota: note || null });
+    if (error) throw error;
+    saveMe(Object.assign({ name, phone, modo: ORD.modo }, ORD.modo === 'entrega' ? { dir } : {}));
+    ORD.done = Object.assign({ code: data.codigo, name, phone, dir, note, modo: ORD.modo, loc: ORD.loc }, data);
+    misAdd({ c: data.codigo, n: b.name, t: 'pedido' });
+    CART = {}; renderCart();
+    $$('#pf-menu .qty').forEach(q => { const sp = q.querySelector('span'), rm = q.querySelector('.rm'); if (sp) { sp.textContent = 0; sp.hidden = true; } if (rm) rm.hidden = true; });
+    if (typeof confetti === 'function') try { confetti(); } catch (e) {}
+  } catch (e) {
+    if (isMissingFn(e)) { ORD_ONLINE = false; show('ord-modal', false); renderCart(); toast('Envía tu pedido por WhatsApp, por favor.'); return; }
+    toast(niceErr(e.message), 'bad');
+  } finally { ORD.sending = false; if (CUR === b && byId('ord-modal').classList.contains('open')) renderCheckout(); }
+}
+function renderCheckoutDone() {
+  const D = ORD.done, food = isFood(CUR.category);
+  const lines = (D.items || []).map(x => `• ${x.q} × ${x.n} — ${fmtP(x.q * x.p)}`).join('\n');
+  const msg = `Hola ${CUR.name} 👋 Te acabo de enviar un pedido por BizLaunch:\n\n🔖 Pedido ${D.code}\n${lines}\n\nSubtotal: ${fmtP(D.subtotal)}${D.modo === 'entrega' ? `\nEnvío: ${D.envio === null ? 'a coordinar' : fmtP(D.envio)}` : ''}\nTotal: ${fmtP(D.total)}\n\n${D.modo === 'entrega' ? '🛵 Entrega en: ' + D.dir + (D.loc ? '\n📍 https://maps.google.com/?q=' + D.loc : '') : '🏪 Paso a retirar'}\n👤 ${D.name} · ${D.phone}${D.note ? '\n📝 ' + D.note : ''}`;
+  byId('ord-body').innerHTML = `<div class="done-box">
+    <div class="done-ico">🎉</div><h4>¡Pedido enviado!</h4>
+    <p>${esc(CUR.name)} ya lo ve en su panel. Para que lo atiendan más rápido, avísale por WhatsApp.</p>
+    <div class="code-pill">Pedido <b>${esc(D.code)}</b></div>
+    <ul class="done-sum">${(D.items || []).map(x => `<li><span>${x.q} × ${esc(x.n)}</span><b>${fmtP(x.q * x.p)}</b></li>`).join('')}
+      ${D.modo === 'entrega' ? `<li><span>Envío</span><b>${D.envio === null ? 'A coordinar' : D.envio ? fmtP(D.envio) : 'Gratis'}</b></li>` : ''}
+      <li class="tot"><span>Total</span><b>${fmtP(D.total)}</b></li><li><span>${D.modo === 'entrega' ? '🛵 Entrega' : '🏪 Retiro'}</span><b>${D.modo === 'entrega' ? esc(D.dir) : 'En el local'}</b></li></ul>
+    <a class="btn btn-wa btn-block" href="${esc(waLink(CUR.wa, msg))}" target="_blank" rel="noopener">${WA_SVG}Avisar por WhatsApp</a>
+    <button class="btn btn-ghost btn-block" style="margin-top:8px" data-act="track-open" data-c="${esc(D.code)}">Seguir mi ${food ? 'pedido' : 'pedido'}</button>
+  </div>`;
+}
+
+/* =====================================================================
+   TRACKING — #seguir/CODE shows the live status of an order or booking
+   ===================================================================== */
+let TRK = { code: '', timer: null };
+const TRK_STEPS = {
+  pedido: (d) => [['recibido', 'Recibido', '🧾'], ['preparando', 'Preparando', '👨‍🍳'], ['listo', d.modo === 'entrega' ? 'En camino' : 'Listo para retirar', d.modo === 'entrega' ? '🛵' : '📦'], ['entregado', 'Entregado', '✅']],
+  cita: () => [['pendiente', 'Solicitada', '📝'], ['confirmada', 'Confirmada', '✅'], ['completada', 'Atendida', '⭐']]
+};
+function openTrack(code) {
+  TRK.code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+  show('rsv-modal', false); show('ord-modal', false);
+  byId('trk-title').textContent = TRK.code ? 'Seguimiento · ' + TRK.code : 'Mis pedidos y reservas';
+  show('trk-modal', true);
+  if (TRK.code && location.hash !== '#seguir/' + TRK.code) history.replaceState(null, '', '#seguir/' + TRK.code);
+  loadTrack();
+}
+function closeTrack() { show('trk-modal', false); clearTimeout(TRK.timer); if (location.hash.startsWith('#seguir')) history.replaceState(null, '', location.pathname); }
+function misHTML(skip) {
+  const a = misList().filter(x => x.c !== skip); if (!a.length) return '';
+  return `<div class="rsv-lbl" style="margin-top:18px">Tus pedidos y reservas en este dispositivo</div><div class="mis">${a.map(x => `<button data-act="track-open" data-c="${esc(x.c)}"><span>${x.t === 'pedido' ? '🛒' : '📅'} <b>${esc(x.n || 'Negocio')}</b></span><small>${esc(x.c)} · ${esc(new Date(x.at).toLocaleDateString('es-PA', { day: 'numeric', month: 'short' }))}</small></button>`).join('')}</div>`;
+}
+async function loadTrack() {
+  clearTimeout(TRK.timer);
+  const body = byId('trk-body'), code = TRK.code;
+  if (!code) { body.innerHTML = `<form id="trk-form" class="fgrid" style="grid-template-columns:1fr auto;align-items:end"><div class="f"><label for="trk-code">Código de tu pedido o reserva</label><input id="trk-code" maxlength="12" placeholder="Ej. 7KQ2M9PA" style="text-transform:uppercase"></div><button class="btn btn-pri" type="submit">Buscar</button></form>${misHTML('') || '<p style="color:var(--mut);font-size:.86rem">Cuando hagas un pedido o una reserva, aparecerá aquí.</p>'}`;
+    byId('trk-form').addEventListener('submit', e => { e.preventDefault(); const v = byId('trk-code').value; if (v.trim()) openTrack(v); }); return; }
+  if (!body.querySelector('.trk')) body.innerHTML = '<div class="skel" style="height:220px"></div>';
+  let d = null, err = '';
+  try { const { data, error } = await SB.rpc('seguimiento', { p_codigo: code }); if (error) throw error; d = data; } catch (e) { err = niceErr(e.message); }
+  if (TRK.code !== code || !byId('trk-modal').classList.contains('open')) return;
+  if (!d) { body.innerHTML = `<div class="empty">🔎<b>${err ? 'No pudimos consultar' : 'No encontramos ese código'}</b>${err || 'Revisa que esté bien escrito.'}<br><br><button class="btn btn-ghost btn-sm" data-act="track-open" data-c="">Buscar otro código</button></div>${misHTML(code)}`; return; }
+  const kind = d.tipo === 'pedido' ? 'pedido' : 'cita', steps = TRK_STEPS[kind](d), idx = steps.findIndex(x => x[0] === d.estado);
+  const bad = ['cancelado', 'cancelada', 'no_asistio'].includes(d.estado);
+  const badTxt = { cancelado: 'Este pedido fue cancelado.', cancelada: 'Esta reserva fue cancelada.', no_asistio: 'Esta cita se marcó como no asistida.' }[d.estado];
+  const wa = d.whatsapp ? waLink(d.whatsapp, `Hola ${d.negocio} 👋 Te escribo por mi ${kind === 'pedido' ? 'pedido' : 'reserva'} ${d.codigo}.`) : '';
+  const canCancel = kind === 'cita' && ['pendiente', 'confirmada'].includes(d.estado);
+  body.innerHTML = `<div class="trk">
+    <div class="trk-hd"><div><small>${kind === 'pedido' ? 'Pedido' : d.tipo === 'mesa' ? 'Reserva de mesa' : 'Cita'} en</small><b>${esc(d.negocio)}</b></div><button class="linkbtn" data-act="profile" data-id="${esc(d.negocio_id)}">Ver negocio</button></div>
+    ${bad ? `<div class="note" style="border-color:rgba(255,92,92,.35);background:rgba(255,92,92,.08);margin-bottom:16px">⚠️ ${badTxt}</div>`
+      : `<ol class="steps">${steps.map((x, i) => `<li class="${i < idx ? 'ok' : i === idx ? 'now' : ''}"><i>${x[2]}</i><span>${x[1]}</span></li>`).join('')}</ol>`}
+    ${kind === 'pedido' ? `<ul class="done-sum">${(d.items || []).map(x => `<li><span>${x.q} × ${esc(x.n)}</span><b>${fmtP(x.q * x.p)}</b></li>`).join('')}
+        ${d.modo === 'entrega' ? `<li><span>Envío</span><b>${d.envio === null ? 'A coordinar' : +d.envio ? fmtP(d.envio) : 'Gratis'}</b></li>` : ''}<li class="tot"><span>Total</span><b>${fmtP(d.total)}</b></li>
+        <li><span>Modalidad</span><b>${d.modo === 'entrega' ? '🛵 Entrega' : '🏪 Retiro en el local'}</b></li>${d.tiempo && !bad && d.estado !== 'entregado' ? `<li><span>Tiempo estimado</span><b>${esc(d.tiempo)}</b></li>` : ''}</ul>`
+      : `<ul class="done-sum">${d.servicio ? `<li><span>Servicio</span><b>${esc(d.servicio)}${d.precio !== null ? ' · ' + fmtP(d.precio) : ''}</b></li>` : ''}<li><span>Día</span><b>${esc(dayLabelStr(d.fecha))}</b></li><li><span>Hora</span><b>${esc(timeLabel(d.fecha, d.hora))}</b></li>${d.tipo === 'mesa' ? `<li><span>Personas</span><b>${d.personas}</b></li>` : ''}</ul>`}
+    <p style="color:var(--dim);font-size:.74rem;margin:10px 0 14px">Actualizado ${esc(new Date(d.updated_at).toLocaleString('es-PA', { hour: 'numeric', minute: '2-digit', day: 'numeric', month: 'short' }))} · se refresca solo</p>
+    ${wa ? `<a class="btn btn-wa btn-block" href="${esc(wa)}" target="_blank" rel="noopener">${WA_SVG}Escribir a ${esc(d.negocio)}</a>` : ''}
+    ${canCancel ? `<button class="btn btn-ghost btn-block" style="margin-top:8px;color:var(--red)" data-act="track-cancel" data-c="${esc(d.codigo)}">Cancelar mi ${d.tipo === 'mesa' ? 'reserva' : 'cita'}</button>` : ''}
+  </div>${misHTML(code)}`;
+  if (!bad && !['entregado', 'completada'].includes(d.estado)) TRK.timer = setTimeout(loadTrack, 30000);
+}
+async function cancelMyBooking(code) {
+  if (!confirm('¿Seguro que quieres cancelar esta reserva?')) return;
+  const { error } = await SB.rpc('cancelar_cita_cliente', { p_codigo: code });
+  if (error) return toast(niceErr(error.message), 'bad');
+  toast('Reserva cancelada', 'ok'); loadTrack();
 }
 
 /* Yappy card (Pro/Premium) */
@@ -2307,13 +2672,17 @@ function extrasEditor(el, extras, opts) {
   const render = () => {
     el.innerHTML = `<div class="xe">
       ${opts.note ? `<p class="note" style="margin-bottom:14px">${opts.note}</p>` : ''}
-      <label class="check" style="margin-bottom:14px"><span class="switch"><input type="checkbox" data-x="activo"${r.activo ? ' checked' : ''}><span></span></span><span style="color:var(--txt);align-self:center">Recibir reservas por WhatsApp</span></label>
+      <label class="check" style="margin-bottom:14px"><span class="switch"><input type="checkbox" data-x="activo"${r.activo ? ' checked' : ''}><span></span></span><span style="color:var(--txt);align-self:center"><b>Recibir reservas en línea</b> <small style="color:var(--mut)">· el cliente aparta una hora libre</small></span></label>
       <div class="fgrid g2"><div class="f"><label for="${P}-tipo">Tipo</label><select id="${P}-tipo" data-x="tipo"><option value="cita"${r.tipo === 'cita' ? ' selected' : ''}>Citas (barbería, clínica, taller…)</option><option value="mesa"${r.tipo === 'mesa' ? ' selected' : ''}>Mesas (restaurante, bar…)</option></select></div>
         <div class="f"><label for="${P}-iv">Cada cuánto hay un horario</label><select id="${P}-iv" data-x="intervalo">${[15, 20, 30, 45, 60, 90, 120].map(n => `<option value="${n}"${r.intervalo === n ? ' selected' : ''}>${n < 60 ? n + ' minutos' : n / 60 + (n === 60 ? ' hora' : ' horas')}</option>`).join('')}</select></div></div>
       <div class="f" style="margin-bottom:6px"><label>Días que atiende</label></div>
       <div class="xe-days">${dayOrder.map(d => `<label><input type="checkbox" data-x="dia" value="${d}"${r.dias.includes(d) ? ' checked' : ''}>${DAY_NAMES[d]}</label>`).join('')}</div>
       <div class="fgrid g2"><div class="f"><label for="${P}-desde">Desde</label><input id="${P}-desde" type="time" data-x="desde" value="${r.desde}"></div><div class="f"><label for="${P}-hasta">Hasta</label><input id="${P}-hasta" type="time" data-x="hasta" value="${r.hasta}"></div></div>
       <div class="fgrid g2"><div class="f"><label for="${P}-mp">Máximo de personas por reserva</label><input id="${P}-mp" type="number" min="1" max="50" data-x="max_personas" value="${r.max_personas}"></div><div class="f"><label for="${P}-ant">Se puede reservar con hasta</label><select id="${P}-ant" data-x="anticipacion">${[3, 7, 14, 30, 60].map(n => `<option value="${n}"${r.anticipacion === n ? ' selected' : ''}>${n} días de anticipación</option>`).join('')}</select></div></div>
+      <div class="fgrid g2"><div class="f"><label for="${P}-cupo">${r.tipo === 'mesa' ? 'Mesas disponibles por horario' : 'Clientes que atiendes a la vez'}</label><input id="${P}-cupo" type="number" min="1" max="50" data-x="cupo" value="${r.cupo}"><small style="color:var(--dim);font-size:.72rem">${r.tipo === 'mesa' ? 'Cuando se llenan, ese horario se bloquea.' : 'Ej. 2 si hay 2 barberos. Al llenarse, la hora se bloquea.'}</small></div><div></div></div>
+      ${r.tipo === 'cita' ? `<div class="f" style="margin-bottom:6px"><label>Servicios que se pueden agendar (opcional)</label><small style="color:var(--dim);font-size:.74rem;display:block;margin-bottom:8px">El cliente elige uno y se aparta el tiempo que dura. Si no agregas ninguno, cada cita dura lo que pusiste en “Cada cuánto hay un horario”.</small></div>
+        ${r.servicios.map((v, i) => `<div class="xe-sv"><input data-sv="n" data-i="${i}" maxlength="60" value="${esc(v.n)}" placeholder="Ej. Corte de cabello" aria-label="Servicio"><input data-sv="p" data-i="${i}" type="number" min="0" step="0.5" value="${v.p === null ? '' : v.p}" placeholder="$ precio" aria-label="Precio"><select data-sv="min" data-i="${i}" aria-label="Duración">${[15, 20, 30, 45, 60, 75, 90, 120, 150, 180, 240].map(m => `<option value="${m}"${v.min === m ? ' selected' : ''}>${durLabel(m)}</option>`).join('')}</select><button type="button" class="x" data-xe="sv-rm" data-i="${i}" aria-label="Quitar servicio">✕</button></div>`).join('')}
+        ${r.servicios.length < 30 ? '<button type="button" class="btn btn-ghost btn-xs" style="margin-bottom:14px" data-xe="sv-add">＋ Agregar servicio</button>' : ''}` : ''}
       <div class="fgrid"><div class="f"><label for="${P}-nota">Nota para el cliente (opcional)</label><input id="${P}-nota" data-x="nota" maxlength="150" value="${esc(r.nota)}" placeholder="Ej. Tolerancia de 15 minutos · Abono para grupos de 8+"></div></div>
       <hr>
       <div class="fgrid g2"><div class="f"><label for="${P}-yn">Yappy: número o @usuario</label><input id="${P}-yn" data-x="ynum" maxlength="40" value="${esc(y.numero)}" placeholder="6000-0000 o @minegocio"></div><div class="f"><label for="${P}-ynom">Nombre que aparece en Yappy (opcional)</label><input id="${P}-ynom" data-x="ynom" maxlength="60" value="${esc(y.nombre)}"></div></div>
@@ -2324,14 +2693,18 @@ function extrasEditor(el, extras, opts) {
   };
   el.onclick = e => { const b = e.target.closest('[data-xe]'); if (!b) return; e.preventDefault();
     if (b.dataset.xe === 'qr-add') el.querySelector('[data-xe-file]').click();
-    if (b.dataset.xe === 'qr-rm') { sync(); if (qrNew) URL.revokeObjectURL(qrNew.url); qrNew = null; qrUrl = ''; render(); } };
-  el.onchange = e => { if (e.target.matches('[data-xe-file]')) { const f = e.target.files[0]; e.target.value = ''; if (!f) return; sync();
+    if (b.dataset.xe === 'qr-rm') { sync(); if (qrNew) URL.revokeObjectURL(qrNew.url); qrNew = null; qrUrl = ''; render(); }
+    if (b.dataset.xe === 'sv-add') { sync(); r.servicios.push({ n: '', p: null, min: r.intervalo >= 30 ? r.intervalo : 30 }); render(); const ins = el.querySelectorAll('[data-sv="n"]'); if (ins.length) ins[ins.length - 1].focus(); }
+    if (b.dataset.xe === 'sv-rm') { sync(); r.servicios.splice(+b.dataset.i, 1); render(); } };
+  el.onchange = e => { if (e.target.dataset.x === 'tipo') { sync(); r.cupo = r.tipo === 'mesa' ? Math.max(r.cupo, 4) : r.cupo; render(); return; } if (e.target.matches('[data-xe-file]')) { const f = e.target.files[0]; e.target.value = ''; if (!f) return; sync();
     compress(f, 900, .9).then(blob => { if (qrNew) URL.revokeObjectURL(qrNew.url); qrNew = { blob, url: URL.createObjectURL(blob) }; render(); }).catch(() => toast('No se pudo leer la imagen', 'bad')); } };
   const q = k => el.querySelector('[data-x="' + k + '"]');
   const sync = () => { if (!q('activo')) return;
     r.activo = q('activo').checked; r.tipo = q('tipo').value; r.intervalo = +q('intervalo').value; r.desde = q('desde').value || '09:00'; r.hasta = q('hasta').value || '18:00';
     r.max_personas = Math.max(1, Math.min(50, +q('max_personas').value || 10)); r.anticipacion = +q('anticipacion').value; r.nota = q('nota').value.trim();
-    r.dias = [...el.querySelectorAll('[data-x="dia"]:checked')].map(i => +i.value); y.numero = q('ynum').value.trim(); y.nombre = q('ynom').value.trim(); };
+    r.dias = [...el.querySelectorAll('[data-x="dia"]:checked')].map(i => +i.value); y.numero = q('ynum').value.trim(); y.nombre = q('ynom').value.trim();
+    if (q('cupo')) r.cupo = Math.max(1, Math.min(50, +q('cupo').value || 1));
+    el.querySelectorAll('[data-sv]').forEach(inp => { const v = r.servicios[+inp.dataset.i]; if (!v) return; const k = inp.dataset.sv; v[k] = k === 'n' ? inp.value : k === 'p' ? (inp.value === '' ? null : Math.max(0, +inp.value)) : +inp.value; }); };
   render();
   el._extras = {
     async collect(folder) {
@@ -2341,7 +2714,8 @@ function extrasEditor(el, extras, opts) {
       if (y.numero && !/^[0-9A-Za-z+@ ._-]+$/.test(y.numero)) throw new Error('El número o usuario de Yappy tiene caracteres no válidos.');
       let qr = qrUrl;
       if (qrNew) { qr = await uploadPhoto(qrNew.blob, folder); if (!/^https:/.test(qr)) throw new Error('No se pudo subir el QR. Intenta de nuevo.'); }
-      return { reservas: Object.assign({}, r), yappy: { numero: y.numero, nombre: y.nombre, qr: qr || '' } };
+      const servicios = r.tipo === 'cita' ? r.servicios.filter(v => String(v.n).trim()).map(v => ({ n: String(v.n).trim(), p: v.p === null || isNaN(v.p) ? undefined : Math.round(v.p * 100) / 100, min: v.min })) : [];
+      return { reservas: Object.assign({}, r, { servicios }), yappy: { numero: y.numero, nombre: y.nombre, qr: qr || '' } };
     }
   };
 }
@@ -2361,6 +2735,7 @@ function menuEditor(el, menu, opts) {
       const s = +inp.dataset.s, i = inp.dataset.i, f = inp.dataset.mf;
       if (f === 'sec') M.secciones[s].nombre = inp.value;
       else if (f === 'nota') M.nota = inp.value;
+      else if (f === 'pe') { const k = inp.dataset.k; M.pedidos[k] = inp.type === 'checkbox' ? inp.checked : (k === 'envio' || k === 'minimo') ? (inp.value === '' ? null : Math.max(0, +inp.value)) : inp.value; }
       else { const it = M.secciones[s].items[+i]; if (f === 'top') it.top = inp.checked; else if (f === 'p') it.p = inp.value === '' ? null : +inp.value; else it[f] = inp.value; }
     });
   };
@@ -2368,7 +2743,17 @@ function menuEditor(el, menu, opts) {
   const allPhotos = () => M.fotos.map(u => ({ u, old: true })).concat(M.newPhotos.map(p => ({ u: p.url, old: false })));
   const render = () => {
     const c = count();
+    const pe = M.pedidos;
     el.innerHTML = `<div class="me">
+      ${opts.pedidos ? `<div class="pe-box">
+        <label class="check" style="margin-bottom:${pe.activo ? 12 : 0}px"><span class="switch"><input type="checkbox" data-mf="pe" data-k="activo"${pe.activo ? ' checked' : ''}><span></span></span><span style="color:var(--txt);align-self:center"><b>Recibir pedidos en línea</b> <small style="color:var(--mut)">· el cliente elige entrega o retiro y te llega a “Pedidos y reservas”</small></span></label>
+        ${pe.activo ? `<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:12px"><label class="pe-opt"><input type="checkbox" data-mf="pe" data-k="entrega"${pe.entrega ? ' checked' : ''}> 🛵 Hago entregas a domicilio</label><label class="pe-opt"><input type="checkbox" data-mf="pe" data-k="retiro"${pe.retiro ? ' checked' : ''}> 🏪 Pueden retirar en el local</label></div>
+          <div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+            <div class="f"><label>Costo de envío ($)</label><input type="number" min="0" step="0.25" data-mf="pe" data-k="envio" value="${pe.envio === null ? '' : pe.envio}" placeholder="Vacío = a coordinar"></div>
+            <div class="f"><label>Pedido mínimo ($)</label><input type="number" min="0" step="0.5" data-mf="pe" data-k="minimo" value="${pe.minimo === null ? '' : pe.minimo}" placeholder="Sin mínimo"></div>
+            <div class="f"><label>Tiempo estimado</label><input data-mf="pe" data-k="tiempo" maxlength="40" value="${esc(pe.tiempo)}" placeholder="30–45 min"></div></div>
+          <div class="fgrid"><div class="f"><label>Zonas de entrega (opcional)</label><input data-mf="pe" data-k="zona" maxlength="120" value="${esc(pe.zona)}" placeholder="Ej. San Francisco, Obarrio, Bella Vista"></div></div>` : ''}
+      </div>` : ''}
       ${M.secciones.map((s, si) => `<div class="me-sec"><div class="me-sec-h"><input data-mf="sec" data-s="${si}" value="${esc(s.nombre)}" placeholder="Nombre de la sección (ej. Entradas)" aria-label="Nombre de la sección" maxlength="60">
           <button type="button" class="x" data-me="sec-up" data-s="${si}" title="Subir sección" ${si ? '' : 'disabled'}>↑</button><button type="button" class="x" data-me="sec-rm" data-s="${si}" title="Eliminar sección">✕</button></div>
         ${s.items.map((it, ii) => `<div class="me-it"><input data-mf="n" data-s="${si}" data-i="${ii}" value="${esc(it.n)}" placeholder="${opts.food ? 'Plato (ej. Ceviche de corvina)' : 'Servicio'}" maxlength="80" aria-label="Nombre">
@@ -2397,7 +2782,8 @@ function menuEditor(el, menu, opts) {
     render();
     if (a === 'it-add') { const ins = el.querySelectorAll('[data-mf="n"][data-s="' + s + '"]'); if (ins.length) ins[ins.length - 1].focus(); }
   };
-  el.onchange = e => { if (e.target.matches('[data-me-file]')) { sync(); const room = 4 - M.fotos.length; addPhotos(e.target.files, M.newPhotos, room, render); e.target.value = ''; } };
+  el.onchange = e => { if (e.target.matches('[data-me-file]')) { sync(); const room = 4 - M.fotos.length; addPhotos(e.target.files, M.newPhotos, room, render); e.target.value = ''; }
+    else if (e.target.dataset.mf === 'pe' && e.target.type === 'checkbox') { sync(); if (!M.pedidos.entrega && !M.pedidos.retiro) { M.pedidos[e.target.dataset.k === 'entrega' ? 'retiro' : 'entrega'] = true; } render(); } };
   render();
   el._menu = {
     // returns the clean payload; uploads new photos first
@@ -2406,7 +2792,8 @@ function menuEditor(el, menu, opts) {
       const fotos = M.fotos.slice();
       for (const p of M.newPhotos) { const u = await uploadPhoto(p.blob, folder); if (!/^https:/.test(u)) throw new Error('No se pudo subir una foto del menú. Intenta de nuevo.'); fotos.push(u); }
       return { secciones: M.secciones.map(s => ({ nombre: String(s.nombre || '').trim(), items: s.items.filter(it => String(it.n).trim()).map(it => ({ n: String(it.n).trim(), d: String(it.d || '').trim() || undefined, p: it.p === null || isNaN(it.p) ? undefined : Math.round(it.p * 100) / 100, top: it.top || undefined })) })).filter(s => s.items.length || s.nombre),
-        fotos, nota: String(M.nota || '').trim() };
+        fotos, nota: String(M.nota || '').trim(),
+        pedidos: { activo: !!M.pedidos.activo, entrega: !!M.pedidos.entrega, retiro: !!M.pedidos.retiro, envio: M.pedidos.envio === null || isNaN(M.pedidos.envio) ? undefined : Math.round(M.pedidos.envio * 100) / 100, minimo: M.pedidos.minimo === null || isNaN(M.pedidos.minimo) ? undefined : Math.round(M.pedidos.minimo * 100) / 100, zona: String(M.pedidos.zona || '').trim() || undefined, tiempo: String(M.pedidos.tiempo || '').trim() || undefined } };
     },
     count
   };
@@ -2470,7 +2857,7 @@ async function openOwnerPanel(token, push) {
   if (!d) { body.innerHTML = `<div class="empty" style="margin-top:40px">🔒<b>Link no válido</b>Revisa que copiaste el link completo o escríbenos para enviártelo de nuevo.<br><br><a class="btn btn-wa btn-sm" href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, necesito el link de mi panel de estadísticas.'))}" target="_blank" rel="noopener">${WA_SVG}Pedir mi link</a></div>`; return; }
   OP = { token, d }; renderOwnerPanel();
 }
-function closeOwnerPanel() { show('mipanel', false); OP = null; if (location.hash.startsWith('#panel/')) history.replaceState(null, '', location.pathname); }
+function closeOwnerPanel() { show('mipanel', false); OP = null; clearInterval(IB.timer); IB.timer = null; IB.data = null; IB.seen = null; document.title = document.title.replace(/^\(\d+\) /, ''); if (location.hash.startsWith('#panel/')) history.replaceState(null, '', location.pathname); }
 function delta(cur, prev) {
   if (!prev && !cur) return '<small>Sin datos del mes anterior</small>';
   if (!prev) return '<small class="up">▲ Nuevo este mes</small>';
@@ -2504,6 +2891,9 @@ function renderOwnerPanel() {
     </div>
     <div class="op-grid">
       <div>
+        ${d.active && ((MENU_LIMIT[d.plan] ?? 0) > 0 || hasExtras(d.plan)) ? `<div class="box ib" id="op-inbox"><div class="ib-hd"><h3>📥 Pedidos y reservas</h3><button class="btn btn-ghost btn-xs" data-act="ib-reload" aria-label="Actualizar">↻ Actualizar</button></div>
+          <div class="ib-tabs" id="ib-tabs" role="tablist"></div><div id="ib-body"><div class="skel" style="height:110px"></div></div>
+          <p style="color:var(--dim);font-size:.74rem;margin-top:10px">Se actualiza solo cada 40 segundos mientras tengas tu panel abierto.</p></div>` : ''}
         <div class="box"><h3>Actividad diaria</h3>
           <div class="legend">${SERIES.map(s => `<span><i style="background:${s.color}"></i>${s.label}</span>`).join('')}</div>
           <div id="op-chart"></div>
@@ -2519,13 +2909,13 @@ function renderOwnerPanel() {
           </form>` : (d.active ? `<p class="note" style="margin-top:12px">Llegaste al límite de ofertas de tu plan.${d.plan !== 'premium' ? ' Con Premium puedes tener 3 a la vez.' : ''} Elimina una para publicar otra.</p>` : '')}
         </div>
         ${d.active ? `<div class="box" id="op-menu-box"><h3>${isFood(d.category) ? '🍽 Mi menú' : '📋 Mis servicios y precios'}</h3>
-          <p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">${isFood(d.category) ? 'Tus clientes ven el menú en tu perfil, tocan <b>+</b> en los platos que quieren y te llega el pedido completo por WhatsApp con el total.' : 'Tus clientes ven tus servicios con precio y te piden cotización por WhatsApp con un toque.'} Los cambios se publican al instante.</p>
+          <p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">${isFood(d.category) ? 'Tus clientes ven el menú en tu perfil, tocan <b>+</b> en los platos que quieren y te hacen el pedido con entrega o retiro.' : 'Tus clientes ven tus productos o servicios con precio y te hacen el pedido o la cotización con un toque.'} Los cambios se publican al instante.</p>
           <div id="op-menu"></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn btn-pri btn-sm" data-act="op-menu-save" id="op-menu-btn">Guardar ${isFood(d.category) ? 'menú' : 'lista'}</button><a class="btn btn-ghost btn-sm" href="${esc(url)}" target="_blank" rel="noopener">Ver cómo se ve ↗</a></div>
         </div>` : ''}
         ${d.active ? `<div class="box" id="op-rv-box" hidden><h3>💬 Responde a tus reseñas</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tu respuesta aparece debajo de la reseña en tu perfil. Agradecer y responder con amabilidad da confianza a nuevos clientes.</p><div id="op-rv"></div></div>` : ''}
-        ${d.active && hasExtras(d.plan) ? `<div class="box" id="op-extras-box"><h3>📅 Reservas y 📱 Yappy</h3>
-          <p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">Tus clientes eligen día y hora en tu perfil y te llega la solicitud lista por WhatsApp; tú confirmas. Con Yappy, ven tu número o tu QR para pagarte directo.</p>
+        ${d.active && hasExtras(d.plan) ? `<div class="box" id="op-extras-box"><h3>📅 Agenda y 📱 Yappy</h3>
+          <p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">Tus clientes eligen servicio, día y una hora libre en tu perfil. La reserva queda apartada y aparece arriba en “Pedidos y reservas” para que la confirmes. Las horas llenas se bloquean solas.</p>
           <div id="op-extras"></div>
           <div style="margin-top:14px"><button class="btn btn-pri btn-sm" data-act="op-extras-save" id="op-extras-btn">Guardar</button></div></div>`
         : d.active && d.plan === 'basico' ? `<div class="box"><h3>📅 Reservas y 📱 Yappy</h3><p style="color:var(--mut);font-size:.86rem;margin-bottom:12px">Recibe reservas o citas por WhatsApp y muestra tu Yappy para que te paguen directo. Disponible en <b style="color:var(--txt)">Pro</b> y <b style="color:var(--txt)">Premium</b>.</p><a class="btn btn-pur btn-sm" href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, quiero pasar "' + d.name + '" a Pro para tener reservas y Yappy.'))}" target="_blank" rel="noopener">Pasar a Pro · ${money(priceOf('pro').final)}/año</a></div>` : ''}
@@ -2552,16 +2942,109 @@ function renderOwnerPanel() {
     if (m) m.remove();
     if (o) o.outerHTML = `<div class="box" style="border-color:rgba(124,92,252,.4);background:linear-gradient(135deg,rgba(124,92,252,.1),var(--card))"><h3>🚀 Consigue más clientes</h3>
       <p style="color:var(--mut);font-size:.88rem;margin-bottom:12px">Estás en el Plan Gratis. ${n('visita') ? `Este mes <b style="color:var(--txt)">${n('visita')} personas</b> vieron tu perfil sin fotos ni ubicación. ` : ''}Con un plan pagado tu perfil se ve completo y aparece más arriba:</p>
-      <ul class="tips"><li><b>Fotos y portada</b> que dan confianza</li><li><b>Mapa y “Cómo llegar”</b></li><li><b>Menú o lista de precios</b> con pedidos por WhatsApp</li><li><b>Ofertas</b> en la portada del directorio</li><li><b>Reservas y Yappy</b> (Pro y Premium)</li></ul>
+      <ul class="tips"><li><b>Fotos y portada</b> que dan confianza</li><li><b>Mapa y “Cómo llegar”</b></li><li><b>Menú con pedidos en línea</b>: entrega o retiro</li><li><b>Ofertas</b> en la portada del directorio</li><li><b>Reservas y Yappy</b> (Pro y Premium)</li></ul>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${PAID.map(k => `<a class="btn ${k === 'pro' ? 'btn-pur' : 'btn-ghost'} btn-sm" href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, quiero pasar "' + d.name + '" al Plan ' + PLANS[k].n + ' (' + money(priceOf(k).final) + '/año).'))}" target="_blank" rel="noopener">${PLANS[k].n} · ${money(priceOf(k).final)}/año</a>`).join('')}</div></div>`;
   }
   lineChart(byId('op-chart'), rows.length ? rows : [{ dia: t, visitas: 0, whatsapp: 0 }]);
   const q = byId('op-qr');
   if (window.QRCode) { try { new QRCode(q, { text: url, width: 140, height: 140, correctLevel: QRCode.CorrectLevel.M }); } catch (e) { q.hidden = true; } } else q.hidden = true;
   const f = byId('op-form'); if (f) f.addEventListener('submit', submitOwnerOffer);
-  if (byId('op-menu')) menuEditor(byId('op-menu'), d.menu, { food: isFood(d.category), limit: MENU_LIMIT[d.plan] ?? 25 });
+  if (byId('op-menu')) menuEditor(byId('op-menu'), d.menu, { food: isFood(d.category), limit: MENU_LIMIT[d.plan] ?? 25, pedidos: true });
   if (byId('op-extras')) extrasEditor(byId('op-extras'), d.extras, { prefix: 'ox' });
   if (byId('op-rv-box')) loadOwnerReviews();
+  clearInterval(IB.timer); IB.timer = null;
+  if (byId('op-inbox')) { IB.tab = (MENU_LIMIT[d.plan] ?? 0) > 0 ? IB.tab : 'citas'; if (!hasExtras(d.plan)) IB.tab = 'pedidos'; renderInbox(); loadInbox(); IB.timer = setInterval(() => loadInbox(true), 40000); }
+}
+/* =====================================================================
+   OWNER INBOX — orders and bookings with statuses (owner panel)
+   ===================================================================== */
+let IB = { tab: 'pedidos', data: null, timer: null, seen: null };
+const PED_ST = { recibido: ['Nuevo', 'st-wait'], preparando: ['Preparando', 'st-ok'], listo: ['Listo', 'st-ok'], entregado: ['Entregado', 'st-mut'], cancelado: ['Cancelado', 'st-bad'] };
+const CITA_ST = { pendiente: ['Por confirmar', 'st-wait'], confirmada: ['Confirmada', 'st-ok'], completada: ['Atendida', 'st-mut'], cancelada: ['Cancelada', 'st-bad'], no_asistio: ['No vino', 'st-bad'] };
+const PED_NEXT = { recibido: [['preparando', '👨‍🍳 Aceptar y preparar']], preparando: [['listo', '📦 Marcar listo']], listo: [['entregado', '✅ Entregado']] };
+const CITA_NEXT = { pendiente: [['confirmada', '✓ Confirmar']], confirmada: [['completada', '⭐ Atendida'], ['no_asistio', 'No vino']] };
+const agoShort = t => { const m = Math.round((Date.now() - Date.parse(t)) / 60000); return m < 1 ? 'ahora' : m < 60 ? 'hace ' + m + ' min' : m < 1440 ? 'hace ' + Math.round(m / 60) + ' h' : new Date(t).toLocaleDateString('es-PA', { day: 'numeric', month: 'short' }); };
+function ibBeep() { try { const C = window.AudioContext || window.webkitAudioContext; if (!C) return; const a = new C(), o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.type = 'sine'; o.frequency.setValueAtTime(880, a.currentTime); o.frequency.setValueAtTime(1320, a.currentTime + .15); g.gain.setValueAtTime(.0001, a.currentTime); g.gain.exponentialRampToValueAtTime(.25, a.currentTime + .02); g.gain.exponentialRampToValueAtTime(.0001, a.currentTime + .45); o.start(); o.stop(a.currentTime + .5); } catch (e) {} }
+async function loadInbox(silent) {
+  if (!OP || !byId('op-inbox')) return;
+  const tok = OP.token;
+  try {
+    const { data, error } = await SB.rpc('bandeja_dueno', { p_token: tok });
+    if (error) throw error;
+    if (!OP || OP.token !== tok) return;
+    const D = { pedidos: data.pedidos || [], citas: data.citas || [] };
+    const keys = new Set(D.pedidos.map(p => 'p' + p.id).concat(D.citas.map(c => 'c' + c.id)));
+    if (IB.seen) {
+      const nuevos = D.pedidos.filter(p => !IB.seen.has('p' + p.id)).length, nc = D.citas.filter(c => !IB.seen.has('c' + c.id)).length;
+      if (nuevos || nc) { ibBeep(); toast('🔔 ' + [nuevos ? nuevos + (nuevos > 1 ? ' pedidos nuevos' : ' pedido nuevo') : '', nc ? nc + (nc > 1 ? ' reservas nuevas' : ' reserva nueva') : ''].filter(Boolean).join(' y '), 'ok'); if (nuevos && !nc) IB.tab = 'pedidos'; else if (nc && !nuevos) IB.tab = 'citas'; }
+    }
+    IB.seen = keys; IB.data = D; renderInbox();
+  } catch (e) {
+    if (isMissingFn(e)) { const b = byId('op-inbox'); if (b) b.hidden = true; clearInterval(IB.timer); return; }
+    if (!silent) { const el = byId('ib-body'); if (el) el.innerHTML = `<p style="color:var(--red);font-size:.84rem">${esc(niceErr(e.message))}</p>`; }
+  }
+}
+function ibPedMsg(p) {
+  const n = OP.d.name, hi = `Hola ${p.cliente} 👋`, link = trackUrl(p.codigo);
+  return { recibido: `${hi} Recibimos tu pedido ${p.codigo} en ${n}. Total: ${fmtP(p.total)}${p.modo === 'entrega' && p.envio === null ? ' + envío' : ''}. En un momento lo empezamos a preparar. Síguelo aquí: ${link}`,
+    preparando: `${hi} ¡Tu pedido ${p.codigo} ya se está preparando en ${n}! 👨‍🍳 Total: ${fmtP(p.total)}${p.modo === 'entrega' && p.envio === null ? ' + envío' : ''}. Síguelo aquí: ${link}`,
+    listo: p.modo === 'entrega' ? `${hi} ¡Tu pedido ${p.codigo} de ${n} va en camino! 🛵` : `${hi} ¡Tu pedido ${p.codigo} está listo para retirar en ${n}! 📦`,
+    entregado: `${hi} ¡Gracias por tu compra en ${n}! 🙌 Si te gustó, nos ayudaría mucho una reseña: ${profileUrl(OP.d.id)}`,
+    cancelado: `${hi} Lo sentimos, no pudimos atender tu pedido ${p.codigo} en ${n}. ¿Te podemos ayudar con otra opción?` }[p.estado];
+}
+function ibCitaMsg(c) {
+  const n = OP.d.name, hi = `Hola ${c.cliente} 👋`, cuando = `${dayLabelStr(c.fecha)} a las ${timeLabel(c.fecha, c.hora)}`, que = c.tipo === 'mesa' ? `tu reserva para ${c.personas} persona${c.personas > 1 ? 's' : ''}` : `tu cita${c.servicio ? ' de ' + c.servicio : ''}`;
+  return { pendiente: `${hi} Recibimos ${que} en ${n} para ${cuando}. Te la confirmamos en breve.`,
+    confirmada: `${hi} ✅ Te confirmamos ${que} en ${n}: ${cuando}. Código ${c.codigo}. Si necesitas cambiarla, avísanos por aquí.`,
+    completada: `${hi} ¡Gracias por visitarnos en ${n}! 🙌 Si te gustó, nos ayudaría mucho una reseña: ${profileUrl(OP.d.id)}`,
+    no_asistio: `${hi} Te esperábamos ${cuando} en ${n}. ¿Quieres que te agendemos otro horario?`,
+    cancelada: `${hi} Tuvimos que cancelar ${que} del ${cuando} en ${n}. Disculpa las molestias. ¿Te agendamos otro horario?` }[c.estado];
+}
+function renderInbox() {
+  const el = byId('ib-body'), tabs = byId('ib-tabs'); if (!el || !OP) return;
+  const d = OP.d, D = IB.data, canP = (MENU_LIMIT[d.plan] ?? 0) > 0, canC = hasExtras(d.plan);
+  const nP = D ? D.pedidos.filter(p => ['recibido', 'preparando', 'listo'].includes(p.estado)).length : 0, nC = D ? D.citas.filter(c => c.estado === 'pendiente').length : 0;
+  tabs.innerHTML = (canP ? `<button role="tab" aria-selected="${IB.tab === 'pedidos'}" class="${IB.tab === 'pedidos' ? 'on' : ''}" data-act="ib-tab" data-t="pedidos">🛒 Pedidos${nP ? ` <span class="ib-n">${nP}</span>` : ''}</button>` : '') +
+    (canC ? `<button role="tab" aria-selected="${IB.tab === 'citas'}" class="${IB.tab === 'citas' ? 'on' : ''}" data-act="ib-tab" data-t="citas">📅 Agenda${nC ? ` <span class="ib-n">${nC}</span>` : ''}</button>` : '');
+  const pend = nP + nC; document.title = (pend ? '(' + pend + ') ' : '') + document.title.replace(/^\(\d+\) /, '');
+  if (!D) { el.innerHTML = '<div class="skel" style="height:110px"></div>'; return; }
+  if (IB.tab === 'pedidos') {
+    const on = d.menu && d.menu.pedidos && d.menu.pedidos.activo;
+    if (!D.pedidos.length) { el.innerHTML = `<div class="ib-empty">🛒<b>Aún no tienes pedidos en línea</b>${on ? 'Cuando un cliente haga un pedido desde tu perfil, aparecerá aquí con su dirección y el total.' : 'Activa <b>“Recibir pedidos en línea”</b> más abajo, en tu menú, para que tus clientes te pidan con entrega o retiro.'}</div>`; return; }
+    el.innerHTML = D.pedidos.map(p => { const st = PED_ST[p.estado] || ['', ''], open = ['recibido', 'preparando', 'listo'].includes(p.estado);
+      return `<div class="ib-it${p.estado === 'recibido' ? ' new' : ''}${open ? '' : ' done'}">
+        <div class="ib-top"><b class="ib-code">${esc(p.codigo)}</b><span class="chip ${st[1]}">${st[0]}</span><small>${esc(agoShort(p.created_at))}</small><b class="ib-tot">${fmtP(p.total)}${p.modo === 'entrega' && p.envio === null ? ' <small>+ envío</small>' : ''}</b></div>
+        <div class="ib-who">👤 ${esc(p.cliente)} · <a href="tel:${esc(p.telefono)}">${esc(p.telefono)}</a> · ${p.modo === 'entrega' ? '🛵 Entrega' : '🏪 Retira en el local'}</div>
+        <ul class="ib-items">${(p.items || []).map(x => `<li><b>${x.q}×</b> ${esc(x.n)} <span>${fmtP(x.q * x.p)}</span></li>`).join('')}${p.modo === 'entrega' ? `<li class="mut">Envío <span>${p.envio === null ? 'a coordinar' : +p.envio ? fmtP(p.envio) : 'gratis'}</span></li>` : ''}</ul>
+        ${p.modo === 'entrega' ? `<div class="ib-who">📍 ${esc(p.direccion || '')}${p.ubicacion ? ` · <a href="https://maps.google.com/?q=${esc(p.ubicacion)}" target="_blank" rel="noopener">Ver en el mapa</a>` : ''}</div>` : ''}
+        ${p.nota ? `<div class="ib-note">📝 ${esc(p.nota)}</div>` : ''}
+        <div class="ib-act">${(PED_NEXT[p.estado] || []).map(x => `<button class="btn btn-pri btn-xs" data-act="ib-st" data-k="p" data-id="${p.id}" data-s="${x[0]}">${x[1]}</button>`).join('')}
+          <a class="btn btn-wa btn-xs" href="${esc(waLink(p.telefono, ibPedMsg(p)))}" target="_blank" rel="noopener">${WA_SVG}Avisar al cliente</a>
+          ${open ? `<button class="btn btn-ghost btn-xs" style="color:var(--red)" data-act="ib-st" data-k="p" data-id="${p.id}" data-s="cancelado">Cancelar</button>` : ''}</div></div>`; }).join('');
+    return;
+  }
+  const r = d.extras && normExtras(d.extras).reservas, hoy = ymd(new Date());
+  const list = D.citas.filter(c => c.fecha >= hoy || ['pendiente', 'confirmada'].includes(c.estado));
+  if (!list.length) { el.innerHTML = `<div class="ib-empty">📅<b>Tu agenda está libre</b>${r && r.activo ? 'Cuando un cliente aparte una hora desde tu perfil, aparecerá aquí para que la confirmes.' : 'Activa <b>“Recibir reservas en línea”</b> más abajo para que tus clientes aparten su hora.'}</div>`; return; }
+  const days = [...new Set(list.map(c => c.fecha))];
+  el.innerHTML = days.map(day => `<div class="ib-day">${esc(dayLabelStr(day))} <small>${list.filter(c => c.fecha === day && !['cancelada', 'no_asistio'].includes(c.estado)).length} activas</small></div>` + list.filter(c => c.fecha === day).map(c => { const st = CITA_ST[c.estado] || ['', ''], open = ['pendiente', 'confirmada'].includes(c.estado);
+    return `<div class="ib-it${c.estado === 'pendiente' ? ' new' : ''}${open ? '' : ' done'}">
+      <div class="ib-top"><b class="ib-time">${esc(timeLabel(c.fecha, c.hora))}</b><span class="chip ${st[1]}">${st[0]}</span><small>${c.tipo === 'mesa' ? '👥 ' + c.personas : esc(durLabel(c.duracion))}</small>${c.precio !== null ? `<b class="ib-tot">${fmtP(c.precio)}</b>` : ''}</div>
+      <div class="ib-who">${c.servicio ? '💈 <b>' + esc(c.servicio) + '</b> · ' : ''}👤 ${esc(c.cliente)} · <a href="tel:${esc(c.telefono)}">${esc(c.telefono)}</a> · <span style="color:var(--dim)">${esc(c.codigo)}</span></div>
+      ${c.nota ? `<div class="ib-note">📝 ${esc(c.nota)}</div>` : ''}
+      <div class="ib-act">${(CITA_NEXT[c.estado] || []).map((x, i) => `<button class="btn ${i ? 'btn-ghost' : 'btn-pri'} btn-xs" data-act="ib-st" data-k="c" data-id="${c.id}" data-s="${x[0]}">${x[1]}</button>`).join('')}
+        <a class="btn btn-wa btn-xs" href="${esc(waLink(c.telefono, ibCitaMsg(c)))}" target="_blank" rel="noopener">${WA_SVG}${c.estado === 'pendiente' ? 'Escribir' : 'Avisar al cliente'}</a>
+        ${open ? `<button class="btn btn-ghost btn-xs" style="color:var(--red)" data-act="ib-st" data-k="c" data-id="${c.id}" data-s="cancelada">Cancelar</button>` : ''}</div></div>`; }).join('')).join('');
+}
+async function setIbStatus(t) {
+  const k = t.dataset.k, id = +t.dataset.id, st = t.dataset.s, list = k === 'p' ? IB.data.pedidos : IB.data.citas, it = list.find(x => x.id === id);
+  if (!it) return;
+  if ((st === 'cancelado' || st === 'cancelada') && !confirm(k === 'p' ? '¿Cancelar este pedido?' : '¿Cancelar esta reserva? La hora quedará libre otra vez.')) return;
+  t.disabled = true;
+  const { error } = await SB.rpc(k === 'p' ? 'estado_pedido_dueno' : 'estado_cita_dueno', { p_token: OP.token, p_id: id, p_estado: st });
+  if (error) { t.disabled = false; return toast(niceErr(error.message), 'bad'); }
+  it.estado = st; it.updated_at = new Date().toISOString(); renderInbox();
+  toast('✓ ' + ((k === 'p' ? PED_ST : CITA_ST)[st] || [''])[0] + ' · avísale al cliente por WhatsApp', 'ok');
 }
 async function loadOwnerReviews() {
   const box = byId('op-rv-box'), el = byId('op-rv'); if (!box || !OP) return;
@@ -3329,6 +3812,7 @@ function routeFromHash() {
   const h = location.hash;
   if (h.startsWith('#panel/')) { const tk = h.slice(7).trim(); if (tk && tk !== PANEL_TOKEN) { PANEL_TOKEN = tk; openOwnerPanel(tk, false); } return; }
   if (byId('mipanel').classList.contains('open')) { show('mipanel', false); PANEL_TOKEN = null; }
+  if (h.startsWith('#seguir')) { openTrack(h.slice(8)); return; }
   if (h.startsWith('#n/')) openProfile(decodeURIComponent(h.slice(3)), false);
   else if (h === '#admin') openAdmin();
   else if (!BL_PAGE) closeProfile(true);
@@ -3728,7 +4212,7 @@ document.addEventListener('click', e => {
     case 'rm-photo': URL.revokeObjectURL(R.photos[+t.dataset.i].url); R.photos.splice(+t.dataset.i, 1); renderThumbs(); break;
     case 'coupon': applyCoupon(); break;
     case 'pay': R.pay = t.dataset.k; stepErr(4); renderPays(); break;
-    case 'profile': if (t.closest('#dir-grid, #featured')) openProfileFrom(t, id); else openProfile(id); break;
+    case 'profile': if (t.closest('#trk-modal')) closeTrack(); if (t.closest('#dir-grid, #featured')) openProfileFrom(t, id); else openProfile(id); break;
     case 'pf-close': closeProfile(); break;
     case 'share': share(); break;
     case 'qr-dl': downloadQR(); break;
@@ -3757,6 +4241,9 @@ document.addEventListener('click', e => {
     case 'compare': toggleCompare(t); break;
     case 'dir-retry': clearTimeout(loadDirectory.t); loadDirectory(); break;
     case 'op-retry': openOwnerPanel(t.dataset.token, false); break;
+    case 'ib-tab': IB.tab = t.dataset.t; renderInbox(); break;
+    case 'ib-reload': loadInbox(); break;
+    case 'ib-st': setIbStatus(t); break;
     case 'quiz': quizPick(t); break;
     case 'free-toggle': { const was = SITE.gratis_off; SITE.gratis_off = !was; saveSettings(SITE.promo, SITE.gratis_off ? '✓ Plan Gratis deshabilitado' : '✓ Plan Gratis habilitado').then(ok => { if (!ok) { SITE.gratis_off = was; if (ATAB === 'ajustes') adminTab('ajustes'); } applyFree(); }); break; }
     case 'atab': adminTab(t.dataset.tab); break;
@@ -3791,6 +4278,16 @@ document.addEventListener('click', e => {
     case 'boost-remove': applyBoost(true); break;
     case 'boost-prices': saveBoostPrices(); break;
     case 'rsv-open': openReservation(); break;
+    case 'rsv-serv': { const v = rsvServs(CUR.extras.reservas)[+t.dataset.i]; if (v) { RSV.serv = v.n; RSV.time = ''; renderReservation(); } break; }
+    case 'rsv-submit': submitReservation(); break;
+    case 'ord-open': openCheckout(); break;
+    case 'ord-close': show('ord-modal', false); if (ORD.done) ORD.done = null; break;
+    case 'ord-modo': ORD.modo = t.dataset.m; renderCheckout(); break;
+    case 'ord-loc': ordLocate(t); break;
+    case 'ord-submit': submitOrder(); break;
+    case 'track-open': openTrack(t.dataset.c); break;
+    case 'track-close': closeTrack(); break;
+    case 'track-cancel': cancelMyBooking(t.dataset.c); break;
     case 'rsv-close': show('rsv-modal', false); break;
     case 'rsv-day': RSV.day = t.dataset.d; RSV.time = ''; renderReservation(); break;
     case 'rsv-time': RSV.time = t.dataset.t; $$('#rsv-body .rsv-slots button').forEach(x => x.classList.toggle('on', x === t)); updateReservationLink(); break;
@@ -3839,7 +4336,7 @@ document.addEventListener('keydown', e => {
   else if (byId('mipanel').classList.contains('open')) { closeOwnerPanel(); PANEL_TOKEN = null; }
   else if (byId('profile').classList.contains('open')) closeProfile();
 });
-document.addEventListener('input', e => { if (e.target.id === 'rsv-name' || e.target.id === 'rsv-note') updateReservationLink(); if (e.target.id === 'bo-n') boostPreview(); });
+document.addEventListener('input', e => { if (/^rsv-(name|note|phone)$/.test(e.target.id)) updateReservationLink(); if (/^ord-(name|phone|dir|note)$/.test(e.target.id)) updateCheckout(); if (e.target.id === 'bo-n') boostPreview(); });
 document.addEventListener('change', e => { if (e.target.id === 'bo-u') boostPreview(); });
 ['edit', 'legal', 'promo-modal', 'rsv-modal', 'boost-modal'].forEach(m => byId(m).addEventListener('click', e => { if (e.target.id === m) show(m, false); }));
 document.addEventListener('input', e => { if (e.target.id === 'cfg-dur') promoPreview(); });
@@ -3979,7 +4476,8 @@ byId('year').textContent = new Date().getFullYear();
   fillSelects(); applyPrices(); observeReveal(); initPlanCarousel();
   if (!SB) { byId('dir-grid').innerHTML = '<div class="empty" style="grid-column:1/-1">⚠️<b>Servicio no disponible</b>Intenta de nuevo en unos minutos.</div>'; return; }
   await loadSettings();
-  if (location.hash.startsWith('#panel/')) routeFromHash();   // owner panel opens without waiting for the directory
+  renderMisBtn();
+  if (location.hash.startsWith('#panel/') || location.hash.startsWith('#seguir')) routeFromHash();   // owner panel opens without waiting for the directory
   await loadDirectory();
   startDemo();
 })();
