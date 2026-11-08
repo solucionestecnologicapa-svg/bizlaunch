@@ -809,6 +809,14 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 .quiz-res p{flex:1;min-width:220px;font-size:.9rem}
 .quiz-res p b{color:var(--acc)}
 .swipe-hint{display:none}
+.plan-founder{align-self:flex-start;margin-top:8px;font-size:.76rem;font-weight:700;color:#FFC83D}
+.founder{max-width:1000px;margin:0 auto 18px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:16px 20px;border-radius:18px;background:linear-gradient(135deg,rgba(255,200,61,.12),rgba(124,92,252,.08));border:1px solid rgba(255,200,61,.4)}
+.founder-ico{font-size:1.7rem}
+.founder b{font-family:'Syne',sans-serif;font-size:1.02rem}
+.founder p{color:var(--mut);font-size:.86rem;margin-top:3px}
+.founder-track{height:6px;border-radius:99px;background:rgba(255,255,255,.08);margin-top:10px;max-width:420px;overflow:hidden}
+.founder-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#FFC83D,#FF5C5C);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.founder-left{font-weight:800;color:#FFC83D;font-size:.95rem;white-space:nowrap;padding:8px 14px;border-radius:12px;background:rgba(5,10,20,.35)}
 .trust{max-width:1000px;margin:22px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .trust-i{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--bdr)}
 .trust-i i{font-style:normal;font-size:1.25rem;line-height:1;width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:11px;background:rgba(0,245,200,.08)}
@@ -1112,6 +1120,12 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
     </div>
     <div class="free-banner rv-in" id="free-banner"><span class="fb-ico">🌱</span><div class="grow"><b>¿Estás empezando? Publica tu negocio gratis.</b><p>Nombre, categoría, botón de WhatsApp y tu panel de estadísticas. Sin tarjeta y sin vencimiento. Sube de plan cuando quieras.</p></div><button class="btn btn-ghost btn-sm" data-act="reg" data-plan="gratis">Publicar gratis</button></div>
     <div class="plan-proof rv-in" id="plan-proof" hidden></div>
+    <div class="founder rv-in" id="founder" hidden>
+      <div class="founder-ico">🏅</div>
+      <div class="grow"><b>Precio de fundador para los primeros 30 negocios</b><p>Paga hoy el precio actual y consérvalo cada vez que renueves, aunque los precios suban después.</p>
+        <div class="founder-track" aria-hidden="true"><i id="founder-bar"></i></div></div>
+      <div class="founder-left" id="founder-left"></div>
+    </div>
     <div class="quiz rv-in" id="quiz">
       <div class="quiz-head"><b>¿Qué plan me conviene?</b><span>Responde 2 preguntas</span></div>
       <div class="quiz-q"><label>1 · ¿Qué tipo de negocio tienes?</label><div class="pills" role="radiogroup" aria-label="Tipo de negocio">
@@ -1127,6 +1141,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <div class="plan-for">Para empezar a aparecer en línea.</div>
         <div class="plan-price js-price" data-plan="basico"></div>
         <div class="plan-day js-day" data-plan="basico"></div>
+        <div class="plan-founder js-founder" data-plan="basico" hidden></div>
         <div class="plan-month js-month" data-plan="basico"></div>
         <ul>
           <li>Perfil profesional y página propia en Google</li>
@@ -1143,6 +1158,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <div class="plan-for">Para negocios con atención al público.</div>
         <div class="plan-price js-price" data-plan="pro"></div>
         <div class="plan-day js-day" data-plan="pro"></div>
+        <div class="plan-founder js-founder" data-plan="pro" hidden></div>
         <div class="plan-month js-month" data-plan="pro"></div>
         <ul>
           <li><b>Todo lo del Básico, y además:</b></li>
@@ -1159,6 +1175,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <div class="plan-for">Máxima visibilidad y confianza.</div>
         <div class="plan-price js-price" data-plan="premium"></div>
         <div class="plan-day js-day" data-plan="premium"></div>
+        <div class="plan-founder js-founder" data-plan="premium" hidden></div>
         <div class="plan-month js-month" data-plan="premium"></div>
         <ul>
           <li><b>Todo lo del Pro, y además:</b></li>
@@ -1732,11 +1749,26 @@ function applyPrices() {
   } else { pb.classList.remove('on'); fab.classList.remove('on'); }
 }
 
+/* ---------- Founder pricing: first 30 paid businesses keep today's price at renewal ---------- */
+const FOUNDER = { cupos: 30, p: { basico: 50, pro: 100, premium: 150 }, next: { basico: 60, pro: 120, premium: 200 } };
+let DIR_LOADED = false;
+const founderUsed = () => ALL.filter(b => PAID.includes(b.plan)).length;
+const founderLeft = () => Math.max(0, FOUNDER.cupos - founderUsed());
+const founderOn = () => DIR_LOADED && founderLeft() > 0 && PAID.every(k => PLANS[k].p <= FOUNDER.p[k]);
+const isFounder = b => b && PAID.includes(b.plan) && b.price > 0 && b.price <= FOUNDER.p[b.plan];
+const renewPrice = b => isFounder(b) ? Math.min(FOUNDER.p[b.plan], PLANS[b.plan].p) : PLANS[b.plan].p;
+function renderFounder() {
+  const on = founderOn(), left = DIR_LOADED ? founderLeft() : 0, bn = byId('founder');
+  if (bn) { bn.hidden = !on; if (on) byId('founder-left').textContent = left === 1 ? 'Queda 1 cupo' : 'Quedan ' + left + ' cupos'; if (on) byId('founder-bar').style.width = Math.round((FOUNDER.cupos - left) / FOUNDER.cupos * 100) + '%'; }
+  $$('.js-founder').forEach(e => { const k = e.dataset.plan; e.hidden = !on; if (on) e.textContent = '🏅 Precio de fundador · luego ' + money(FOUNDER.next[k]) + '/año'; });
+}
+
 /* ---------- Plans: compare table, quiz, add-on, mobile carousel, proof ---------- */
 function renderPlanExtras() {
   const ao = byId('addon-opts');
   if (ao) ao.innerHTML = (SITE.boost || BOOST_DEFAULT).map(o => `<a href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, quiero destacar mi negocio por ' + o.d + ' días (' + money2(o.p) + ').'))}" target="_blank" rel="noopener"><small>${o.d} ${o.d === 1 ? 'día' : 'días'}</small><b>${money2(o.p)}</b></a>`).join('');
   const cmp = byId('compare'); if (cmp && !cmp.hidden) cmp.innerHTML = compareTable();
+  renderFounder();
   try { $$('.js-pm-yappy').forEach(e => e.hidden = !yappyReady()); $$('.js-pm-bank').forEach(e => e.hidden = !bankReady()); } catch (e) {}
 }
 function compareTable() {
@@ -1838,7 +1870,7 @@ async function loadDirectory() {
     // fall back to older column sets if a newer SQL update has not been applied yet
     for (const cols of [PUB_COLS_V4, PUB_COLS_OLD]) { if (!res.error || PUBC === PUB_COLS_OLD) break; if (cols.length < PUBC.length) { PUBC = cols; res = await SB.from('negocios').select(PUBC).eq('active', true); } }
     if (res.error) throw res.error;
-    ALL = (res.data || []).map(norm).filter(isLive); DIR_TRIES = 0;
+    ALL = (res.data || []).map(norm).filter(isLive); DIR_TRIES = 0; DIR_LOADED = true; renderFounder();
   } catch (e) {
     console.error('directorio', e); ALL = [];
     DIR_TRIES = (DIR_TRIES || 0) + 1; clearTimeout(loadDirectory.t);
@@ -3041,11 +3073,11 @@ function markAviso(id, stage) { const a = avisos(); a[id] = { stage, at: Date.no
 const avisado = (b, d) => { const a = avisos()[b.id]; return a && a.stage === vStage(d) ? a : null; };
 const porAvisar = () => ADM.filter(b => expiresAt(b) && daysLeft(b) <= 30 && !avisado(b, daysLeft(b))).length;
 function vMsg(b, d) {
-  const P = PLANS[b.plan], hi = b.owner ? `Hola ${b.owner} 👋` : 'Hola 👋';
-  if (d <= 0) return `${hi} Tu perfil "${b.name}" en BizLaunch venció y ya no aparece en el directorio. Puedes reactivarlo hoy por ${money(P.p)} (12 meses) y conservas tu mismo link, tus fotos y tus reseñas. ¿Lo reactivamos?`;
-  if (d <= 1) return `${hi} Último aviso: tu perfil "${b.name}" en BizLaunch vence ${d === 1 ? 'mañana' : 'hoy'}. Renuévalo por ${money(P.p)} (12 meses más) para no dejar de aparecer ante tus clientes. ¿Te lo renovamos ahora?`;
-  if (d <= 7) return `${hi} Tu perfil "${b.name}" en BizLaunch vence en ${d} días. La renovación del Plan ${P.n} es de ${money(P.p)} por 12 meses y mantiene tu link, fotos y reseñas. ¿Te la dejo lista?`;
-  return `${hi} Te recuerdo con tiempo que tu perfil "${b.name}" en BizLaunch vence el ${fmtDate(expiresAt(b))} (en ${d} días). Para seguir visible, la renovación del Plan ${P.n} es de ${money(P.p)} por 12 meses. ¿Quieres renovarlo?`;
+  const P = PLANS[b.plan], fz = isFounder(b) ? ' (tu precio de fundador)' : '', hi = b.owner ? `Hola ${b.owner} 👋` : 'Hola 👋';
+  if (d <= 0) return `${hi} Tu perfil "${b.name}" en BizLaunch venció y ya no aparece en el directorio. Puedes reactivarlo hoy por ${money(renewPrice(b))} (12 meses)${fz} y conservas tu mismo link, tus fotos y tus reseñas. ¿Lo reactivamos?`;
+  if (d <= 1) return `${hi} Último aviso: tu perfil "${b.name}" en BizLaunch vence ${d === 1 ? 'mañana' : 'hoy'}. Renuévalo por ${money(renewPrice(b))} (12 meses más)${fz} para no dejar de aparecer ante tus clientes. ¿Te lo renovamos ahora?`;
+  if (d <= 7) return `${hi} Tu perfil "${b.name}" en BizLaunch vence en ${d} días. La renovación del Plan ${P.n} es de ${money(renewPrice(b))} por 12 meses y mantiene tu link, fotos y reseñas. ¿Te la dejo lista?`;
+  return `${hi} Te recuerdo con tiempo que tu perfil "${b.name}" en BizLaunch vence el ${fmtDate(expiresAt(b))} (en ${d} días). Para seguir visible, la renovación del Plan ${P.n} es de ${money(renewPrice(b))} por 12 meses. ¿Quieres renovarlo?`;
 }
 function aVenc() {
   const rows = ADM.filter(b => expiresAt(b)).map(b => ({ b, d: daysLeft(b) })).filter(x => x.d <= 90).sort((a, b) => a.d - b.d);
@@ -3083,6 +3115,7 @@ function aAjustes() {
     <div class="box"><h3>🎟 Códigos de descuento</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Los códigos se validan en el servidor; nadie puede verlos desde el sitio.</p>
       <div class="toolbar"><input id="cp-code" placeholder="CODIGO" style="text-transform:uppercase;max-width:180px"><input id="cp-pct" type="number" min="1" max="90" placeholder="%" style="max-width:90px;flex:0"><input id="cp-desc" placeholder="Descripción (opcional)"><button class="btn btn-pri btn-sm" data-act="cp-add">Crear</button></div>
       <div id="cp-list"><div class="skel" style="height:50px"></div></div></div>
+    <div class="box"><h3>🏅 Precio de fundador</h3><p style="color:var(--mut);font-size:.86rem">Negocios pagados publicados: <b style="color:var(--txt)">${founderUsed()} de ${FOUNDER.cupos}</b>. ${founderLeft() > 0 ? 'La web muestra “Quedan ' + founderLeft() + ' cupos”.' : '<b style="color:#FFC83D">Se llenaron los cupos.</b> Sube los precios a ' + PAID.map(k => money(FOUNDER.next[k])).join(' / ') + ' en “Precios” y crea los nuevos links de PayPal con esos montos. Los fundadores conservan su precio al renovar.'}</p></div>
     <div class="box"><h3>🔎 Páginas para Google</h3>
       <p style="color:var(--mut);font-size:.84rem;margin-bottom:10px">Cada negocio activo tiene su propia página (por ejemplo <code>/n/barberia-don-luis/</code>) con título, descripción y foto para Google y para la vista previa de WhatsApp. <b style="color:var(--txt)">Se generan solas</b> cada vez que se publica el sitio.${PAGES.at ? ' Última actualización: <b style="color:var(--txt)">' + esc(fmtDateTime(Date.parse(PAGES.at))) + '</b> · ' + Object.keys(PAGES.map).length + ' páginas.' : ''}</p>
       <p style="color:var(--mut);font-size:.82rem;margin-bottom:10px">Para que se actualicen al momento cuando actives o edites un negocio, pega aquí el <b style="color:var(--txt)">Build hook</b> de Netlify (se guarda solo en este navegador).</p>
