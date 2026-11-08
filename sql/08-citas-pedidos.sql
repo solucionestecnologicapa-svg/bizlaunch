@@ -397,3 +397,6 @@ grant execute on function public.cancelar_cita_cliente(text) to anon, authentica
 grant execute on function public.bandeja_dueno(uuid) to anon, authenticated;
 grant execute on function public.estado_pedido_dueno(uuid, bigint, text) to anon, authenticated;
 grant execute on function public.estado_cita_dueno(uuid, bigint, text) to anon, authenticated;
+
+alter function public.bl_negocio_vivo(public.negocios) set search_path = public;
+alter function public.bl_tel(text) set search_path = public;
