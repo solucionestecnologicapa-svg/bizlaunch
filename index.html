@@ -787,6 +787,70 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   body.printing .pr-page:last-child{break-after:auto;page-break-after:auto}
 }
 
+/* ---------- Plans: quiz, per-day price, compare, add-on, proof ---------- */
+.plan-day{display:inline-flex;align-self:flex-start;margin-top:10px;padding:4px 10px;border-radius:999px;background:rgba(0,245,200,.08);color:var(--acc);font-size:.78rem;font-weight:700}
+.plan.feat .plan-day{background:rgba(124,92,252,.14);color:#B7A6FF}
+.plan li b{color:var(--txt)}
+.plan li:has(b):before{content:''}
+.plan.rec{border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,245,200,.18),0 24px 60px rgba(0,0,0,.35)}
+.plan.feat.rec .plan-tag{display:none}
+.plan-tag-rec{position:absolute;z-index:3;top:-13px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--acc);color:#04121A;font-size:.72rem;font-weight:800;padding:5px 12px;border-radius:999px;animation:fadeUp .4s cubic-bezier(.2,.8,.2,1)}
+.quiz{max-width:1000px;margin:0 auto 26px;padding:20px 22px;border-radius:18px;background:var(--card);border:1px solid var(--bdr)}
+.quiz-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.quiz-head b{font-family:'Syne',sans-serif;font-size:1.1rem}
+.quiz-head span{color:var(--dim);font-size:.8rem}
+.quiz-q{margin-top:10px}
+.quiz-q label{display:block;color:var(--mut);font-size:.82rem;font-weight:600;margin-bottom:8px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills button{padding:8px 13px;border-radius:999px;border:1px solid var(--bdr2);background:rgba(255,255,255,.03);font-size:.84rem;font-weight:600;color:var(--txt);transition:background .2s,border-color .2s,transform .15s}
+.pills button:hover{border-color:var(--acc)}
+.pills button.on{background:var(--acc);border-color:var(--acc);color:#04121A}
+.quiz-res{margin-top:16px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(0,245,200,.1),rgba(124,92,252,.1));border:1px solid rgba(0,245,200,.25);display:flex;gap:14px;align-items:center;flex-wrap:wrap;animation:fadeUp .4s cubic-bezier(.2,.8,.2,1)}
+.quiz-res p{flex:1;min-width:220px;font-size:.9rem}
+.quiz-res p b{color:var(--acc)}
+.swipe-hint{display:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.plan-dots{display:none}
+.incl{max-width:1000px;margin:26px auto 0;padding:20px 22px;border-radius:18px;border:1px dashed var(--bdr2);text-align:center}
+.incl-t{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:12px}
+.incl-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px}
+.incl-g span{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600}
+.incl-g i{font-style:normal;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.05)}
+.incl-pay{margin-top:14px;color:var(--mut);font-size:.84rem}
+.compare{max-width:1000px;margin:18px auto 0;overflow-x:auto;border-radius:16px;border:1px solid var(--bdr);background:var(--card);animation:fadeUp .35s cubic-bezier(.2,.8,.2,1)}
+.compare table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:560px}
+.compare th,.compare td{padding:11px 14px;border-bottom:1px solid var(--bdr);text-align:center}
+.compare th:first-child,.compare td:first-child{text-align:left;position:sticky;left:0;background:var(--card);z-index:1}
+.compare thead th{font-family:'Syne',sans-serif;font-size:.95rem;position:sticky;top:0}
+.compare tr.grp td{background:rgba(255,255,255,.03);color:var(--mut);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.compare .y{color:var(--acc);font-weight:800}
+.compare .n{color:var(--dim)}
+.compare tbody tr:last-child td{border-bottom:none}
+.addon{max-width:1000px;margin:22px auto 0;display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:18px 22px;border-radius:18px;background:linear-gradient(135deg,rgba(255,200,61,.1),var(--card));border:1px solid rgba(255,200,61,.35)}
+.addon-ico{font-size:1.8rem;width:52px;height:52px;display:grid;place-items:center;border-radius:14px;background:rgba(255,200,61,.14)}
+.addon b{font-family:'Syne',sans-serif;font-size:1.05rem}
+.addon p{color:var(--mut);font-size:.86rem;margin-top:3px;max-width:520px}
+.addon-opts{display:flex;gap:8px;flex-wrap:wrap}
+.addon-opts a{display:flex;flex-direction:column;align-items:center;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,200,61,.35);background:rgba(5,10,20,.35);text-decoration:none;color:var(--txt);transition:transform .15s,border-color .2s}
+.addon-opts a:hover{transform:translateY(-2px);border-color:#FFC83D}
+.addon-opts small{color:var(--mut);font-size:.72rem}
+.addon-opts b{color:#FFC83D;font-size:1rem}
+.plan-proof{max-width:1000px;margin:0 auto 18px;display:flex;justify-content:center;gap:12px 22px;flex-wrap:wrap;align-items:center;font-size:.9rem;color:var(--mut)}
+.plan-proof b{color:var(--txt)}
+.plan-proof q{font-style:italic;color:var(--txt);quotes:'“' '”'}
+@media(max-width:760px){
+  .swipe-hint{display:block;text-align:right;color:var(--dim);font-size:.78rem;margin:0 4px 8px}
+  .plans#plans{display:flex;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:16px 8% 8px;margin:0 -16px;scrollbar-width:none;align-items:stretch}
+  .plans#plans::-webkit-scrollbar{display:none}
+  .plans#plans .plan{flex:0 0 84%;scroll-snap-align:center}
+  .plan-dots{display:flex;justify-content:center;gap:7px;margin-top:10px}
+  .plan-dots i{width:7px;height:7px;border-radius:99px;background:var(--bdr2);transition:width .25s,background .25s}
+  .plan-dots i.on{width:20px;background:var(--acc)}
+  .quiz{padding:16px}
+  .pills button{font-size:.8rem;padding:7px 11px}
+  .addon{padding:16px}
+}
+
 /* ---------- Favorites, suggestions, hours ---------- */
 .card{position:relative}
 .fav{position:absolute;top:10px;right:10px;z-index:3;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(5,10,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);color:#fff;transition:transform .2s,background .2s}
@@ -846,7 +910,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 .plan:before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(380px circle at var(--mx) var(--my),color-mix(in srgb,var(--spot,var(--acc)) 16%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
 .plan:hover:after,.plan:hover:before{opacity:1}
 .plan.feat{--spot:var(--pur)}
-.plan>:not(.plan-tag){position:relative}
+.plan>:not(.plan-tag):not(.plan-tag-rec){position:relative}
 /* 7 · hero title word by word */
 .hero h1 .w{display:inline-block;animation:wordIn .8s cubic-bezier(.2,.8,.2,1) backwards}
 @keyframes wordIn{from{opacity:0;transform:translateY(55%) rotate(2deg);filter:blur(6px)}}
@@ -1037,67 +1101,83 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       <p class="sec-sub">Elige el nivel de visibilidad que necesita tu negocio. Puedes subir de plan cuando quieras.</p>
     </div>
     <div class="free-banner rv-in" id="free-banner"><span class="fb-ico">🌱</span><div class="grow"><b>¿Estás empezando? Publica tu negocio gratis.</b><p>Nombre, categoría, botón de WhatsApp y tu panel de estadísticas. Sin tarjeta y sin vencimiento. Sube de plan cuando quieras.</p></div><button class="btn btn-ghost btn-sm" data-act="reg" data-plan="gratis">Publicar gratis</button></div>
-    <div class="plans">
-      <div class="plan rv-in">
+    <div class="plan-proof rv-in" id="plan-proof" hidden></div>
+    <div class="quiz rv-in" id="quiz">
+      <div class="quiz-head"><b>¿Qué plan me conviene?</b><span>Responde 2 preguntas</span></div>
+      <div class="quiz-q"><label>1 · ¿Qué tipo de negocio tienes?</label><div class="pills" role="radiogroup" aria-label="Tipo de negocio">
+        <button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="t" data-v="comida">🍽️ Restaurante o comida</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="t" data-v="citas">💅 Belleza, salud o servicios con cita</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="t" data-v="tienda">🛍️ Tienda o productos</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="t" data-v="servicios">🧰 Servicios profesionales</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="t" data-v="otro">✨ Otro</button></div></div>
+      <div class="quiz-q"><label>2 · ¿Qué es lo más importante para ti?</label><div class="pills" role="radiogroup" aria-label="Lo más importante">
+        <button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="g" data-v="aparecer">Aparecer en línea y recibir mensajes</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="g" data-v="reservas">Recibir reservas, citas o pagos</button><button type="button" role="radio" aria-checked="false" data-act="quiz" data-q="g" data-v="primero">Salir de primero y verificado</button></div></div>
+      <div class="quiz-res" id="quiz-res" aria-live="polite" hidden></div>
+    </div>
+    <p class="swipe-hint">Desliza para ver los planes →</p>
+    <div class="plans" id="plans">
+      <div class="plan rv-in" data-plan="basico">
         <div class="plan-name" style="color:#00F5C8">Básico</div>
         <div class="plan-for">Para empezar a aparecer en línea.</div>
         <div class="plan-price js-price" data-plan="basico"></div>
+        <div class="plan-day js-day" data-plan="basico"></div>
         <div class="plan-month js-month" data-plan="basico"></div>
         <ul>
-          <li>Perfil profesional con link propio</li>
-          <li>Hasta 5 fotos</li>
-          <li>1 red social</li>
-          <li>Botón de WhatsApp directo</li>
-          <li>Mapa de ubicación</li>
-          <li>Reseñas de clientes y código QR</li>
-          <li>Panel de estadísticas: visitas y clics de WhatsApp</li>
-          <li>Menú o lista de precios (hasta 25) con pedidos por WhatsApp</li>
-          <li>1 oferta activa a la vez</li>
-          <li class="no">Horario y “abierto ahora”</li>
-          <li class="no">Reservas y Yappy</li>
-          <li class="no">Insignia verificado</li>
+          <li>Perfil profesional y página propia en Google</li>
+          <li>WhatsApp directo, mapa y código QR</li>
+          <li>Menú o lista de precios con pedidos por WhatsApp</li>
+          <li>5 fotos, 1 red social y 1 oferta activa</li>
+          <li>Panel de estadísticas de visitas y clics</li>
         </ul>
         <button class="btn btn-ghost btn-block" data-act="reg" data-plan="basico">Elegir Básico</button>
       </div>
-      <div class="plan feat rv-in">
+      <div class="plan feat rv-in" data-plan="pro">
         <div class="plan-tag">⭐ El más elegido</div>
         <div class="plan-name" style="color:#7C5CFC">Pro</div>
         <div class="plan-for">Para negocios con atención al público.</div>
         <div class="plan-price js-price" data-plan="pro"></div>
+        <div class="plan-day js-day" data-plan="pro"></div>
         <div class="plan-month js-month" data-plan="pro"></div>
         <ul>
-          <li>Todo lo del plan Básico</li>
-          <li>Hasta 10 fotos</li>
-          <li>2 redes sociales</li>
+          <li><b>Todo lo del Básico, y además:</b></li>
           <li>Reservas o citas por WhatsApp</li>
           <li>Botón de pago con Yappy</li>
-          <li>Menú de hasta 80 platos o servicios</li>
-          <li>2 ofertas activas a la vez</li>
-          <li>Horario con indicador “abierto ahora”</li>
-          <li>Botón de llamada directa</li>
-          <li>Mejor posición que Básico</li>
-          <li class="no">Insignia verificado</li>
+          <li>Horario con “abierto ahora” y botón de llamada</li>
+          <li>10 fotos, 2 redes, 2 ofertas y menú más grande</li>
+          <li>Mejor posición en el directorio</li>
         </ul>
         <button class="btn btn-pur btn-block" data-act="reg" data-plan="pro">Elegir Pro</button>
       </div>
-      <div class="plan rv-in">
+      <div class="plan rv-in" data-plan="premium">
         <div class="plan-name" style="color:#FF5C5C">Premium</div>
         <div class="plan-for">Máxima visibilidad y confianza.</div>
         <div class="plan-price js-price" data-plan="premium"></div>
+        <div class="plan-day js-day" data-plan="premium"></div>
         <div class="plan-month js-month" data-plan="premium"></div>
         <ul>
-          <li>Todo lo del plan Pro</li>
-          <li>Hasta 15 fotos</li>
-          <li>3 redes sociales</li>
-          <li>Menú de hasta 200 platos o servicios</li>
-          <li>3 ofertas activas a la vez</li>
+          <li><b>Todo lo del Pro, y además:</b></li>
           <li>Insignia ✓ Verificado</li>
-          <li>Botón destacado a tu sitio web</li>
           <li>Primeros lugares del directorio</li>
-          <li>Sección “Destacados” en la portada</li>
+          <li>Botón destacado a tu sitio web</li>
+          <li>15 fotos, 3 redes, 3 ofertas y menú de 200</li>
         </ul>
         <button class="btn btn-ghost btn-block" data-act="reg" data-plan="premium">Elegir Premium</button>
       </div>
+    </div>
+    <div class="plan-dots" id="plan-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="incl rv-in">
+      <b class="incl-t">Incluido en todos los planes</b>
+      <div class="incl-g">
+        <span><i>🖨</i>Tarjetas, letrero y volantes con tu QR</span>
+        <span><i>🔎</i>Página propia en Google</span>
+        <span><i>⭐</i>Reseñas que puedes responder</span>
+        <span><i>📊</i>Estadísticas de visitas y WhatsApp</span>
+        <span><i>❤️</i>Clientes te guardan y agregan a sus contactos</span>
+      </div>
+      <p class="incl-pay">💳 Paga con tarjeta Visa o Mastercard de forma segura</p>
+    </div>
+    <div style="text-align:center;margin-top:18px"><button class="btn btn-ghost" data-act="compare" aria-expanded="false" aria-controls="compare">📋 Comparar todos los planes</button></div>
+    <div class="compare" id="compare" hidden></div>
+    <div class="addon rv-in" id="addon">
+      <div class="addon-ico">⚡</div>
+      <div class="grow"><b>Complemento: Destacar</b><p>Para cualquier plan. Tu negocio sale de primero en el directorio y en “Negocios destacados” de la portada, con la etiqueta ⚡ Destacado.</p></div>
+      <div class="addon-opts" id="addon-opts"></div>
     </div>
     <div class="guarantee rv-in">
       <span style="font-size:1.8rem">🛡️</span>
@@ -1574,7 +1654,7 @@ function parseHours(str) {
 const BOOST_DEFAULT = [{ d: 3, p: 5 }, { d: 7, p: 10 }, { d: 30, p: 30 }];
 let SITE = { precios: { basico:50, pro:100, premium:150 }, promo: { active:false, pct:0, title:'', msg:'', until:'' }, boost: BOOST_DEFAULT, gratis_off: false };
 const freeOn = () => !SITE.gratis_off;
-function applyFree() { const on = freeOn(); ['free-banner', 'faq-free'].forEach(id => { const e = byId(id); if (e) e.hidden = !on; }); }
+function applyFree() { const on = freeOn(); ['free-banner', 'faq-free'].forEach(id => { const e = byId(id); if (e) e.hidden = !on; }); if (typeof renderPlanExtras === 'function') renderPlanExtras(); }
 let PAGES = { map: {}, at: '' };   // {negocioId: slug} of the pages already published for Google
 async function loadSettings() {
   try {
@@ -1625,6 +1705,8 @@ function applyPrices() {
   $$('.js-price').forEach(e => { const k = e.dataset.plan, pr = priceOf(k); e.innerHTML = pr.pct ? `<s>${money(pr.base)}</s>${money(pr.final)}<span class="off">-${pr.pct}%</span>` : `${money(pr.base)}<small>/año</small>`; });
   $$('.js-month').forEach(e => { const pr = priceOf(e.dataset.plan); e.textContent = 'Equivale a ' + money((pr.final / 12).toFixed(2)).replace(/\.00$/, '') + ' al mes · pago único anual'; });
   $$('.js-from').forEach(e => e.textContent = money(priceOf('basico').final));
+  $$('.js-day').forEach(e => { const pr = priceOf(e.dataset.plan); e.textContent = 'Menos de $' + (Math.ceil(pr.final / 365 * 100) / 100).toFixed(2) + ' al día'; });
+  renderPlanExtras();
   const pb = byId('promo'), fab = byId('promo-fab'), pct = promoPct(), e = promoEnds();
   if (pct) {
     const p = SITE.promo;
@@ -1632,6 +1714,89 @@ function applyPrices() {
     fab.innerHTML = `<span class="gift">🎁</span><span><b>-${pct}% en planes</b><small>${e ? 'Termina en <span class="js-cd"></span>' : esc(p.title || 'Descuento especial')}</small></span>`;
     pb.classList.add('on'); fab.classList.add('on'); PROMO_WAS = pct; promoTick();
   } else { pb.classList.remove('on'); fab.classList.remove('on'); }
+}
+
+/* ---------- Plans: compare table, quiz, add-on, mobile carousel, proof ---------- */
+function renderPlanExtras() {
+  const ao = byId('addon-opts');
+  if (ao) ao.innerHTML = (SITE.boost || BOOST_DEFAULT).map(o => `<a href="${esc(waLink(CFG.CONTACT_WA, 'Hola BizLaunch, quiero destacar mi negocio por ' + o.d + ' días (' + money2(o.p) + ').'))}" target="_blank" rel="noopener"><small>${o.d} ${o.d === 1 ? 'día' : 'días'}</small><b>${money2(o.p)}</b></a>`).join('');
+  const cmp = byId('compare'); if (cmp && !cmp.hidden) cmp.innerHTML = compareTable();
+}
+function compareTable() {
+  const ks = Object.keys(PLANS).filter(k => !PLANS[k].free || freeOn());
+  const Y = '<span class="y" aria-label="Incluido">✓</span>', N = '<span class="n" aria-label="No incluido">—</span>';
+  const yn = f => k => f(k) ? Y : N;
+  const rows = [
+    ['g', 'Tu presencia'],
+    ['Perfil con link propio y página en Google', () => Y],
+    ['Botón de WhatsApp', () => Y],
+    ['Tarjetas, letrero y volantes con QR', () => Y],
+    ['Reseñas con respuesta del dueño', () => Y],
+    ['Panel de estadísticas', () => Y],
+    ['Fotos', k => PLANS[k].f ? String(PLANS[k].f) : N],
+    ['Redes sociales', k => PLANS[k].s ? String(PLANS[k].s) : N],
+    ['Mapa y ubicación', yn(k => !PLANS[k].free)],
+    ['g', 'Ventas'],
+    ['Menú o lista de precios con pedidos', k => MENU_LIMIT[k] ? 'Hasta ' + MENU_LIMIT[k] : N],
+    ['Ofertas activas', k => OFFER_LIMIT[k] ? String(OFFER_LIMIT[k]) : N],
+    ['Reservas o citas por WhatsApp', yn(hasExtras)],
+    ['Botón de pago con Yappy', yn(hasExtras)],
+    ['Horario con “abierto ahora” y botón de llamada', yn(k => PLANS[k].hours && PLANS[k].call)],
+    ['Botón destacado a tu sitio web', yn(k => PLANS[k].webBtn)],
+    ['g', 'Visibilidad'],
+    ['Insignia ✓ Verificado', yn(k => PLANS[k].verified)],
+    ['Posición en el directorio', k => ['Primeros lugares', 'Alta', 'Buena', 'Normal'][PLANS[k].rank]],
+    ['⚡ Destacar (complemento)', () => 'Opcional']
+  ];
+  const head = `<thead><tr><th scope="col">Incluye</th>${ks.map(k => `<th scope="col" style="color:${PLANS[k].c}">${esc(PLANS[k].n)}<br><small style="color:var(--mut);font-family:Inter,sans-serif;font-weight:600">${PLANS[k].free ? '$0' : money(priceOf(k).final) + '/año'}</small></th>`).join('')}</tr></thead>`;
+  const body = rows.map(r => r[0] === 'g' ? `<tr class="grp"><td colspan="${ks.length + 1}">${r[1]}</td></tr>` : `<tr><th scope="row" style="font-weight:500">${r[0]}</th>${ks.map(k => `<td>${r[1](k)}</td>`).join('')}</tr>`).join('');
+  const foot = `<tr><td></td>${ks.map(k => `<td><button class="btn btn-sm ${k === 'pro' ? 'btn-pur' : 'btn-ghost'}" data-act="reg" data-plan="${k}">Elegir</button></td>`).join('')}</tr>`;
+  return `<table><caption class="sr-only">Comparación de planes de BizLaunch</caption>${head}<tbody>${body}${foot}</tbody></table>`;
+}
+function toggleCompare(btn) {
+  const c = byId('compare'), open = c.hidden;
+  if (open) c.innerHTML = compareTable();
+  c.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+  btn.textContent = open ? '✕ Ocultar comparación' : '📋 Comparar todos los planes';
+  if (open) c.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest' });
+}
+const QUIZ = { t: '', g: '' };
+function quizPick(btn) {
+  QUIZ[btn.dataset.q] = btn.dataset.v;
+  btn.parentNode.querySelectorAll('button').forEach(b => { const on = b === btn; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(on)); });
+  if (!QUIZ.t || !QUIZ.g) return;
+  const k = QUIZ.g === 'primero' ? 'premium' : QUIZ.g === 'reservas' ? 'pro' : (QUIZ.t === 'comida' || QUIZ.t === 'citas') ? 'pro' : 'basico';
+  const why = {
+    basico: 'Te da tu perfil, página en Google, WhatsApp, mapa, QR y menú con pedidos: todo lo necesario para que te encuentren y te escriban.',
+    pro: QUIZ.g === 'reservas' ? 'Incluye reservas o citas por WhatsApp y botón de Yappy para que te paguen directo.' : 'Para ' + (QUIZ.t === 'comida' ? 'restaurantes' : 'negocios con citas') + ' lo más útil es mostrar si estás “abierto ahora”, recibir reservas y cobrar con Yappy.',
+    premium: 'Sales en los primeros lugares, con la insignia ✓ Verificado y un botón destacado a tu web.'
+  }[k];
+  const r = byId('quiz-res');
+  r.innerHTML = `<p>Te recomendamos <b>${esc(PLANS[k].n)}</b> · ${money(priceOf(k).final)}/año. ${why}</p><button class="btn btn-pri btn-sm" data-act="reg" data-plan="${k}">Elegir ${esc(PLANS[k].n)}</button>`;
+  r.hidden = false;
+  $$('#plans .plan').forEach(c => { const on = c.dataset.plan === k; c.classList.toggle('rec', on); const t = c.querySelector('.plan-tag-rec'); if (on && !t) c.insertAdjacentHTML('afterbegin', '<div class="plan-tag-rec">🎯 Recomendado para ti</div>'); if (!on && t) t.remove(); });
+  const card = document.querySelector(`#plans .plan[data-plan="${k}"]`);
+  if (card) { scrollPlanInto(card); }
+}
+function scrollPlanInto(card, instant) {
+  const row = byId('plans');
+  if (row.scrollWidth > row.clientWidth + 4) row.scrollTo({ left: card.offsetLeft - (row.clientWidth - card.offsetWidth) / 2, behavior: instant || REDUCED ? 'auto' : 'smooth' });
+  else if (!instant) card.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest' });
+}
+function initPlanCarousel() {
+  const row = byId('plans'); if (!row) return;
+  const cards = [...row.querySelectorAll('.plan')], dots = [...byId('plan-dots').children];
+  const sync = () => { const mid = row.scrollLeft + row.clientWidth / 2; let best = 0, bd = 1e9; cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } }); dots.forEach((d, i) => d.classList.toggle('on', i === best)); };
+  row.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  const start = () => { const pro = row.querySelector('.plan[data-plan="pro"]'); if (pro) scrollPlanInto(pro, true); sync(); };
+  start(); window.addEventListener('resize', () => { clearTimeout(initPlanCarousel.t); initPlanCarousel.t = setTimeout(sync, 150); });
+}
+function renderPlanProof(review) {
+  const el = byId('plan-proof'); if (!el) return;
+  const parts = [];
+  if (ALL.length >= 10) parts.push(`<span>🏪 <b>${ALL.length} negocios</b> ya usan BizLaunch</span>`);
+  if (review) { const b = ALL.find(x => x.id === String(review.negocio_id)); const txt = review.comentario.length > 120 ? review.comentario.slice(0, 117).replace(/\s+\S*$/, '') + '…' : review.comentario; parts.push(`<span><span style="color:#FFC83D">${'★'.repeat(review.estrellas)}</span> <q>${esc(txt)}</q> — ${esc(review.autor || 'Cliente')}${b ? ', sobre ' + esc(b.name) : ''}</span>`); }
+  el.innerHTML = parts.join(''); el.hidden = !parts.length;
 }
 
 /* =====================================================================
@@ -1787,10 +1952,11 @@ async function loadTestimonials() {
     const { data, error } = await SB.from('resenas').select('negocio_id,autor,estrellas,comentario,created_at').eq('aprobada', true).gte('estrellas', 4).order('created_at', { ascending: false }).limit(12);
     if (error) throw error;
     const rows = (data || []).filter(r => (r.comentario || '').length >= 25 && ALL.some(b => b.id === String(r.negocio_id))).slice(0, 3);
+    renderPlanProof(rows[0]);
     if (!rows.length) { sec.hidden = true; return; }
     byId('tgrid').innerHTML = rows.map(r => { const b = ALL.find(x => x.id === String(r.negocio_id)); return `<div class="tcard rv-in"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>“${esc(r.comentario)}”</p><small>${esc(r.autor || 'Cliente')} sobre <button class="linkbtn" data-act="profile" data-id="${esc(b.id)}">${esc(b.name)}</button></small></div>`; }).join('');
     sec.hidden = false; observeReveal();
-  } catch (e) { sec.hidden = true; }
+  } catch (e) { sec.hidden = true; renderPlanProof(null); }
 }
 
 /* =====================================================================
@@ -3535,6 +3701,8 @@ document.addEventListener('click', e => {
     case 'sg-biz': hideSugg(); openProfile(id); break;
     case 'hook-save': saveHook(); break;
     case 'pages-rebuild': rebuildPages(true); break;
+    case 'compare': toggleCompare(t); break;
+    case 'quiz': quizPick(t); break;
     case 'free-toggle': { const was = SITE.gratis_off; SITE.gratis_off = !was; saveSettings(SITE.promo, SITE.gratis_off ? '✓ Plan Gratis deshabilitado' : '✓ Plan Gratis habilitado').then(ok => { if (!ok) { SITE.gratis_off = was; if (ATAB === 'ajustes') adminTab('ajustes'); } applyFree(); }); break; }
     case 'atab': adminTab(t.dataset.tab); break;
     case 'a-reload': adminLoad().then(() => adminTab(ATAB)); break;
@@ -3753,7 +3921,7 @@ $$('.js-mail-contact').forEach(a => { a.href = mailHref(CFG.ADMIN_EMAIL, 'Consul
 byId('year').textContent = new Date().getFullYear();
 
 (async function init() {
-  fillSelects(); applyPrices(); observeReveal();
+  fillSelects(); applyPrices(); observeReveal(); initPlanCarousel();
   if (!SB) { byId('dir-grid').innerHTML = '<div class="empty" style="grid-column:1/-1">⚠️<b>Servicio no disponible</b>Intenta de nuevo en unos minutos.</div>'; return; }
   await loadSettings();
   if (location.hash.startsWith('#panel/')) routeFromHash();   // owner panel opens without waiting for the directory
