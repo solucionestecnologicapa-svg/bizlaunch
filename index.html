@@ -2045,9 +2045,17 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
   </div>
 </div>
 
-<script src="/vendor/supabase-2.117.2.js"></script>
-<script src="/vendor/emailjs-4.4.1.min.js"></script>
-<script src="/vendor/qrcode-1.0.0.min.js"></script>
+<script>
+/* The libraries live in /vendor on the site. When this file is opened on its own (double click, or uploaded without the
+   /vendor folder) they are loaded from the jsDelivr CDN instead, so the businesses still show up. */
+window.VENDOR_CDN = { 'supabase-2.117.2.js': '@supabase/supabase-js@2.117.2/dist/umd/supabase.js', 'emailjs-4.4.1.min.js': '@emailjs/browser@4.4.1/dist/email.min.js', 'qrcode-1.0.0.min.js': 'qrcodejs@1.0.0/qrcode.min.js',
+  'leaflet-1.9.4.js': 'leaflet@1.9.4/dist/leaflet.js', 'leaflet-1.9.4.css': 'leaflet@1.9.4/dist/leaflet.css', 'xlsx-0.18.5.full.min.js': 'xlsx@0.18.5/dist/xlsx.full.min.js', 'jszip-3.10.1.min.js': 'jszip@3.10.1/dist/jszip.min.js' };
+window.vendorUrl = f => location.protocol === 'file:' || window.VENDOR_OFF ? 'https://cdn.jsdelivr.net/npm/' + window.VENDOR_CDN[f] : '/vendor/' + f;
+document.write(['supabase-2.117.2.js', 'emailjs-4.4.1.min.js', 'qrcode-1.0.0.min.js'].map(f => '<script src="' + vendorUrl(f) + '"><\/script>').join(''));
+</script>
+<script>
+if (!window.supabase && location.protocol !== 'file:') { window.VENDOR_OFF = 1; document.write(['supabase-2.117.2.js', 'emailjs-4.4.1.min.js', 'qrcode-1.0.0.min.js'].map(f => '<script src="' + vendorUrl(f) + '"><\/script>').join('')); }
+</script>
 <script>
 'use strict';
 /* =====================================================================
@@ -2655,7 +2663,7 @@ function llOf(b) {
 async function openMap() {
   show('map-modal', true);
   try {
-    if (!window.L) { loadCss('/vendor/leaflet-1.9.4.css'); await loadScript('/vendor/leaflet-1.9.4.js'); }
+    if (!window.L) { loadCss(vendorUrl('leaflet-1.9.4.css')); await loadScript(vendorUrl('leaflet-1.9.4.js')); }
     if (!GEO) { try { const r = await fetch('/geo.json', { cache: 'no-cache' }); GEO = r.ok ? await r.json() : {}; } catch (e) { GEO = {}; } }
     renderMap();
   } catch (e) { byId('map-box').innerHTML = '<div class="empty" style="padding:60px 20px">🗺️<b>No pudimos cargar el mapa</b>Revisa tu conexión e intenta de nuevo.</div>'; }
@@ -4475,7 +4483,7 @@ async function eSave() {
 }
 
 async function exportXlsx(f) {
-  try { await loadScript('/vendor/xlsx-0.18.5.full.min.js'); } catch (e) { return toast(e.message, 'bad'); }
+  try { await loadScript(vendorUrl('xlsx-0.18.5.full.min.js')); } catch (e) { return toast(e.message, 'bad'); }
   const l = ADM.filter(b => f === 'activos' ? b.active : f === 'pendientes' ? !b.active && !b.activatedAt : true);
   if (!l.length) return toast('No hay datos para exportar');
   const rows = l.map(b => ({ ID: b.id, Negocio: b.name, Categoría: catOf(b.category)[1], Plan: b.planN, 'Precio ($)': b.price, Estado: b.active ? 'Activo' : b.activatedAt ? 'Vencido' : 'Pendiente', Dueño: b.owner, Cédula: b.cedula, Correo: b.email, Teléfono: b.phone, WhatsApp: b.wa, Provincia: provLabel(b.province), RUC: b.ruc, Dirección: b.address, 'Sitio web': b.website, Fotos: b.photos.length, Pago: (b.payment || {}).label || '', Referencia: (b.payment || {}).ref || (b.payment || {}).yappyRef || '', Visitas: b.visits, Registrado: fmtDate(b.registeredAt), Activado: fmtDate(b.activatedAt), Vence: fmtDate(expiresAt(b)), Notas: b.notes }));
@@ -4959,7 +4967,7 @@ async function exportSite() {
   if (location.protocol === 'file:') return toast('Abre el panel desde tu sitio publicado (Netlify) para generar el ZIP.', 'bad');
   const btn = byId('seo-btn'); if (btn) { btn.disabled = true; btn.textContent = 'Generando…'; }
   try {
-    await loadScript('/vendor/jszip-3.10.1.min.js');
+    await loadScript(vendorUrl('jszip-3.10.1.min.js'));
     const r = await fetch('/index.html', { cache: 'no-store' }); if (!r.ok) throw new Error('No se pudo leer index.html del sitio');
     let tpl = await r.text();
     if (!tpl.includes('id="pf-content"') || tpl.includes('window.BL_PAGE=')) throw new Error('El index.html publicado no es la versión nueva del sitio');
