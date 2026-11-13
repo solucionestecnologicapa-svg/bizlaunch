@@ -1,0 +1,13 @@
+-- =====================================================================
+-- BizLaunch · Negocios de muestra (uno por plan) — aplicado el 2026-11-12
+--  demo_basico  → Panadería Dulce Hogar          (Básico, diseño Terracota)
+--  demo_pro     → Barbería Los Clásicos           (Pro, diseño Urbano)
+--  demo_premium → Mar y Fuego Cocina del Pacífico (Premium, diseño Océano)
+-- Fotos: Pexels (licencia libre), enlazadas desde images.pexels.com.
+-- La web los marca como "Perfil de muestra" y no los cuenta en estadísticas
+-- ni en los cupos de fundador. Para quitarlos:
+--   delete from public.negocios where id like 'demo_%';   (borra en cascada citas y pedidos)
+--   delete from public.ofertas  where negocio_id like 'demo_%';
+--   delete from public.resenas  where negocio_id like 'demo_%';
+--   delete from public.eventos  where negocio_id like 'demo_%';
+-- =====================================================================

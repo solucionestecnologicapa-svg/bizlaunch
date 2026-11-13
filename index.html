@@ -239,6 +239,7 @@ p{text-wrap:pretty}
 .card:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:var(--bdr2)}
 .card--premium{border-color:rgba(255,92,92,.35)}
 .card--boost{border-color:rgba(255,200,61,.55);box-shadow:0 0 0 1px rgba(255,200,61,.18),0 14px 40px rgba(255,176,32,.12)}
+.chip-demo{color:#fff;background:linear-gradient(135deg,#7C5CFC,#00C2A8);border:0}
 .chip-boost{color:#1A1200;background:#FFC83D;border:1px solid #FFC83D}
 .card-media{position:relative;display:block;width:100%;aspect-ratio:16/10;background:var(--sur);overflow:hidden}
 .card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
@@ -2105,7 +2106,7 @@ function applyPrices() {
 /* ---------- Founder pricing: first 30 paid businesses keep today's price at renewal ---------- */
 const FOUNDER = { cupos: 30, p: { basico: 50, pro: 100, premium: 150 }, next: { basico: 60, pro: 120, premium: 200 } };
 let DIR_LOADED = false;
-const founderUsed = () => ALL.filter(b => PAID.includes(b.plan)).length;
+const founderUsed = () => ALL.filter(b => PAID.includes(b.plan) && !isDemo(b)).length;
 const founderLeft = () => Math.max(0, FOUNDER.cupos - founderUsed());
 const founderOn = () => DIR_LOADED && founderLeft() > 0 && PAID.every(k => PLANS[k].p <= FOUNDER.p[k]);
 const isFounder = b => b && PAID.includes(b.plan) && b.price > 0 && b.price <= FOUNDER.p[b.plan];
@@ -2198,7 +2199,8 @@ function initPlanCarousel() {
 function renderPlanProof(review) {
   const el = byId('plan-proof'); if (!el) return;
   const parts = [];
-  if (ALL.length >= 10) parts.push(`<span>🏪 <b>${ALL.length} negocios</b> ya usan BizLaunch</span>`);
+  const real = ALL.filter(b => !isDemo(b)).length;
+  if (real >= 10) parts.push(`<span>🏪 <b>${real} negocios</b> ya usan BizLaunch</span>`);
   if (review) { const b = ALL.find(x => x.id === String(review.negocio_id)); const txt = review.comentario.length > 120 ? review.comentario.slice(0, 117).replace(/\s+\S*$/, '') + '…' : review.comentario; parts.push(`<span><span style="color:#FFC83D">${'★'.repeat(review.estrellas)}</span> <q>${esc(txt)}</q> — ${esc(review.autor || 'Cliente')}${b ? ', sobre ' + esc(b.name) : ''}</span>`); }
   el.innerHTML = parts.join(''); el.hidden = !parts.length;
 }
@@ -2271,11 +2273,12 @@ function renderOffers() {
 
 function renderStats() {
   const el = byId('stats');
-  if (ALL.length < 3) { el.hidden = true; return; }
-  const provs = new Set(ALL.map(b => b.province).filter(Boolean)).size;
-  const visits = ALL.reduce((s, b) => s + b.visits, 0);
-  const cats = new Set(ALL.map(b => b.category).filter(Boolean)).size;
-  const rows = [[ALL.length, ALL.length === 1 ? 'Negocio' : 'Negocios', 'var(--acc)'], [cats, cats === 1 ? 'Categoría' : 'Categorías', 'var(--pur)'], [provs, provs === 1 ? 'Provincia' : 'Provincias', 'var(--red)']]
+  const RL = ALL.filter(x => !isDemo(x));   // sample profiles don't count
+  if (RL.length < 3) { el.hidden = true; return; }
+  const provs = new Set(RL.map(b => b.province).filter(Boolean)).size;
+  const visits = RL.reduce((s, b) => s + b.visits, 0);
+  const cats = new Set(RL.map(b => b.category).filter(Boolean)).size;
+  const rows = [[RL.length, RL.length === 1 ? 'Negocio' : 'Negocios', 'var(--acc)'], [cats, cats === 1 ? 'Categoría' : 'Categorías', 'var(--pur)'], [provs, provs === 1 ? 'Provincia' : 'Provincias', 'var(--red)']]
     .concat(visits >= 100 ? [[visits, 'Visitas', 'var(--amb)']] : []);
   el.classList.toggle('three', rows.length === 3);
   el.innerHTML = rows.map(s => `<div class="stat"><b style="color:${s[2]}" data-count="${s[0]}">${REDUCED ? s[0].toLocaleString('es-PA') : 0}</b><span>${s[1]}</span></div>`).join('');
@@ -2307,7 +2310,7 @@ function cardHTML(b, opt) {
   return `<article class="card${isBoosted(b) ? ' card--boost' : b.plan === 'premium' ? ' card--premium' : ''}${opt.reveal ? ' rv-in' : ''}">${opt.preview ? '' : favBtn(b)}
     <button class="card-media" ${act} aria-label="Ver perfil de ${esc(b.name)}">
       ${img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async">` : `<div class="ph ph-card" style="--c:${P.c}"><i aria-hidden="true">${catOf(b.category)[2]}</i><span>${initial}</span></div>`}
-      <div class="card-badges">${[isBoosted(b) ? '<span class="chip chip-boost">⚡ Destacado</span>' : '', OFFERS.some(o => o.negocio_id === b.id) ? '<span class="chip chip-offer">🏷 Oferta</span>' : '', isNew(b) ? '<span class="chip st-ok" style="backdrop-filter:blur(6px)">Nuevo</span>' : ''].filter(Boolean).slice(0, 2).join('')}</div>
+      <div class="card-badges">${[isDemo(b) ? '<span class="chip chip-demo">Muestra · Plan ' + esc(PLANS[b.plan].n) + '</span>' : '', isBoosted(b) ? '<span class="chip chip-boost">⚡ Destacado</span>' : '', OFFERS.some(o => o.negocio_id === b.id) ? '<span class="chip chip-offer">🏷 Oferta</span>' : '', isNew(b) ? '<span class="chip st-ok" style="backdrop-filter:blur(6px)">Nuevo</span>' : ''].filter(Boolean).slice(0, 2).join('')}</div>
       ${b.photos.length > 1 ? `<span class="card-count">📷 ${b.photos.length}</span>` : ''}
     </button>
     <div class="card-body">
@@ -2482,7 +2485,7 @@ function renderProfile(b) {
   <section class="pf-hero h-${TH.hero}">
     ${full ? `<div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${TH.acc}55,transparent),radial-gradient(50% 60% at 90% 10%,${TH.acc2}44,transparent),linear-gradient(135deg,${TH.sur},${TH.bg})`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${TH.acc}">${catOf(b.category)[2]}</div>`}` : '<div class="pf-pat" aria-hidden="true"></div><div class="pf-orbs" aria-hidden="true"><i></i><i></i></div>'}
     <div class="wrap pf-hero-in"><div class="pf-txt">
-      <div class="pf-badges"><span class="pf-eyebrow">${catOf(b.category)[2]} ${esc(catOf(b.category)[1])}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}</span>${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
+      <div class="pf-badges">${isDemo(b) ? `<span class="chip chip-demo">Perfil de muestra · Plan ${esc(P.n)}</span>` : ''}<span class="pf-eyebrow">${catOf(b.category)[2]} ${esc(catOf(b.category)[1])}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}</span>${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
       <h1 class="pf-name">${esc(b.name)}</h1>
       ${tag ? `<p class="pf-tag">${esc(tag)}</p>` : ''}
       <div class="pf-meta">${statusHtml}${b.address ? `<span>📍 ${esc(b.address.length > 60 ? b.address.slice(0, 57) + '…' : b.address)}</span>` : b.province ? `<span>📍 ${esc(provLabel(b.province))}</span>` : ''}${P.hours && b.hours ? `<span>🕐 ${esc(b.hours.length > 40 ? b.hours.slice(0, 37) + '…' : b.hours)}</span>` : ''}</div>
@@ -2557,6 +2560,7 @@ async function track(id, tipo) {
 const countVisit = id => track(id, 'visita');
 // capture phase so it runs even when the link opens a new tab
 document.addEventListener('click', e => { const a = e.target.closest('[data-track]'); if (a && a.dataset.id) track(a.dataset.id, a.dataset.track); }, true);
+const isDemo = b => /^demo_/.test((b && b.id) || '');
 function isNew(b) { return b.activatedAt && Date.now() - b.activatedAt < 30 * DAY; }
 
 async function loadReviews(id) {
