@@ -609,6 +609,66 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 .dp-sw input{position:absolute;inset:-6px;width:44px;height:44px;opacity:0;cursor:pointer}
 .dp-auto{background:conic-gradient(#E11D48,#F97316,#EAB308,#16A34A,#0284C7,#9333EA,#E11D48)}
 
+/* ---------- Premium layer for business pages ---------- */
+#profile{--ease:cubic-bezier(.32,.72,0,1);background-color:var(--bg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E")}
+#profile .ov-bar{background:transparent!important;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;padding:12px 14px 0;pointer-events:none}
+#profile .ov-bar .wrap{pointer-events:auto;height:58px;max-width:1120px;border-radius:999px;padding:0 8px;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid color-mix(in srgb,var(--txt) 10%,transparent);box-shadow:0 18px 40px -26px rgba(0,0,0,.7)}
+#profile .ov-bar .btn{border-color:transparent;background:color-mix(in srgb,var(--txt) 6%,transparent)}
+.pf-barname{flex:1;min-width:0;text-align:center;font-family:var(--fh);font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+#profile.scrolled .pf-barname{opacity:1;transform:none}
+#profile .pf-nav{top:78px;background:transparent;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}
+#profile .pf-nav .wrap{pointer-events:auto;width:max-content;max-width:calc(100% - 28px);margin:14px auto 0;padding:5px;border-radius:999px;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid color-mix(in srgb,var(--txt) 10%,transparent)}
+#profile .pf-nav button{border-radius:999px}
+#profile .pf-name{letter-spacing:-.025em}
+#profile .pf-hero:not(.h-mag) .pf-name{font-size:clamp(2.6rem,6.4vw,5.3rem);line-height:.98}
+#profile .pf-hero:not(.h-full) .wrap{padding-top:130px;padding-bottom:88px}
+#profile .pf-tag{font-size:1.16rem;line-height:1.6}
+.pf-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--acct);background:color-mix(in srgb,var(--acc) 11%,transparent);border:1px solid color-mix(in srgb,var(--acc) 28%,transparent)}
+#profile .pf-badges{align-items:center;margin-bottom:22px}
+#profile .h-full .pf-eyebrow{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.24)}
+#profile .pf-meta span{display:inline-flex;align-items:center;gap:6px}
+.pf-orbs{position:absolute;inset:-20% -10% -10% -10%;pointer-events:none;overflow:hidden}
+.pf-orbs i{position:absolute;width:52vw;max-width:680px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--acc) 30%,transparent),transparent 64%);top:-6%;left:-6%;animation:pfOrb 20s cubic-bezier(.45,0,.55,1) infinite alternate}
+.pf-orbs i+i{background:radial-gradient(circle,color-mix(in srgb,var(--acc2) 30%,transparent),transparent 64%);left:auto;right:-8%;top:18%;animation-duration:26s;animation-direction:alternate-reverse}
+#profile[data-tone="light"] .pf-orbs i{opacity:.7}
+@keyframes pfOrb{to{transform:translate3d(7vw,5vh,0) scale(1.15)}}
+#profile .btn{transition:transform .5s var(--ease),background .4s var(--ease),border-color .4s var(--ease),color .3s,opacity .3s}
+#profile .btn:hover{transform:translateY(-1px)}
+#profile .btn:active{transform:scale(.97)}
+#profile .btn-cta{padding:7px 7px 7px 22px;gap:12px;font-size:.98rem;box-shadow:0 14px 34px -14px color-mix(in srgb,currentColor 0%,rgba(0,0,0,.6))}
+#profile .btn-cta .bib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1rem;background:rgba(0,0,0,.16);transition:transform .6s var(--ease)}
+#profile .btn-cta:hover .bib{transform:translate(2px,-2px) scale(1.07)}
+#profile .btn-wa.btn-cta{box-shadow:0 16px 36px -14px rgba(37,211,102,.55)}
+#profile .btn-pri.btn-cta{box-shadow:0 16px 36px -14px color-mix(in srgb,var(--acc) 70%,transparent)}
+#profile .pf-actions{gap:12px;align-items:center}
+#profile .pf-actions .btn-dark,#profile .pf-actions .fav-big{padding:10px 16px;font-size:.84rem}
+#profile .pf-actions .btn-dark,#profile .pf-actions .fav-big{background:color-mix(in srgb,var(--txt) 6%,transparent);border-color:color-mix(in srgb,var(--txt) 12%,transparent)}
+#profile .h-full .pf-actions .btn-dark,#profile .h-full .pf-actions .fav-big{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+#profile .side-card,#profile .rv,#profile .rv-form,#profile .pf-offer,#profile .pf-facts span{background:linear-gradient(180deg,color-mix(in srgb,var(--txt) 4%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--txt) 9%,transparent);box-shadow:0 0 0 5px color-mix(in srgb,var(--txt) 3%,transparent),inset 0 1px 0 rgba(255,255,255,.06),0 30px 60px -42px rgba(0,0,0,.7)}
+#profile[data-tone="light"] .side-card,#profile[data-tone="light"] .rv,#profile[data-tone="light"] .rv-form,#profile[data-tone="light"] .pf-facts span{box-shadow:0 0 0 5px color-mix(in srgb,var(--txt) 4%,transparent),inset 0 1px 0 rgba(255,255,255,.5),0 30px 60px -40px rgba(60,30,10,.35)}
+#profile .side-card{padding:22px}
+#profile .mapbox,#profile .gal button{box-shadow:0 0 0 5px color-mix(in srgb,var(--txt) 4%,transparent),0 0 0 6px color-mix(in srgb,var(--txt) 9%,transparent)}
+#profile .gal{gap:16px}
+#profile .gal img{transition:transform 1.2s var(--ease)}
+#profile .pf-media img,#profile .pf-ph{box-shadow:0 0 0 8px color-mix(in srgb,var(--txt) 5%,transparent),0 0 0 9px color-mix(in srgb,var(--txt) 11%,transparent),0 50px 100px -36px rgba(0,0,0,.75)}
+#profile .h-split .pf-media:before{opacity:.55;inset:28px -22px -22px 28px}
+#profile .pf-body{padding-top:64px;gap:56px}
+#profile .pf-sec{margin-bottom:76px}
+#profile .pf-about{font-size:1.14rem;line-height:1.8;max-width:64ch}
+#profile .pf-facts{gap:10px;padding-top:30px}
+#profile .pf-facts span{padding:10px 16px;font-size:.86rem;border-radius:999px}
+#profile .mi,#profile .mi:last-child{padding:16px 18px;border:1px solid color-mix(in srgb,var(--txt) 8%,transparent);border-radius:calc(var(--pr) * .75);background:color-mix(in srgb,var(--txt) 2.5%,transparent);margin-bottom:10px;transition:transform .5s var(--ease),border-color .4s var(--ease),background .4s var(--ease)}
+#profile .mi:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 38%,transparent);background:color-mix(in srgb,var(--acc) 6%,transparent)}
+#profile .mn-sec h3{font-size:1.25rem;margin:22px 0 12px}
+#profile .mn-tabs button{border-radius:999px;padding:8px 16px}
+#profile .pf-cta{padding:28px;box-shadow:0 0 0 5px color-mix(in srgb,var(--txt) 3%,transparent)}
+#profile .pf-bar{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:7px;border-radius:999px;border:1px solid color-mix(in srgb,var(--txt) 12%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 24px 50px -20px rgba(0,0,0,.75)}
+#profile .rv-in{opacity:0;transform:translateY(42px);filter:blur(8px);transition:opacity .9s var(--ease),transform 1.1s var(--ease),filter .9s var(--ease)}
+#profile .rv-in.vis{opacity:1;transform:none;filter:none}
+@media(min-width:861px){#profile .h-split .pf-media{transform:rotate(2deg)}#profile .h-split .pf-media:hover{transform:rotate(0)}#profile .h-split .pf-media{transition:transform 1s var(--ease)}}
+@media(max-width:860px){#profile .pf-hero:not(.h-full) .wrap{padding-top:96px;padding-bottom:48px}#profile .pf-body{padding-top:40px}#profile .pf-sec{margin-bottom:56px}#profile .pf-nav{top:74px}.pf-barname{font-size:.85rem}#profile .btn-cta{font-size:.92rem}}
+@media (prefers-reduced-motion:reduce){.pf-orbs i{animation:none}#profile .rv-in{filter:none;transform:none}}
+
 /* Lightbox */
 .lb{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.95);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 .lb.open{display:flex;animation:fadeIn .2s ease}
@@ -1645,7 +1705,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 
 <!-- ============ PROFILE ============ -->
 <div class="ov" id="profile" role="dialog" aria-modal="true" aria-label="Perfil de negocio">
-  <div class="ov-bar"><div class="wrap"><button class="btn btn-ghost btn-sm" data-act="pf-close">← Directorio</button><button class="btn btn-ghost btn-sm" data-act="share">Compartir</button></div></div>
+  <div class="ov-bar"><div class="wrap"><button class="btn btn-ghost btn-sm" data-act="pf-close">← Directorio</button><span class="pf-barname" id="pf-barname" aria-hidden="true"></span><button class="btn btn-ghost btn-sm" data-act="share">Compartir</button></div></div>
   <div id="pf-content"></div>
   <div class="pf-bar" id="pf-bar"></div>
   <div class="cart-bar" id="cart-bar" role="status" aria-live="polite"></div>
@@ -2293,18 +2353,18 @@ const profileUrl = id => PAGES.map[id] ? SITE_ROOT() + 'n/' + PAGES.map[id] + '/
    chosen for its category from its id, so neighbours rarely look alike.
    ===================================================================== */
 const PT = [
-  { id: 'neon', n: 'Neón', d: 'Oscuro y tecnológico', dark: 1, bg: '#050A14', sur: '#0B1322', card: '#101A2D', txt: '#E8EDF5', mut: '#8C9BBA', acc: '#00F5C8', acc2: '#7C5CFC', on: '#04121A', fh: 'Syne', fb: 'DM Sans', g: '', hero: 'full', h: 'line', pat: 'grid', r: 16, btn: 999 },
-  { id: 'elegante', n: 'Elegante', d: 'Negro y dorado, letra clásica', dark: 1, bg: '#0E0D0B', sur: '#161411', card: '#1C1915', txt: '#F3EDE2', mut: '#A89F8E', acc: '#D4AF6A', acc2: '#8C6B3E', on: '#1A1408', fh: 'Playfair Display', fb: 'Jost', g: 'Playfair+Display:wght@600;800&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'lines', r: 4, btn: 4 },
-  { id: 'fresco', n: 'Fresco', d: 'Claro, limpio y moderno', dark: 0, bg: '#F3FAF7', sur: '#E6F4EE', card: '#FFFFFF', txt: '#0F2A22', mut: '#53706A', acc: '#0E9F6E', acc2: '#14B8A6', on: '#FFFFFF', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'split', h: 'pill', pat: 'dots', r: 22, btn: 999 },
-  { id: 'terracota', n: 'Terracota', d: 'Cálido, ideal para comida y café', dark: 0, bg: '#FBF5EE', sur: '#F3E7DA', card: '#FFFDF9', txt: '#2B1A12', mut: '#7A6052', acc: '#C2410C', acc2: '#E9A23B', on: '#FFFFFF', fh: 'Fraunces', fb: 'DM Sans', g: 'Fraunces:opsz,wght@9..144,600;9..144,800', hero: 'card', h: 'num', pat: 'waves', r: 18, btn: 12 },
-  { id: 'urbano', n: 'Urbano', d: 'Negro y amarillo, con fuerza', dark: 1, bg: '#0A0A0A', sur: '#141414', card: '#191919', txt: '#FAFAFA', mut: '#A3A3A3', acc: '#FACC15', acc2: '#F97316', on: '#0A0A0A', fh: 'Bebas Neue', fb: 'Archivo', g: 'Bebas+Neue&family=Archivo:wght@400;500;700', hero: 'mag', h: 'bar', pat: 'diag', r: 6, btn: 4 },
-  { id: 'oceano', n: 'Océano', d: 'Azul profundo con coral', dark: 1, bg: '#06142B', sur: '#0B1F3D', card: '#0F264A', txt: '#EAF2FF', mut: '#8FA7C9', acc: '#FF7A59', acc2: '#38BDF8', on: '#1A0A04', fh: 'DM Serif Display', fb: 'DM Sans', g: 'DM+Serif+Display', hero: 'full', h: 'serif', pat: 'waves', r: 20, btn: 999 },
-  { id: 'rosa', n: 'Rosa', d: 'Delicado, para belleza y eventos', dark: 0, bg: '#FDF4F5', sur: '#F8E4E8', card: '#FFFFFF', txt: '#3B1424', mut: '#8A5A6B', acc: '#B83268', acc2: '#E58FAE', on: '#FFFFFF', fh: 'Cormorant Garamond', fb: 'Jost', g: 'Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'blobs', r: 28, btn: 999 },
-  { id: 'bosque', n: 'Bosque', d: 'Verde natural y orgánico', dark: 1, bg: '#0B1A12', sur: '#11251A', card: '#152D20', txt: '#ECF5E9', mut: '#9BB5A2', acc: '#A3E635', acc2: '#FDE68A', on: '#102006', fh: 'Space Grotesk', fb: 'Space Grotesk', g: 'Space+Grotesk:wght@400;500;700', hero: 'split', h: 'num', pat: 'dots', r: 14, btn: 12 },
-  { id: 'minimal', n: 'Minimal', d: 'Blanco y negro, serio', dark: 0, bg: '#FFFFFF', sur: '#F4F4F5', card: '#FFFFFF', txt: '#0A0A0A', mut: '#666666', acc: '#111111', acc2: '#777777', on: '#FFFFFF', fh: 'Inter Tight', fb: 'Inter Tight', g: 'Inter+Tight:wght@400;500;700;800', hero: 'mag', h: 'line', pat: 'none', r: 2, btn: 2 },
-  { id: 'tropical', n: 'Tropical', d: 'Colores vivos y alegres', dark: 0, bg: '#FFF8F0', sur: '#FFEBD6', card: '#FFFFFF', txt: '#2A1033', mut: '#7C5C6E', acc: '#E11D74', acc2: '#F97316', on: '#FFFFFF', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'card', h: 'pill', pat: 'blobs', r: 24, btn: 999, grad: 1 },
-  { id: 'corporativo', n: 'Corporativo', d: 'Azul confiable para empresas', dark: 0, bg: '#F5F7FB', sur: '#E9EEF7', card: '#FFFFFF', txt: '#0B1B33', mut: '#55657E', acc: '#1D4ED8', acc2: '#0EA5E9', on: '#FFFFFF', fh: 'IBM Plex Sans', fb: 'IBM Plex Sans', g: 'IBM+Plex+Sans:wght@400;500;600;700', hero: 'split', h: 'bar', pat: 'grid', r: 10, btn: 10 },
-  { id: 'atardecer', n: 'Atardecer', d: 'Morado y naranja, nocturno', dark: 1, bg: '#140A24', sur: '#1C1033', card: '#24143F', txt: '#F6EEFF', mut: '#B4A2CF', acc: '#FF8A3D', acc2: '#C084FC', on: '#1E0B02', fh: 'Syne', fb: 'Outfit', g: 'Outfit:wght@400;500;600', hero: 'center', h: 'pill', pat: 'blobs', r: 20, btn: 999, grad: 1 }
+  { id: 'neon', n: 'Neón', d: 'Negro profundo con luces turquesa y violeta', dark: 1, bg: '#05070D', sur: '#0B1020', card: '#0E1428', txt: '#EEF2FF', mut: '#8B95B5', acc: '#00F5C8', acc2: '#8B5CF6', on: '#03140F', fh: 'Syne', fb: 'DM Sans', g: '', hero: 'full', h: 'line', pat: 'grid', r: 22, btn: 999 },
+  { id: 'elegante', n: 'Elegante', d: 'Espresso y dorado, letra de revista', dark: 1, bg: '#0D0B08', sur: '#15120D', card: '#1A1610', txt: '#F4ECDD', mut: '#A99E89', acc: '#D9B26A', acc2: '#7A5A2E', on: '#1A1306', fh: 'Playfair Display', fb: 'Jost', g: 'Playfair+Display:wght@600;700;800&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'lines', r: 6, btn: 999 },
+  { id: 'fresco', n: 'Menta', d: 'Verde azulado intenso, fresco y moderno', dark: 1, bg: '#04201C', sur: '#072B26', card: '#0A332D', txt: '#E8FFF8', mut: '#8DBFB2', acc: '#5EEAD4', acc2: '#A7F3D0', on: '#032620', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'split', h: 'pill', pat: 'dots', r: 28, btn: 999 },
+  { id: 'terracota', n: 'Terracota', d: 'Arena cálida y barro, para comida y café', dark: 0, bg: '#EFE3D3', sur: '#E6D5C0', card: '#F6ECDF', txt: '#2A1910', mut: '#7B6150', acc: '#C2410C', acc2: '#EAA23C', on: '#FFF7EE', fh: 'Fraunces', fb: 'DM Sans', g: 'Fraunces:opsz,wght@9..144,600;9..144,800', hero: 'card', h: 'num', pat: 'waves', r: 24, btn: 999 },
+  { id: 'urbano', n: 'Urbano', d: 'Negro y amarillo, letra gigante', dark: 1, bg: '#0A0A0A', sur: '#131313', card: '#181818', txt: '#FAFAFA', mut: '#A3A3A3', acc: '#FACC15', acc2: '#F97316', on: '#0A0A0A', fh: 'Bebas Neue', fb: 'Archivo', g: 'Bebas+Neue&family=Archivo:wght@400;500;700', hero: 'mag', h: 'bar', pat: 'diag', r: 8, btn: 8 },
+  { id: 'oceano', n: 'Océano', d: 'Azul marino con coral', dark: 1, bg: '#041126', sur: '#08193A', card: '#0C2147', txt: '#EAF2FF', mut: '#8EA6CB', acc: '#FF7A59', acc2: '#38BDF8', on: '#1F0A03', fh: 'DM Serif Display', fb: 'DM Sans', g: 'DM+Serif+Display', hero: 'full', h: 'serif', pat: 'waves', r: 24, btn: 999 },
+  { id: 'rosa', n: 'Malva', d: 'Ciruela oscuro con rosa y champán', dark: 1, bg: '#170A14', sur: '#21101D', card: '#2A1425', txt: '#FBEAF3', mut: '#C29AB2', acc: '#F472B6', acc2: '#E9C9A6', on: '#2A0619', fh: 'Cormorant Garamond', fb: 'Jost', g: 'Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'blobs', r: 30, btn: 999 },
+  { id: 'bosque', n: 'Bosque', d: 'Verde bosque con lima', dark: 1, bg: '#0A1810', sur: '#0F2318', card: '#132B1E', txt: '#ECF6E8', mut: '#9BB6A2', acc: '#A3E635', acc2: '#FDE68A', on: '#102006', fh: 'Space Grotesk', fb: 'Space Grotesk', g: 'Space+Grotesk:wght@400;500;700', hero: 'split', h: 'num', pat: 'dots', r: 18, btn: 999 },
+  { id: 'minimal', n: 'Grafito', d: 'Carbón y azul hielo, sobrio y fuerte', dark: 1, bg: '#0F0F12', sur: '#16161B', card: '#1B1B21', txt: '#F2F2F5', mut: '#9A9AA6', acc: '#9DB8FF', acc2: '#6366F1', on: '#0B1020', fh: 'Plus Jakarta Sans', fb: 'Plus Jakarta Sans', g: 'Plus+Jakarta+Sans:wght@400;500;700;800', hero: 'mag', h: 'line', pat: 'grid', r: 14, btn: 999 },
+  { id: 'tropical', n: 'Caribe', d: 'Turquesa profundo con fucsia y mango', dark: 1, bg: '#052A2C', sur: '#073537', card: '#0A3F42', txt: '#EFFFFC', mut: '#93C5C0', acc: '#FF5DA2', acc2: '#FFB547', on: '#2A0516', fh: 'Sora', fb: 'Sora', g: 'Sora:wght@400;500;600;800', hero: 'card', h: 'pill', pat: 'blobs', r: 28, btn: 999, grad: 1 },
+  { id: 'corporativo', n: 'Zafiro', d: 'Azul noche y eléctrico, para empresas', dark: 1, bg: '#07112A', sur: '#0B1838', card: '#0F1F46', txt: '#EAF0FF', mut: '#8DA0C8', acc: '#3B82F6', acc2: '#22D3EE', on: '#FFFFFF', fh: 'Manrope', fb: 'Manrope', g: 'Manrope:wght@400;500;700;800', hero: 'split', h: 'bar', pat: 'grid', r: 16, btn: 999 },
+  { id: 'atardecer', n: 'Atardecer', d: 'Morado nocturno con naranja', dark: 1, bg: '#12081F', sur: '#1A0D2E', card: '#22123B', txt: '#F7EEFF', mut: '#B5A3CF', acc: '#FF8A3D', acc2: '#C084FC', on: '#1E0B02', fh: 'Unbounded', fb: 'Outfit', g: 'Unbounded:wght@600;700&family=Outfit:wght@400;500;600', hero: 'center', h: 'pill', pat: 'blobs', r: 26, btn: 999, grad: 1 }
 ];
 const PT_BY = Object.fromEntries(PT.map(t => [t.id, t]));
 const PT_CAT = { 'Restaurante / Comida': ['terracota', 'tropical', 'elegante', 'urbano', 'oceano'], 'Belleza y Estetica': ['rosa', 'elegante', 'fresco', 'atardecer'], 'Salud y Bienestar': ['fresco', 'bosque', 'corporativo', 'rosa'],
@@ -2323,7 +2383,7 @@ function themeOf(b, over) {
   T.acct = !T.dark && L > .3 ? mixHex(T.acc, '#000000', .45) : T.dark && L < .06 ? mixHex(T.acc, '#FFFFFF', .55) : T.acc;
   return T;
 }
-const FH_FALL = { 'Playfair Display': 'Georgia,serif', 'Fraunces': 'Georgia,serif', 'DM Serif Display': 'Georgia,serif', 'Cormorant Garamond': 'Garamond,Georgia,serif', 'Bebas Neue': "Impact,'Arial Narrow',sans-serif", 'Syne': 'system-ui,sans-serif' };
+const FH_FALL = { 'Unbounded': 'system-ui,sans-serif', 'Playfair Display': 'Georgia,serif', 'Fraunces': 'Georgia,serif', 'DM Serif Display': 'Georgia,serif', 'Cormorant Garamond': 'Garamond,Georgia,serif', 'Bebas Neue': "Impact,'Arial Narrow',sans-serif", 'Syne': 'system-ui,sans-serif' };
 const FONTS_ON = new Set();
 function loadFonts(q) { if (!q || FONTS_ON.has(q)) return; FONTS_ON.add(q); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=' + q + '&display=swap'; document.head.appendChild(l); }
 function applyTheme(el, T) {
@@ -2335,10 +2395,10 @@ function applyTheme(el, T) {
   Object.assign(el.dataset, { tone: T.dark ? 'dark' : 'light', hero: T.hero, h: T.h, pat: T.pat, grad: T.grad ? '1' : '0', theme: T.id });
 }
 const tagline = d => { const t = String(d || '').replace(/\s+/g, ' ').trim(); if (!t) return ''; const m = t.match(/^.{20,150}?[.!?](\s|$)/); return m ? m[0].trim() : t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
-function pfJump(id) { const el = byId(id), pf = byId('profile'); if (!el) return; pf.scrollTo({ top: pf.scrollTop + el.getBoundingClientRect().top - 128, behavior: REDUCED ? 'auto' : 'smooth' }); }
+function pfJump(id) { const el = byId(id), pf = byId('profile'); if (!el) return; pf.scrollTo({ top: pf.scrollTop + el.getBoundingClientRect().top - 150, behavior: REDUCED ? 'auto' : 'smooth' }); }
 function pfNavSync() {
   const pf = byId('profile'), nav = pf.querySelector('.pf-nav'); if (!nav) return;
-  let cur = ''; nav.querySelectorAll('[data-to]').forEach(b => { const el = byId(b.dataset.to); if (el && el.getBoundingClientRect().top < 170) cur = b.dataset.to; });
+  let cur = ''; nav.querySelectorAll('[data-to]').forEach(b => { const el = byId(b.dataset.to); if (el && el.getBoundingClientRect().top < 200) cur = b.dataset.to; });
   nav.querySelectorAll('[data-to]').forEach(b => { const on = b.dataset.to === cur; if (b.classList.contains('on') !== on) { b.classList.toggle('on', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center' }); } });
 }
 
@@ -2356,7 +2416,7 @@ function renderProfile(b) {
   const T = tipo => ` data-track="${tipo}" data-id="${esc(b.id)}"`;
   const offers = OFFERS.filter(o => o.negocio_id === b.id);
   const statusHtml = hoursBadge(st, true);
-  const TH = themeOf(b), pfEl = byId('profile'); applyTheme(pfEl, TH);
+  const TH = themeOf(b), pfEl = byId('profile'); applyTheme(pfEl, TH); pfEl.classList.remove('scrolled'); byId('pf-barname').textContent = b.name;
   const full = TH.hero === 'full', tag = tagline(b.desc);
   const r = b.extras && b.extras.reservas;
   const facts = [P.verified ? '<span>✓ Negocio verificado</span>' : '', '<span id="pf-fact-rv" hidden></span>',
@@ -2367,20 +2427,20 @@ function renderProfile(b) {
 
   byId('pf-content').innerHTML = `
   <section class="pf-hero h-${TH.hero}">
-    ${full ? `<div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${TH.acc}55,transparent),radial-gradient(50% 60% at 90% 10%,${TH.acc2}44,transparent),linear-gradient(135deg,${TH.sur},${TH.bg})`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${TH.acc}">${catOf(b.category)[2]}</div>`}` : '<div class="pf-pat" aria-hidden="true"></div>'}
+    ${full ? `<div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${TH.acc}55,transparent),radial-gradient(50% 60% at 90% 10%,${TH.acc2}44,transparent),linear-gradient(135deg,${TH.sur},${TH.bg})`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${TH.acc}">${catOf(b.category)[2]}</div>`}` : '<div class="pf-pat" aria-hidden="true"></div><div class="pf-orbs" aria-hidden="true"><i></i><i></i></div>'}
     <div class="wrap pf-hero-in"><div class="pf-txt">
-      <div class="pf-badges">${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
+      <div class="pf-badges"><span class="pf-eyebrow">${catOf(b.category)[2]} ${esc(catOf(b.category)[1])}${b.province ? ' · ' + esc(provLabel(b.province)) : ''}</span>${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
       <h1 class="pf-name">${esc(b.name)}</h1>
       ${tag ? `<p class="pf-tag">${esc(tag)}</p>` : ''}
-      <div class="pf-meta"><span>${catOf(b.category)[2]} ${esc(catOf(b.category)[1])}</span>${b.province ? `<span>📍 ${esc(provLabel(b.province))}</span>` : ''}${statusHtml}</div>
+      <div class="pf-meta">${statusHtml}${b.address ? `<span>📍 ${esc(b.address.length > 60 ? b.address.slice(0, 57) + '…' : b.address)}</span>` : b.province ? `<span>📍 ${esc(provLabel(b.province))}</span>` : ''}${P.hours && b.hours ? `<span>🕐 ${esc(b.hours.length > 40 ? b.hours.slice(0, 37) + '…' : b.hours)}</span>` : ''}</div>
       <div class="pf-actions">
-        ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}Escribir por WhatsApp</a>` : ''}
-        ${canReserve(b) ? `<button class="btn btn-pri" data-act="rsv-open">📅 ${b.extras.reservas.tipo === 'mesa' ? 'Reservar mesa' : 'Agendar cita'}</button>` : ''}
+        ${wa ? `<a class="btn btn-wa btn-cta" href="${esc(wa)}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}Escribir por WhatsApp<span class="bib" aria-hidden="true">↗</span></a>` : ''}
+        ${canReserve(b) ? `<button class="btn btn-pri btn-cta" data-act="rsv-open">${b.extras.reservas.tipo === 'mesa' ? 'Reservar mesa' : 'Agendar cita'}<span class="bib" aria-hidden="true">📅</span></button>` : ''}
         ${P.call && b.wa ? `<a class="btn btn-dark" href="tel:+${esc(waNum(b.wa))}"${T('llamada')}>📞 Llamar</a>` : ''}
         ${P.webBtn && web ? `<a class="btn btn-dark" href="${esc(web)}" target="_blank" rel="noopener"${T('web')}>🌐 Sitio web</a>` : ''}
         ${gm ? `<a class="btn btn-dark" href="${esc(gm)}" target="_blank" rel="noopener"${T('mapa')}>🧭 Cómo llegar</a>` : ''}
         ${favBtn(b, true)}
-        ${b.wa ? `<button class="btn btn-dark" data-act="vcard">👤 Guardar contacto</button>` : ''}
+        ${b.wa ? `<button class="btn btn-dark" data-act="vcard" title="Guardar en mis contactos">👤 Contacto</button>` : ''}
       </div>
     </div>
     ${full ? '' : `<div class="pf-media">${cover ? `<img src="${esc(cover)}" alt="${esc(b.name)}" fetchpriority="high">` : `<div class="pf-ph" aria-hidden="true">${catOf(b.category)[2]}</div>`}</div>`}
@@ -2426,7 +2486,7 @@ function renderProfile(b) {
   byId('pf-bar').innerHTML = (wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}WhatsApp</a>` : '') + (canReserve(b) ? `<button class="btn btn-pri" data-act="rsv-open">📅 ${b.extras.reservas.tipo === 'mesa' ? 'Reservar' : 'Agendar'}</button>` : P.call && b.wa ? `<a class="btn btn-dark" href="tel:+${esc(waNum(b.wa))}"${T('llamada')}>📞 Llamar</a>` : (gm ? `<a class="btn btn-dark" href="${esc(gm)}" target="_blank" rel="noopener"${T('mapa')}>🧭 Cómo llegar</a>` : ''));
   byId('rv-form').addEventListener('submit', submitReview);
   pfEl.querySelectorAll('.pf-sec, .side-card, .pf-cta').forEach(x => x.classList.add('rv-in')); observeReveal();
-  if (!pfEl._navSync) { pfEl._navSync = 1; pfEl.addEventListener('scroll', () => requestAnimationFrame(pfNavSync), { passive: true }); }
+  if (!pfEl._navSync) { pfEl._navSync = 1; pfEl.addEventListener('scroll', () => requestAnimationFrame(() => { pfNavSync(); pfEl.classList.toggle('scrolled', pfEl.scrollTop > 320); }), { passive: true }); }
   const q = byId('pf-qr');
   if (window.QRCode) { try { new QRCode(q, { text: profileUrl(b.id), width: 150, height: 150, correctLevel: QRCode.CorrectLevel.M }); } catch (e) { q.hidden = true; } } else q.hidden = true;
 }
