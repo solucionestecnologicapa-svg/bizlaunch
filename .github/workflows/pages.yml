@@ -1,0 +1,52 @@
+# Publica la web en GitHub Pages.
+# Se ejecuta al subir cambios a main, cada 6 horas (para crear las páginas de los
+# negocios nuevos) y a mano desde la pestaña Actions → "Publicar en GitHub Pages" → Run workflow.
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '41 */6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Armar el sitio (páginas de cada negocio, mapa e imágenes para compartir)
+        run: npm run build
+      - name: Adaptar a la dirección de GitHub Pages
+        run: node scripts/pages-base.mjs
+        env:
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

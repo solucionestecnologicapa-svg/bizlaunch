@@ -15,7 +15,7 @@ jobs:
       SB_URL: https://ufybfbydbregtrvdsscw.supabase.co
       # Clave pública (anon): es la misma que ya está en index.html
       SB_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmeWJmYnlkYnJlZ3RydmRzc2N3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMzg4NzMsImV4cCI6MjA4ODkxNDg3M30.jJikFNnRpSH6-c9SwX34Kyu5Gepanbfvh2LMSWSOzRk
-      SITE: https://bizlaunchpanama.netlify.app
+      SITE: https://solucionestecnologicapa-svg.github.io/bizlaunch
     steps:
       - name: Base de datos (consulta real para que cuente como actividad)
         run: |

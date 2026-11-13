@@ -1,6 +1,9 @@
 # "npm run build" copia el sitio a dist/ y crea una página para Google por cada
 # negocio activo (/n/<slug>/), el sitemap.xml y paginas.json. Netlify publica dist/.
 [build]
+  # La web ahora se publica en GitHub Pages (.github/workflows/pages.yml).
+  # "exit 0" le dice a Netlify que omita toda publicación nueva y no gaste créditos.
+  ignore = "exit 0"
   publish = "dist"
   command = "npm run build"
 
