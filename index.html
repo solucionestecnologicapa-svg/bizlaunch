@@ -1215,6 +1215,57 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 .fl.pt-3:before{clip-path:polygon(56% 0,100% 0,100% 100%,46% 100%)}
 .fl.pt-3 .qrs figcaption,.fl.pt-6 .qrs figcaption{color:#fff}
 .fl.pt-6:before{right:-12%;bottom:-70%;width:62%;padding-bottom:62%}
+/* table tent: fold in half, top half upside down */
+.pr-tools .seg{flex-wrap:wrap;border-radius:22px}
+.tn{position:absolute;left:0;right:0;height:139.7mm;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10mm 14mm;gap:1.6mm}
+.tn.up{top:0;transform:rotate(180deg)}.tn.dn{top:139.7mm}
+.tn .ct{font-size:9pt}
+.tn .nm{font-size:26pt;margin:.5mm 0 1mm}.tn .nm.l{font-size:21pt}.tn .nm.xl{font-size:17pt}
+.tn .tag{font-size:13pt;font-weight:800;color:var(--fg);margin-bottom:3mm}
+.tn .qrs{display:flex;gap:7mm;justify-content:center}
+.tn .qrs figure{width:38mm;margin:0;text-align:center}
+.tn .qrs .tile{padding:2mm;border-radius:3.5mm}
+.tn .qrs figcaption{margin-top:2mm;font-size:9.5pt;font-weight:800;color:var(--fg);line-height:1.15}
+.tn .ln{font-size:10pt;margin-top:2mm}
+.tn .brand{font-size:7pt;color:var(--mut)}
+.tn.pt-3:before{clip-path:polygon(0 70%,100% 55%,100% 100%,0 100%)}
+.tn.pt-6:before{right:-30%;bottom:-120%;width:80%;padding-bottom:80%}
+.pr-fold{position:absolute;left:0;right:0;top:139.7mm;border-top:.25mm dashed #b9bec8;z-index:2}
+.pr-fold span{position:absolute;right:8mm;top:-3.6mm;background:#fff;color:#8a919d;font-size:7pt;padding:0 2mm}
+/* Yappy payment sign */
+.py{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:15mm 16mm 12mm}
+.py .ct{font-size:11pt}
+.py .nm{font-size:34pt;margin:1.5mm 0 0}.py .nm.l{font-size:28pt}.py .nm.xl{font-size:22pt}
+.py .hd{margin-top:7mm;display:inline-flex;align-items:center;gap:3mm;white-space:nowrap;font-family:'Syne','DM Sans',sans-serif;font-weight:800;font-size:22pt;padding:3mm 9mm;border-radius:99mm;background:#fff;color:#0B3D91;box-shadow:0 1mm 4mm rgba(0,0,0,.18)}
+.py .hd i{font-style:normal;display:grid;place-items:center;width:12mm;height:12mm;border-radius:50%;background:#0B3D91;color:#fff;font-size:15pt}
+.py .qrbig{margin:9mm auto 0;width:112mm}
+.py .qrbig .tile{padding:4mm;border-radius:6mm}
+.py .qrbig img{image-rendering:auto}
+.py .numbox{margin:18mm auto 0;background:#fff;color:#0B0F17;border-radius:6mm;padding:9mm 12mm;box-shadow:0 1mm 4mm rgba(0,0,0,.18)}
+.py .numbox small{display:block;font-size:12pt;color:#4B5260;font-weight:600}
+.py .numbox b{display:block;font-family:'Syne','DM Sans',sans-serif;font-size:52pt;line-height:1.1;margin-top:2mm;overflow-wrap:anywhere}
+.py .who{margin-top:5mm;font-size:14pt;font-weight:700;color:var(--fg)}
+.py .who span{color:var(--mut);font-weight:500}
+.py .steps{display:flex;gap:4mm;margin:auto 0 0;width:100%}
+.py .steps div{flex:1;background:rgba(255,255,255,.14);border:.3mm solid rgba(255,255,255,.3);border-radius:4mm;padding:3.5mm 3mm;font-size:11pt;font-weight:700;color:var(--fg)}
+.py .steps b{display:block;font-family:'Syne','DM Sans',sans-serif;font-size:16pt;color:var(--ct)}
+.py.pt-1 .steps div,.py.pt-3 .steps div,.py.pt-4 .steps div,.py.pt-6 .steps div,.py.pt-7 .steps div{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.12)}
+.py .foot{display:flex;align-items:center;gap:4mm;margin-top:6mm;text-align:left;font-size:10pt;color:var(--mut)}
+.py .foot .tile{width:22mm;padding:1mm;flex-shrink:0}
+.py .foot b{color:var(--fg);display:block;font-size:11.5pt}
+.py.pt-3:before{clip-path:polygon(0 0,100% 0,100% 24%,0 34%)}
+.py.pt-3 .ct,.py.pt-3 .nm{color:#fff}
+.py.pt-6:before{right:-28%;top:-22%;bottom:auto;width:62%;padding-bottom:62%}
+.py.pt-6:after{left:-18%;bottom:-14%;width:40%;padding-bottom:40%;border-radius:50%;background:color-mix(in srgb,var(--b) 30%,transparent)}
+.pr-empty{max-width:520px;margin:30px auto;text-align:center;background:var(--card);border:1px solid var(--bdr2);border-radius:18px;padding:28px 24px;color:var(--mut)}
+.pr-empty b{display:block;color:var(--txt);font-size:1.1rem;margin-bottom:6px}
+/* social images */
+.pr-soc{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;align-items:flex-start;width:100%}
+.pr-soc figure{margin:0;display:flex;flex-direction:column;gap:10px;align-items:center}
+.pr-soc img{display:block;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#111}
+.pr-soc .st{width:min(300px,80vw)}.pr-soc .po{width:min(380px,86vw)}
+.pr-soc figcaption{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;color:var(--mut);font-size:.82rem}
+.pr-soc figcaption b{width:100%;text-align:center;color:var(--txt)}
 @media print{
   @page{size:letter;margin:0}
   body.printing>*:not(#printer){display:none!important}
@@ -1611,6 +1662,11 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
           <li>Perfil profesional y página propia en Google</li>
           <li>WhatsApp directo, mapa y código QR</li>
           <li>Menú con pedidos en línea: entrega o retiro</li>
+          <li>Elige entre 32 diseños para tu página</li>
+          <li>Kit para imprimir: tarjetas, letrero, volantes y habladores de mesa con QR</li>
+          <li>Imagen lista para tus estados de WhatsApp e Instagram</li>
+          <li>Aviso por correo con cada pedido y reporte semanal</li>
+          <li>Reseñas de clientes y seguimiento del pedido</li>
           <li>5 fotos, 1 red social y 1 oferta activa</li>
           <li>Panel de estadísticas de visitas y clics</li>
         </ul>
@@ -1628,6 +1684,9 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
           <li><b>Todo lo del Básico, y además:</b></li>
           <li>Agenda en línea: citas y reservas sin cruces</li>
           <li>Botón de pago con Yappy</li>
+          <li>Letrero de cobro con tu QR de Yappy para imprimir</li>
+          <li>Tu color de marca en el diseño de tu página</li>
+          <li>Aviso por correo con cada reserva o cita</li>
           <li>Horario con “abierto ahora” y botón de llamada</li>
           <li>10 fotos, 2 redes, 2 ofertas y menú más grande</li>
           <li>Mejor posición en el directorio</li>
@@ -1646,6 +1705,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
           <li>Insignia ✓ Verificado</li>
           <li>Primeros lugares del directorio</li>
           <li>Botón destacado a tu sitio web</li>
+          <li>Sello ✓ Verificado también en tus impresos</li>
           <li>15 fotos, 3 redes, 3 ofertas y menú de 200</li>
         </ul>
         <button class="btn btn-ghost btn-block" data-act="reg" data-plan="premium">Elegir Premium</button>
@@ -1669,7 +1729,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
       </div>
       <p class="incl-pay">💳 Paga con tarjeta Visa o Mastercard de forma segura</p>
     </div>
-    <div style="text-align:center;margin-top:18px"><button class="btn btn-ghost" data-act="compare" aria-expanded="false" aria-controls="compare">📋 Comparar todos los planes</button></div>
+    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-ghost" data-act="compare" aria-expanded="false" aria-controls="compare">📋 Comparar todos los planes</button><button class="btn btn-ghost" data-act="kit-demo">🖨 Ver el kit para imprimir</button></div>
     <div class="compare" id="compare" hidden></div>
     <div class="addon rv-in" id="addon">
       <div class="addon-ico">⚡</div>
@@ -1965,7 +2025,7 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- ============ PRINTABLES ============ -->
-<div class="ov" id="printer" role="dialog" aria-modal="true" aria-label="Tarjetas y letrero para imprimir">
+<div class="ov" id="printer" role="dialog" aria-modal="true" aria-label="Kit para imprimir y compartir">
   <div class="ov-bar"><div class="wrap"><b id="pr-title" style="font-family:'Syne',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Tarjetas y letrero</b><button class="btn btn-ghost btn-sm" data-act="pr-close">✕ Cerrar</button></div></div>
   <div class="wrap">
     <div class="pr-tools">
@@ -1973,9 +2033,12 @@ details.tv summary{cursor:pointer;color:var(--mut);font-size:.8rem;margin-top:10
         <button data-act="pr-kind" data-k="cards" role="tab">🪪 Tarjetas</button>
         <button data-act="pr-kind" data-k="sign" role="tab">🪧 Letrero</button>
         <button data-act="pr-kind" data-k="flyer" role="tab">📄 Volantes</button>
+        <button data-act="pr-kind" data-k="tent" role="tab">🍽 Mesa</button>
+        <button data-act="pr-kind" data-k="pay" role="tab">📱 Cobro Yappy</button>
+        <button data-act="pr-kind" data-k="social" role="tab">📲 Estados y redes</button>
       </div>
       <button class="btn btn-ghost btn-sm" data-act="pr-design">🎨 Otro diseño <span id="pr-num" style="color:var(--dim);font-weight:600"></span></button>
-      <button class="btn btn-pri btn-sm" data-act="pr-print" style="margin-left:auto">🖨 Imprimir o guardar PDF</button>
+      <button class="btn btn-pri btn-sm" data-act="pr-print" id="pr-print-btn" style="margin-left:auto">🖨 Imprimir o guardar PDF</button>
     </div>
     <p class="pr-tip" id="pr-tip"></p>
     <div class="pr-stage" id="pr-stage"></div>
@@ -2270,7 +2333,10 @@ function compareTable() {
     ['g', 'Tu presencia'],
     ['Perfil con link propio y página en Google', () => Y],
     ['Botón de WhatsApp', () => Y],
-    ['Tarjetas, letrero y volantes con QR', () => Y],
+    ['Tarjetas, letrero, volantes y habladores de mesa con QR', () => Y],
+    ['Imagen para estados de WhatsApp e Instagram', () => Y],
+    ['Diseño de tu página (32 a elegir)', yn(k => !PLANS[k].free)],
+    ['Tu color de marca en el diseño', yn(hasExtras)],
     ['Reseñas con respuesta del dueño', () => Y],
     ['Panel de estadísticas', () => Y],
     ['Fotos', k => PLANS[k].f ? String(PLANS[k].f) : N],
@@ -2283,10 +2349,13 @@ function compareTable() {
     ['Panel de pedidos y reservas con estados', yn(k => (MENU_LIMIT[k] ?? 0) > 0)],
     ['Seguimiento del pedido para tu cliente', yn(k => (MENU_LIMIT[k] ?? 0) > 0)],
     ['Botón de pago con Yappy', yn(hasExtras)],
+    ['Letrero de cobro con QR de Yappy', yn(hasExtras)],
+    ['Aviso por correo de pedidos y reservas', yn(k => (MENU_LIMIT[k] ?? 0) > 0)],
+    ['Reporte semanal por correo', yn(k => !PLANS[k].free)],
     ['Horario con “abierto ahora” y botón de llamada', yn(k => PLANS[k].hours && PLANS[k].call)],
     ['Botón destacado a tu sitio web', yn(k => PLANS[k].webBtn)],
     ['g', 'Visibilidad'],
-    ['Insignia ✓ Verificado', yn(k => PLANS[k].verified)],
+    ['Insignia ✓ Verificado (en la página y en tus impresos)', yn(k => PLANS[k].verified)],
     ['Posición en el directorio', k => ['Primeros lugares', 'Alta', 'Buena', 'Normal'][PLANS[k].rank]],
     ['⚡ Destacar (complemento)', () => 'Opcional']
   ];
@@ -3499,7 +3568,7 @@ function renderOwnerPanel() {
         ${d.active ? `<div class="box" id="op-design-box"><h3>🎨 Diseño de tu página</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">Elige cómo se ve tu página: colores, tipo de letra y estilo de portada. Cada diseño es distinto para que tu negocio se reconozca.</p>
           <div id="op-design"></div>
           ${PLANS[d.plan].free ? '' : `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><button class="btn btn-pri btn-sm" data-act="op-design-save">Guardar diseño</button><button class="btn btn-ghost btn-sm" data-act="op-design-preview">👁 Vista previa</button></div>`}</div>` : ''}
-        ${d.active ? `<div class="box"><h3>🖨 Tarjetas y letrero</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tarjetas de presentación, un letrero y volantes con tu código QR de WhatsApp y de tu página, listos para imprimir.</p><button class="btn btn-pri btn-sm btn-block" data-act="op-print">Crear e imprimir</button></div>` : ''}
+        ${d.active ? `<div class="box"><h3>🖨 Kit para imprimir y compartir</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tarjetas, letrero, volantes y habladores de mesa con tu QR de WhatsApp y de tu página${hasExtras(d.plan) ? ', letrero de cobro con tu QR de Yappy' : ''} e imágenes para tus estados de WhatsApp e Instagram.</p><button class="btn btn-pri btn-sm btn-block" data-act="op-print">Abrir mi kit</button></div>` : ''}
         <div class="box"><h3>⭐ Reseñas</h3>${rv.total ? `<p><b style="font-family:Syne,sans-serif;font-size:1.6rem;color:#FFC83D">${rv.promedio}</b> <span style="color:var(--mut)">de 5 · ${rv.total} reseña${rv.total > 1 ? 's' : ''}</span></p>` : '<p style="color:var(--mut);font-size:.86rem">Aún no tienes reseñas.</p>'}<p style="color:var(--mut);font-size:.8rem;margin-top:8px">Pídele a tus clientes que te dejen una en tu perfil: generan confianza.</p></div>
         <div class="box"><h3>💡 Consejos</h3><ul class="tips">
           <li><b>Responde rápido</b> por WhatsApp: la primera hora decide la venta.</li>
@@ -4096,7 +4165,7 @@ function aRow(b) {
   return `<div class="arow"><div class="arow-top"><div><h3>${esc(b.name)}</h3><div class="arow-badges">${statusChip(b)}<span class="chip chip-plan" style="--c:${P.c}">${P.n} · ${money(b.price)}</span>${b.visits ? `<span class="chip st-mut" title="Visitas totales">👁 ${b.visits}</span>` : ''}${b.active && V3 ? `<span class="chip st-ok" title="Clics a WhatsApp, últimos 30 días">💬 ${ev30(b.id, 'whatsapp')} en 30d</span>` : ''}${isBoosted(b) ? `<span class="chip chip-boost">⚡ hasta ${esc(fmtDateTime(b.boostUntil))}</span>` : ''}</div></div>
     <div class="arow-acts">
       ${b.active && V5 ? `<button class="btn btn-ghost btn-xs" style="color:#FFC83D" data-act="a-boost" data-id="${esc(b.id)}">⚡ ${isBoosted(b) ? 'Destacado' : 'Destacar'}</button>` : ''}
-      ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-print" data-id="${esc(b.id)}" title="Tarjetas, letrero y volantes con QR">🖨 Tarjetas</button>` : ''}${b.active && b.token ? `<button class="btn btn-ghost btn-xs" data-act="a-panel" data-id="${esc(b.id)}" title="Abrir el panel privado del cliente">📊 Panel</button><button class="btn btn-ghost btn-xs" data-act="a-panel-copy" data-id="${esc(b.id)}">🔗 Link panel</button>${b.phone || b.wa ? `<a class="btn btn-wa btn-xs" href="${esc(waLink(b.phone || b.wa, reportMsg(b)))}" target="_blank" rel="noopener">Enviar reporte</a>` : ''}` : ''}
+      ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-print" data-id="${esc(b.id)}" title="Kit: tarjetas, letrero, volantes, mesa, cobro Yappy e imágenes para estados">🖨 Kit</button>` : ''}${b.active && b.token ? `<button class="btn btn-ghost btn-xs" data-act="a-panel" data-id="${esc(b.id)}" title="Abrir el panel privado del cliente">📊 Panel</button><button class="btn btn-ghost btn-xs" data-act="a-panel-copy" data-id="${esc(b.id)}">🔗 Link panel</button>${b.phone || b.wa ? `<a class="btn btn-wa btn-xs" href="${esc(waLink(b.phone || b.wa, reportMsg(b)))}" target="_blank" rel="noopener">Enviar reporte</a>` : ''}` : ''}
       ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-off" data-id="${esc(b.id)}">Desactivar</button>` : `<button class="btn btn-pri btn-xs" data-act="a-on" data-id="${esc(b.id)}">${b.activatedAt ? '↻ Renovar' : '✓ Activar'}</button>`}
       <button class="btn btn-ghost btn-xs" data-act="a-edit" data-id="${esc(b.id)}">Editar</button>
       ${b.active ? `<button class="btn btn-ghost btn-xs" data-act="a-view" data-id="${esc(b.id)}">Ver perfil</button>` : ''}
@@ -4637,13 +4706,16 @@ function prData(b) {
   const prov = provLabel(b.province) || 'Panamá', addr = [b.address, prov].filter(Boolean).join(', ');
   const photo = b.photos && b.photos[0] ? safeUrl(b.photos[0]) : '';
   return { name: b.name || 'Mi negocio', cat: catOf(b.category), tel: fmtTel(b.wa), addr, web: shortWeb(b.website), photo: /^https:/.test(photo) ? photo : '',
-    url: profileUrl(b.id), wa: b.wa ? 'https://wa.me/' + waNum(b.wa) : '', food: isFood(b.category), hours: PLANS[b.plan] && PLANS[b.plan].hours ? String(b.hours || '').slice(0, 60) : '' };
+    url: profileUrl(b.id), wa: b.wa ? 'https://wa.me/' + waNum(b.wa) : '', food: isFood(b.category), hours: PLANS[b.plan] && PLANS[b.plan].hours ? String(b.hours || '').slice(0, 60) : '',
+    ver: !!(PLANS[b.plan] && PLANS[b.plan].verified), tag: tagline(b.desc), plan: b.plan,
+    yap: hasExtras(b.plan) && b.extras && b.extras.yappy && (b.extras.yappy.numero || b.extras.yappy.qr) ? { num: String(b.extras.yappy.numero || ''), who: String(b.extras.yappy.nombre || ''), qr: /^https:/.test(safeUrl(b.extras.yappy.qr) || '') ? safeUrl(b.extras.yappy.qr) : '' } : null };
 }
+const prCat = D => `${D.cat[2]} ${esc(D.cat[1])}${D.ver ? ' · ✓ Verificado' : ''}`;
 const nmSize = n => n.length > 30 ? ' xl' : n.length > 19 ? ' l' : '';
 function prCard(D, ds, q) {
   return `<div class="pz bc pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}"><div class="bc-in">
     <div class="bc-info">
-      <div class="head">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div></div></div>
+      <div class="head">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${prCat(D)}</div></div></div>
       <div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
       ${D.tel ? `<div class="ln">📱 <b>${esc(D.tel)}</b></div>` : ''}
       <div class="ln">📍 ${esc(D.addr)}</div>
@@ -4661,7 +4733,7 @@ function prQrs(D, label) {
 }
 function prSign(D, ds, q) {
   return `<div class="pz sg pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}">
-    <div class="top">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div><div class="nm${nmSize(D.name)}">${esc(D.name)}</div></div></div>
+    <div class="top">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div style="min-width:0"><div class="ct">${prCat(D)}</div><div class="nm${nmSize(D.name)}">${esc(D.name)}</div></div></div>
     <div class="wm" aria-hidden="true">${D.cat[2]}</div>
     <div class="tag">📲 Escanea con la cámara de tu celular</div>
     ${D.hours ? `<div class="hrs">🕒 ${esc(D.hours)}</div>` : ''}
@@ -4672,26 +4744,126 @@ function prSign(D, ds, q) {
 }
 function prFlyer(D, ds, q, second) {
   return `<div class="pz fl pt-${ds.t}${second ? ' b2' : ''}" style="--a:${ds.a};--b:${ds.b}">
-    <div class="left">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div class="ct">${D.cat[2]} ${esc(D.cat[1])}</div>
+    <div class="left">${D.photo ? `<img class="av" src="${esc(D.photo)}" alt="">` : ''}<div class="ct">${prCat(D)}</div>
       <div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
       <div class="tag">Escanea y escríbenos 📲</div>
       ${D.tel ? `<div class="ln">📱 <b>${esc(D.tel)}</b></div>` : ''}<div class="ln">📍 ${esc(D.addr)}</div>${D.web ? `<div class="ln">🌐 ${esc(D.web)}</div>` : ''}
       <div class="brand">Encuéntranos en BizLaunch Panamá</div></div>
     <div class="qrs">${q.wa ? `<figure><div class="tile"><img src="${q.wa}" alt="QR de WhatsApp"></div><figcaption>💬 WhatsApp</figcaption></figure>` : ''}${q.web ? `<figure><div class="tile"><img src="${q.web}" alt="QR de la página"></div><figcaption>${D.food ? '🍽 Menú' : '🌐 Página'}</figcaption></figure>` : ''}</div></div>`;
 }
+function prTentHalf(D, ds, q, cls) {
+  const y = D.yap && D.yap.qr;
+  return `<div class="pz tn ${cls} pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}">
+    <div class="ct">${prCat(D)}</div><div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
+    <div class="tag">${D.food ? '📲 Escanea, mira el menú y pide desde tu mesa' : '📲 Escanea con la cámara de tu celular'}</div>
+    <div class="qrs">${q.web ? `<figure><div class="tile"><img src="${q.web}" alt="QR de la página"></div><figcaption>${D.food ? '🍽 Menú y pedidos' : '🌐 Nuestra página'}</figcaption></figure>` : ''}
+      ${q.wa ? `<figure><div class="tile"><img src="${q.wa}" alt="QR de WhatsApp"></div><figcaption>💬 WhatsApp</figcaption></figure>` : ''}
+      ${y ? `<figure><div class="tile"><img src="${esc(D.yap.qr)}" alt="QR de Yappy" style="image-rendering:auto"></div><figcaption>📱 Paga con Yappy</figcaption></figure>` : ''}</div>
+    ${D.tel ? `<div class="ln">📱 <b>${esc(D.tel)}</b>${D.web ? ` · 🌐 ${esc(D.web)}` : ''}</div>` : ''}
+    <div class="brand">Encuéntranos en BizLaunch Panamá</div></div>`;
+}
+function prPay(D, ds, q) {
+  const Y = D.yap;
+  return `<div class="pz py pt-${ds.t}" style="--a:${ds.a};--b:${ds.b}">
+    <div class="ct">${prCat(D)}</div><div class="nm${nmSize(D.name)}">${esc(D.name)}</div>
+    <div class="hd"><i>Y</i>Paga aquí con Yappy</div>
+    ${Y.qr ? `<div class="qrbig"><div class="tile"><img src="${esc(Y.qr)}" alt="Código QR de Yappy"></div></div>` : ''}
+    ${Y.num ? `<div class="${Y.qr ? 'who' : 'numbox'}">${Y.qr ? `${/^@/.test(Y.num) ? 'Usuario' : 'Número'} Yappy: ${esc(Y.num)}` : `<small>Búscanos en Yappy como</small><b>${esc(Y.num)}</b>`}</div>` : ''}
+    ${Y.who ? `<div class="who"><span>A nombre de</span> ${esc(Y.who)}</div>` : ''}
+    <div class="steps"><div><b>1</b>Abre tu app de Yappy</div><div><b>2</b>${Y.qr ? 'Escanea este código' : 'Busca nuestro ' + (/^@/.test(Y.num) ? 'usuario' : 'número')}</div><div><b>3</b>Escribe el monto y paga</div><div><b>4</b>Muestra tu comprobante</div></div>
+    ${q.wa ? `<div class="foot"><div class="tile"><img src="${q.wa}" alt="QR de WhatsApp"></div><div><b>¿Dudas con tu pago?</b>Escríbenos por WhatsApp ${esc(D.tel)}</div></div>` : ''}</div>`;
+}
+
+/* images for WhatsApp/Instagram status and posts, drawn on a canvas */
+const loadImg = (src, cors) => new Promise(r => { if (!src) return r(null); const i = new Image(); if (cors) i.crossOrigin = 'anonymous'; i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+function cvWrap(x, text, maxW, maxLines) {
+  const words = String(text).split(/\s+/), lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (x.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  if (cur) lines.push(cur);
+  if (lines.length > maxLines) { lines.length = maxLines; let l = lines[maxLines - 1]; while (x.measureText(l + '…').width > maxW && l.length) l = l.slice(0, -1); lines[maxLines - 1] = l + '…'; }
+  return lines;
+}
+function cvRound(x, X, Y, W, H, r) { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + W, Y, X + W, Y + H, r); x.arcTo(X + W, Y + H, X, Y + H, r); x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + W, Y, r); x.closePath(); }
+function cvCover(x, img, X, Y, W, H) { const s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s; x.drawImage(img, X + (W - w) / 2, Y + (H - h) / 2, w, h); }
+async function socialImage(D, ds, fmt, withPhoto) {
+  const W = 1080, H = fmt === 'story' ? 1920 : 1080, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+  try { await Promise.all(['800 40px Syne', '700 40px "DM Sans"', '500 40px "DM Sans"'].map(f => document.fonts.load(f))); } catch (e) {}
+  const light = [1, 3, 4, 6, 7].includes(ds.t), FG = light ? '#14171F' : '#FFFFFF', MU = light ? '#4B5260' : 'rgba(255,255,255,.82)';
+  // background
+  if (light) { x.fillStyle = ds.t === 4 ? '#F6EFE3' : '#FBFAF7'; x.fillRect(0, 0, W, H); const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, ds.a); g.addColorStop(1, ds.b);
+    x.fillStyle = g; x.beginPath(); x.arc(W * .95, H * (fmt === 'story' ? .08 : .05), W * .55, 0, 7); x.fill(); x.globalAlpha = .9; x.beginPath(); x.arc(-W * .1, H * .98, W * .42, 0, 7); x.fill(); x.globalAlpha = 1; }
+  else if (ds.t === 2) { const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, ds.a); g.addColorStop(1, ds.b); x.fillStyle = g; x.fillRect(0, 0, W, H); x.fillStyle = 'rgba(255,255,255,.08)'; x.beginPath(); x.arc(W * .9, H * .12, W * .5, 0, 7); x.fill(); }
+  else { x.fillStyle = '#0B1220'; x.fillRect(0, 0, W, H); [[ds.b, .1, .05], [ds.a, 1, .95]].forEach(([col, px, py]) => { const g = x.createRadialGradient(W * px, H * py, 0, W * px, H * py, W * .9); g.addColorStop(0, col + 'B0'); g.addColorStop(1, col + '00'); x.fillStyle = g; x.fillRect(0, 0, W, H); }); }
+  const P = 84, story = fmt === 'story';
+  const card = story ? { s: 440, x: (W - 520) / 2, y: H - 330 - 590 } : { s: 320, x: W - P - 400, y: 150 };   // QR card = s + 80 wide, s + 150 tall
+  const textW = story ? W - P * 2 : card.x - P - 44, bottom = story ? card.y - 50 : H - 300;
+  let y = story ? 140 : 96;
+  // category pill
+  x.textBaseline = 'middle'; let cfs = 32, cat = D.cat[2] + ' ' + D.cat[1] + (D.ver ? '  ✓ Verificado' : '');
+  do { x.font = `700 ${cfs}px "DM Sans", sans-serif`; cfs -= 2; } while (x.measureText(cat).width + 56 > (story ? textW : W - P * 2) && cfs > 18);
+  const cw = x.measureText(cat).width + 56; x.fillStyle = light ? 'rgba(0,0,0,.06)' : 'rgba(255,255,255,.14)'; cvRound(x, P, y, cw, 62, 31); x.fill(); x.fillStyle = FG; x.fillText(cat, P + 28, y + 32); y += 104;
+  // name: largest size that fits in 3 lines without cutting a word
+  x.textBaseline = 'top'; let fs = story ? 124 : 84, lines;
+  for (; fs >= 40; fs -= 4) { x.font = `800 ${fs}px Syne, sans-serif`; lines = cvWrap(x, D.name, textW, 99); if (lines.length <= 3 && lines.every(l => x.measureText(l).width <= textW)) break; }
+  lines = cvWrap(x, D.name, textW, 3); x.fillStyle = FG; lines.forEach(l => { x.fillText(l, P, y); y += fs * 1.04; }); y += 22;
+  // tagline: as many lines as fit
+  const tfs = story ? 42 : 32, tlh = tfs * 1.38; x.font = `500 ${tfs}px "DM Sans", sans-serif`; x.fillStyle = MU;
+  if (D.tag) { const room = Math.max(0, Math.floor((bottom - y - (story ? 300 : 0)) / tlh)); cvWrap(x, D.tag, textW, Math.min(story ? 3 : 4, Math.max(room, story ? 2 : 1))).forEach(l => { x.fillText(l, P, y); y += tlh; }); }
+  // photo (story only), sized to the space left above the QR card
+  if (story && withPhoto && D.photo) { const ph = Math.min(560, bottom - y - 40); if (ph >= 240) { const im = await loadImg(imgW(D.photo, 1080), true); if (im) { y += 40; x.save(); cvRound(x, P, y, W - P * 2, ph, 44); x.clip(); cvCover(x, im, P, y, W - P * 2, ph); x.restore(); } } }
+  // QR card
+  const qr = await loadImg(qrImg(D.wa || D.url, 600, '#0B0F17')), cwid = card.s + 80;
+  x.fillStyle = '#FFFFFF'; x.shadowColor = 'rgba(0,0,0,.28)'; x.shadowBlur = 50; x.shadowOffsetY = 18; cvRound(x, card.x, card.y, cwid, card.s + 150, 46); x.fill(); x.shadowColor = 'transparent'; x.shadowBlur = 0; x.shadowOffsetY = 0;
+  if (qr) { x.imageSmoothingEnabled = false; x.drawImage(qr, card.x + 40, card.y + 40, card.s, card.s); x.imageSmoothingEnabled = true; }
+  let qfs = story ? 38 : 30; const qt = D.wa ? 'Escanéame y escríbenos' : 'Escanéame y conócenos';
+  do { x.font = `800 ${qfs}px Syne, sans-serif`; qfs -= 2; } while (x.measureText(qt).width > cwid - 40 && qfs > 16);
+  x.fillStyle = '#0B0F17'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(qt, card.x + cwid / 2, card.y + card.s + 96); x.textAlign = 'left'; x.textBaseline = 'top';
+  // footer: phone, address, brand
+  let fy = H - (story ? 290 : 250); x.fillStyle = FG;
+  if (D.tel) { let pf = story ? 64 : 54; do { x.font = `800 ${pf}px Syne, sans-serif`; pf -= 2; } while (x.measureText('💬 ' + D.tel).width > W - P * 2 && pf > 30); x.fillText('💬 ' + D.tel, P, fy); fy += pf + 30; }
+  x.font = `600 ${story ? 36 : 30}px "DM Sans", sans-serif`; x.fillStyle = MU;
+  if (D.addr) cvWrap(x, '📍 ' + D.addr, W - P * 2, 1).forEach(l => { x.fillText(l, P, fy); fy += 50; });
+  x.font = `600 ${story ? 30 : 26}px "DM Sans", sans-serif`; x.fillText('Búscanos en BizLaunch Panamá', P, H - (story ? 100 : 74));
+  try { return c.toDataURL('image/png'); } catch (e) { return withPhoto ? socialImage(D, ds, fmt, false) : ''; }
+}
+async function renderSocial(D, ds) {
+  const st = byId('pr-stage'); st.innerHTML = '<p class="pr-tip">Creando tus imágenes…</p>';
+  const tok = PR.tok = Math.random(), [a, b] = await Promise.all([socialImage(D, ds, 'story', true), socialImage(D, ds, 'post', false)]);
+  if (tok !== PR.tok || PR.kind !== 'social') return;
+  PR.imgs = { story: a, post: b };
+  const can = !!(navigator.canShare && window.File);
+  st.innerHTML = `<div class="pr-soc">
+    <figure><img class="st" src="${a}" alt="Imagen para estados de ${esc(D.name)}"><figcaption><b>Estado o historia · 1080 × 1920</b><button class="btn btn-pri btn-sm" data-act="pr-dl" data-f="story">⬇ Descargar</button>${can ? '<button class="btn btn-ghost btn-sm" data-act="pr-share" data-f="story">📤 Compartir</button>' : ''}</figcaption></figure>
+    <figure><img class="po" src="${b}" alt="Imagen para publicación de ${esc(D.name)}"><figcaption><b>Publicación cuadrada · 1080 × 1080</b><button class="btn btn-pri btn-sm" data-act="pr-dl" data-f="post">⬇ Descargar</button>${can ? '<button class="btn btn-ghost btn-sm" data-act="pr-share" data-f="post">📤 Compartir</button>' : ''}</figcaption></figure></div>`;
+}
+const prFile = f => 'bizlaunch-' + (PR.b.name || 'negocio').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]+/g, '-').toLowerCase() + '-' + (f === 'story' ? 'estado' : 'post') + '.png';
+function prDownload(f) { const u = PR.imgs && PR.imgs[f]; if (!u) return; const a = document.createElement('a'); a.href = u; a.download = prFile(f); document.body.appendChild(a); a.click(); a.remove(); }
+async function prShare(f) {
+  const u = PR.imgs && PR.imgs[f]; if (!u) return;
+  try { const blob = await (await fetch(u)).blob(), file = new File([blob], prFile(f), { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: PR.b.name, text: PR.b.name + ' · ' + profileUrl(PR.b.id) }); else prDownload(f);
+  } catch (e) { if (e && e.name !== 'AbortError') prDownload(f); }
+}
 function renderPrinter() {
   const b = PR.b; if (!b) return;
   const D = prData(b), ds = prDesign(b);
-  const big = PR.kind === 'cards' ? 320 : 640;
+  const big = PR.kind === 'cards' ? 320 : PR.kind === 'pay' ? 300 : 640;
   const q = { web: qrImg(D.url, big), wa: qrImg(D.wa, big, '#064E3B') };
   $$('#printer [data-act="pr-kind"]').forEach(x => { x.classList.toggle('on', x.dataset.k === PR.kind); x.setAttribute('aria-selected', x.dataset.k === PR.kind); });
   byId('pr-num').textContent = `· ${PR_THEMES[ds.t]}`;
   byId('pr-title').textContent = '🖨 ' + D.name;
-  byId('pr-tip').textContent = { cards: '10 tarjetas de 9 × 5 cm por hoja carta. Imprime en cartulina y corta por las líneas.', sign: 'Letrero tamaño carta para la puerta, la caja o el mostrador. Si puedes, plastifícalo.', flyer: '2 volantes por hoja carta para repartir o dejar en el mostrador. Corta por la línea.' }[PR.kind] +
-    ' En la ventana de impresión elige “Guardar como PDF” para descargarlo, y activa “Gráficos de fondo” si los colores no salen.';
+  const tips = { cards: '10 tarjetas de 9 × 5 cm por hoja carta. Imprime en cartulina y corta por las líneas.', sign: 'Letrero tamaño carta para la puerta, la caja o el mostrador. Si puedes, plastifícalo.', flyer: '2 volantes por hoja carta para repartir o dejar en el mostrador. Corta por la línea.',
+    tent: 'Hablador de mesa: imprime en cartulina, dobla por la línea punteada y ponlo de pie sobre la mesa o el mostrador.', pay: 'Letrero de cobro tamaño carta para la caja. Tus clientes escanean tu QR de Yappy y pagan sin preguntar el número.',
+    social: 'Imágenes listas para tus estados de WhatsApp, historias de Instagram o una publicación. Descárgalas o compártelas directo desde el celular.' };
+  byId('pr-tip').textContent = tips[PR.kind] + (PR.kind === 'social' ? '' : ' En la ventana de impresión elige “Guardar como PDF” para descargarlo, y activa “Gráficos de fondo” si los colores no salen.');
+  byId('pr-print-btn').hidden = PR.kind === 'social' || (PR.kind === 'pay' && !D.yap);
+  if (PR.kind === 'social') return renderSocial(D, ds);
+  if (PR.kind === 'pay' && !D.yap) { byId('pr-stage').innerHTML = `<div class="pr-empty"><b>📱 Letrero de cobro con Yappy</b>${hasExtras(b.plan) ? 'Agrega tu número o tu código QR de Yappy en tu panel (sección “Yappy”) y aquí aparecerá tu letrero listo para imprimir.' : 'Está incluido en los planes Pro y Premium, junto con el botón de pago con Yappy en tu página.'}</div>`; return; }
   const page = inner => `<div class="pr-page">${inner}</div>`;
   byId('pr-stage').innerHTML = PR.kind === 'cards' ? page(`<div class="pr-cards">${Array.from({ length: 10 }, () => prCard(D, ds, q)).join('')}</div>`)
     : PR.kind === 'sign' ? page(prSign(D, ds, q))
+    : PR.kind === 'tent' ? page(prTentHalf(D, ds, q, 'up') + '<div class="pr-fold"><span>Doblar aquí</span></div>' + prTentHalf(D, ds, q, 'dn'))
+    : PR.kind === 'pay' ? page(prPay(D, ds, q))
     : page(prFlyer(D, ds, q) + '<div class="pr-cut"></div>' + prFlyer(D, ds, q, true));
   fitPrinter();
 }
@@ -4932,6 +5104,9 @@ document.addEventListener('click', e => {
     case 'pr-kind': PR.kind = t.dataset.k; renderPrinter(); break;
     case 'pr-design': PR.shift++; renderPrinter(); break;
     case 'pr-print': printNow(); break;
+    case 'pr-dl': prDownload(t.dataset.f); break;
+    case 'pr-share': prShare(t.dataset.f); break;
+    case 'kit-demo': { const d = ALL.find(x => x.id === 'demo_premium') || ALL.filter(isDemo)[0] || ALL.slice().sort(sortBiz)[0]; if (!d) { toast('Aún estamos cargando los negocios, intenta en un momento.'); break; } openPrinter(d, 'sign'); toast('🖨 Ejemplo con un negocio de muestra. Cada cliente recibe el suyo con sus datos.'); break; }
     case 'a-print': openPrinter(ADM.find(x => x.id === id)); break;
     case 'op-print': ownerPrint(); break;
     case 'a-panel-copy': { const b = ADM.find(x => x.id === id); if (!b || !b.token) break; const u = panelUrl(b.token); if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => toast('🔗 Link del panel copiado', 'ok'), () => prompt('Copia este link:', u)); else prompt('Copia este link:', u); break; }
