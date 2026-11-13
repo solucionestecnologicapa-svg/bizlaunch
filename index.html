@@ -582,6 +582,7 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 .pf-nav .wrap::-webkit-scrollbar{display:none}
 .pf-nav button{flex-shrink:0;padding:7px 15px;border-radius:var(--btnr,999px);font-size:.84rem;font-weight:600;color:var(--mut);border:1px solid transparent;transition:color .2s,background .2s,border-color .2s}
 .pf-nav button:hover{color:var(--txt)}
+.pf-nav button:focus:not(:focus-visible){outline:none;box-shadow:none}
 .pf-nav button.on{color:var(--acct);border-color:color-mix(in srgb,var(--acc) 40%,transparent);background:color-mix(in srgb,var(--acc) 10%,transparent)}
 .pf-facts{display:flex;flex-wrap:wrap;gap:8px;padding-top:24px}
 .pf-facts span{display:inline-flex;gap:6px;align-items:center;padding:8px 14px;border-radius:var(--btnr,999px);background:var(--card);border:1px solid var(--bdr);font-size:.84rem;font-weight:600}
@@ -2774,11 +2775,26 @@ function applyTheme(el, T) {
   Object.assign(el.dataset, { tone: T.dark ? 'dark' : 'light', hero: T.hero, h: T.h, pat: T.pat, grad: T.grad ? '1' : '0', vivid: T.vivid ? '1' : '0', theme: T.id });
 }
 const tagline = d => { const t = String(d || '').replace(/\s+/g, ' ').trim(); if (!t) return ''; const m = t.match(/^.{20,150}?[.!?](\s|$)/); return m ? m[0].trim() : t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
-function pfJump(id) { const el = byId(id), pf = byId('profile'); if (!el) return; pf.scrollTo({ top: pf.scrollTop + el.getBoundingClientRect().top - 150, behavior: REDUCED ? 'auto' : 'smooth' }); }
+function pfMark(cur) {
+  const nav = byId('profile').querySelector('.pf-nav'); if (!nav) return;
+  nav.querySelectorAll('[data-to]').forEach(b => { const on = b.dataset.to === cur; b.setAttribute('aria-current', on ? 'true' : 'false'); if (b.classList.contains('on') !== on) { b.classList.toggle('on', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center' }); } });
+}
+function pfJump(id) {
+  const el = byId(id), pf = byId('profile'); if (!el) return;
+  const top = Math.max(0, Math.min(pf.scrollHeight - pf.clientHeight, pf.scrollTop + el.getBoundingClientRect().top - 150));
+  // the tapped section stays marked until the page actually arrives, instead of passing through the ones in between
+  pf._navLock = { id, top, until: Date.now() + 1800 }; pfMark(id);
+  pf.scrollTo({ top, behavior: REDUCED ? 'auto' : 'smooth' });
+}
 function pfNavSync() {
   const pf = byId('profile'), nav = pf.querySelector('.pf-nav'); if (!nav) return;
-  let cur = ''; nav.querySelectorAll('[data-to]').forEach(b => { const el = byId(b.dataset.to); if (el && el.getBoundingClientRect().top < 200) cur = b.dataset.to; });
-  nav.querySelectorAll('[data-to]').forEach(b => { const on = b.dataset.to === cur; if (b.classList.contains('on') !== on) { b.classList.toggle('on', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center' }); } });
+  const L = pf._navLock;
+  if (L) { if (Math.abs(pf.scrollTop - L.top) > 3 && Date.now() < L.until) return pfMark(L.id); pf._navLock = null; if (Math.abs(pf.scrollTop - L.top) <= 3) return pfMark(L.id); }
+  const ids = [...nav.querySelectorAll('[data-to]')].map(b => b.dataset.to).filter(id => byId(id));
+  let cur = ''; ids.forEach(id => { if (byId(id).getBoundingClientRect().top < 200) cur = id; });
+  // at the bottom of the page the last sections can never reach the top, so mark the last one that is on screen
+  if (pf.scrollTop + pf.clientHeight >= pf.scrollHeight - 8) { const vis = ids.filter(id => byId(id).getBoundingClientRect().top < pf.clientHeight - 80); if (vis.length) cur = vis[vis.length - 1]; }
+  pfMark(cur);
 }
 
 function renderProfile(b) {
