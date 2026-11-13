@@ -479,6 +479,136 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 .pf-cta{background:linear-gradient(135deg,rgba(0,245,200,.1),rgba(124,92,252,.14));border:1px solid var(--bdr2);border-radius:var(--r);padding:22px;text-align:center}
 .pf-cta p{color:var(--mut);font-size:.85rem;margin:6px 0 14px}
 
+/* ---------- Page designs: one look per business ---------- */
+#profile{font-family:var(--fb,'DM Sans',system-ui,sans-serif);color:var(--txt)}
+#profile .pf-name,#profile .mn-sec h3,#profile .rv-sum b,#profile .mi-p,#profile .cart-bar .ci b{font-family:var(--fh,'Syne',sans-serif)}
+#profile .ov-bar,#profile .pf-bar{background:color-mix(in srgb,var(--bg) 92%,transparent)}
+#profile .btn{border-radius:var(--btnr,999px)}
+#profile .btn-pri,#profile .qty .add{color:var(--on,#04121A)}
+#profile .btn-dark{background:color-mix(in srgb,var(--txt) 7%,transparent);color:var(--txt);border-color:color-mix(in srgb,var(--txt) 18%,transparent)}
+#profile .h-full .btn-dark{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.22)}
+#profile .pf-about{color:var(--txt);opacity:.92}
+#profile .pf-meta{color:var(--mut)}
+#profile .h-full .pf-meta{color:rgba(255,255,255,.8)}
+#profile .h-full .pf-name,#profile .h-full .pf-tag{color:#fff}
+#profile .pf-bg:after{background:linear-gradient(to top,var(--bg) 2%,color-mix(in srgb,var(--bg) 55%,transparent) 55%,color-mix(in srgb,var(--bg) 20%,transparent))}
+#profile .side-card,#profile .rv,#profile .rv-form,#profile .mapbox,#profile .pf-cta,#profile .pf-offer{border-radius:var(--pr,16px)}
+#profile .gal button{border-radius:calc(var(--pr,16px) * .7)}
+#profile .mi-p,#profile .rv-reply b,#profile .is-open{color:var(--acct,var(--acc))}
+#profile .rv-reply{border-left-color:var(--acc);background:color-mix(in srgb,var(--acc) 7%,transparent)}
+#profile .pf-cta{background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 12%,transparent),color-mix(in srgb,var(--acc2) 16%,transparent))}
+#profile .ord-badges span{background:color-mix(in srgb,var(--acc) 9%,transparent);border-color:color-mix(in srgb,var(--acc) 28%,transparent)}
+#profile .mn-tabs button:hover,#profile .qty button:hover{border-color:var(--acc);color:var(--acct)}
+#profile[data-tone="light"] .side-card,#profile[data-tone="light"] .rv,#profile[data-tone="light"] .rv-form,#profile[data-tone="light"] .pf-facts span{box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px -16px rgba(0,0,0,.18)}
+#profile[data-tone="light"] .chip-ver{color:#0369A1;background:#E0F2FE;border-color:#7DD3FC}
+#profile[data-tone="light"] .stars,#profile[data-tone="light"] .rv-sum b{color:#D97706}
+#profile[data-tone="light"] .chip-top{color:#B45309;background:#FEF3C7;border-color:#FCD34D}
+#profile[data-tone="light"] .pf-offer{background:#FFF7E6;border-color:#FCD9A0}
+#profile[data-tone="light"] .chip.st-mut{background:color-mix(in srgb,var(--txt) 6%,transparent)}
+#profile.pv{z-index:560}
+#profile .yappy-card .y-num{font-family:var(--fh,'Syne',sans-serif)}
+#profile .btn-pur{background:var(--acc);color:var(--on)}
+#profile .fav-big .hrt{color:var(--txt)}
+#profile .h-full .fav-big .hrt{color:#fff}
+#profile .fav-big.on .hrt{color:#FF5C7A}
+.pf-tag{font-size:1.08rem;line-height:1.55;color:var(--mut);max-width:620px;margin:0 0 18px}
+.pf-hero-in{position:relative}
+#profile .pf-hero:not(.h-full){min-height:0;display:block}
+#profile .pf-hero:not(.h-full) .wrap{padding-top:92px;padding-bottom:46px}
+.pf-pat{position:absolute;inset:0;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 35%,transparent);mask-image:linear-gradient(to bottom,#000 35%,transparent)}
+#profile[data-pat="grid"] .pf-pat{background-image:linear-gradient(color-mix(in srgb,var(--txt) 7%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--txt) 7%,transparent) 1px,transparent 1px);background-size:44px 44px}
+#profile[data-pat="dots"] .pf-pat{background-image:radial-gradient(color-mix(in srgb,var(--acc) 38%,transparent) 1.4px,transparent 1.6px);background-size:22px 22px}
+#profile[data-pat="lines"] .pf-pat{background-image:repeating-linear-gradient(135deg,color-mix(in srgb,var(--acc) 13%,transparent) 0 1px,transparent 1px 16px)}
+#profile[data-pat="diag"] .pf-pat{background-image:repeating-linear-gradient(-45deg,color-mix(in srgb,var(--acc) 8%,transparent) 0 22px,transparent 22px 44px)}
+#profile[data-pat="waves"] .pf-pat{background:radial-gradient(70% 55% at 85% 0%,color-mix(in srgb,var(--acc2) 26%,transparent),transparent 70%),radial-gradient(60% 60% at 0% 100%,color-mix(in srgb,var(--acc) 18%,transparent),transparent 70%)}
+#profile[data-pat="blobs"] .pf-pat{background:radial-gradient(38% 50% at 12% 18%,color-mix(in srgb,var(--acc) 30%,transparent),transparent 70%),radial-gradient(34% 46% at 88% 26%,color-mix(in srgb,var(--acc2) 32%,transparent),transparent 70%)}
+.pf-media{position:relative;isolation:isolate;animation:fadeUp .8s .1s cubic-bezier(.2,.8,.2,1) backwards}
+.pf-media img,.pf-ph{display:block;width:100%;object-fit:cover;border-radius:calc(var(--pr,16px) * 1.3);box-shadow:0 30px 70px -24px rgba(0,0,0,.5)}
+.pf-ph{display:grid;place-items:center;font-size:clamp(3.5rem,9vw,6rem);background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 28%,var(--card)),color-mix(in srgb,var(--acc2) 26%,var(--card)))}
+.pf-txt{animation:fadeUp .7s cubic-bezier(.2,.8,.2,1) backwards}
+/* split */
+.h-split .pf-hero-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:52px;align-items:center}
+.h-split .pf-media img,.h-split .pf-ph{aspect-ratio:4/5;max-height:540px}
+.h-split .pf-media:before{content:'';position:absolute;inset:20px -16px -16px 20px;border-radius:calc(var(--pr,16px) * 1.3);background:linear-gradient(135deg,var(--acc),var(--acc2));z-index:-1;opacity:.85}
+/* center */
+.h-center .pf-txt{text-align:center;max-width:820px;margin:0 auto}
+.h-center .pf-badges,.h-center .pf-meta,.h-center .pf-actions{justify-content:center}
+.h-center .pf-tag{margin-left:auto;margin-right:auto}
+.h-center .pf-name:after{content:'';display:block;width:64px;height:2px;background:var(--acc);margin:18px auto 0}
+.h-center .pf-media{max-width:1060px;margin:42px auto 0}
+.h-center .pf-media img,.h-center .pf-ph{aspect-ratio:21/9}
+#profile[data-grad="1"] .h-center .pf-name{background:linear-gradient(100deg,var(--txt) 20%,var(--acc) 60%,var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* card */
+.h-card{background:linear-gradient(170deg,color-mix(in srgb,var(--acc) 14%,var(--bg)),var(--bg) 75%)}
+#profile[data-grad="1"] .h-card{background:linear-gradient(160deg,color-mix(in srgb,var(--acc) 85%,transparent),color-mix(in srgb,var(--acc2) 80%,transparent) 55%,var(--bg) 56%)}
+.h-card .pf-hero-in{display:flex;flex-direction:column}
+.h-card .pf-media{order:-1}
+.h-card .pf-media img,.h-card .pf-ph{aspect-ratio:21/8}
+.h-card .pf-txt{position:relative;z-index:1;background:var(--card);border:1px solid var(--bdr);border-radius:var(--pr,16px);padding:28px 30px;margin:-74px 28px 0;box-shadow:0 26px 60px -24px rgba(0,0,0,.35)}
+/* magazine */
+.h-mag .pf-name{font-size:clamp(2.9rem,10.5vw,7.8rem);line-height:.9;text-transform:uppercase;letter-spacing:-.015em;margin-bottom:18px}
+#profile[data-theme="minimal"] .h-mag .pf-name{letter-spacing:-.045em;font-weight:800}
+.h-mag .pf-tag{font-size:1.18rem;max-width:680px}
+.h-mag .pf-media{margin-top:36px}
+.h-mag .pf-media img,.h-mag .pf-ph{aspect-ratio:3/1;box-shadow:none}
+.h-mag .pf-txt{border-bottom:2px solid var(--txt);padding-bottom:28px}
+#profile[data-theme="urbano"] .h-mag .pf-name{color:var(--acc)}
+/* section headings */
+#profile[data-h="serif"] .pf-sec h2{font-family:var(--fh);font-size:1.75rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--txt);border:0;padding:0;margin-bottom:18px}
+#profile[data-h="serif"] .pf-sec h2:after{content:'';display:block;width:44px;height:2px;background:var(--acc);margin-top:10px}
+#profile[data-h="num"] .pf-body>div:first-child{counter-reset:pfs}
+#profile[data-h="num"] .pf-sec h2{counter-increment:pfs;font-family:var(--fh);font-size:1.4rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--txt)}
+#profile[data-h="num"] .pf-sec h2:before{content:counter(pfs,decimal-leading-zero);color:var(--acct);font-size:.8rem;margin-right:12px;letter-spacing:.08em;vertical-align:middle}
+#profile[data-h="pill"] .pf-sec h2{display:inline-flex;border:0;padding:7px 16px;border-radius:999px;background:color-mix(in srgb,var(--acc) 13%,transparent);color:var(--acct);font-size:.76rem}
+#profile[data-h="bar"] .pf-sec h2{font-family:var(--fh);font-size:1.45rem;font-weight:700;letter-spacing:.03em;color:var(--txt);border:0;border-left:4px solid var(--acc);padding:2px 0 2px 12px}
+/* section nav + highlights */
+.pf-nav{position:sticky;top:60px;z-index:4;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--bdr)}
+.pf-nav .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:9px;padding-bottom:9px}
+.pf-nav .wrap::-webkit-scrollbar{display:none}
+.pf-nav button{flex-shrink:0;padding:7px 15px;border-radius:var(--btnr,999px);font-size:.84rem;font-weight:600;color:var(--mut);border:1px solid transparent;transition:color .2s,background .2s,border-color .2s}
+.pf-nav button:hover{color:var(--txt)}
+.pf-nav button.on{color:var(--acct);border-color:color-mix(in srgb,var(--acc) 40%,transparent);background:color-mix(in srgb,var(--acc) 10%,transparent)}
+.pf-facts{display:flex;flex-wrap:wrap;gap:8px;padding-top:24px}
+.pf-facts span{display:inline-flex;gap:6px;align-items:center;padding:8px 14px;border-radius:var(--btnr,999px);background:var(--card);border:1px solid var(--bdr);font-size:.84rem;font-weight:600}
+.pf-facts span[hidden]{display:none}
+@media(max-width:860px){
+  .h-split .pf-hero-in{grid-template-columns:1fr;gap:28px}
+  .h-split .pf-media{order:-1}
+  .h-split .pf-media img,.h-split .pf-ph{aspect-ratio:4/3;max-height:none}
+  .h-split .pf-media:before{inset:12px -8px -8px 12px}
+  .h-card .pf-txt{margin:-36px 8px 0;padding:20px}
+  .h-card .pf-media img,.h-card .pf-ph{aspect-ratio:4/3}
+  .h-center .pf-media img,.h-center .pf-ph{aspect-ratio:16/10}
+  .h-mag .pf-media img,.h-mag .pf-ph{aspect-ratio:16/9}
+  #profile .pf-hero:not(.h-full) .wrap{padding-top:76px;padding-bottom:30px}
+  .pf-tag{font-size:1rem}
+}
+@media (prefers-reduced-motion:reduce){.pf-media,.pf-txt{animation:none}}
+/* design picker (owner panel / admin) */
+.dp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:8px}
+.dp-card{text-align:left;border:1.5px solid var(--bdr2);border-radius:14px;padding:8px;transition:border-color .15s,transform .15s;background:var(--sur)}
+.dp-card:hover{transform:translateY(-2px);border-color:var(--mut)}
+.dp-card.on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,245,200,.18)}
+.dp-card.lock{opacity:.55}
+.dp-prev{position:relative;display:block;height:74px;border-radius:9px;overflow:hidden;margin-bottom:8px}
+.dp-prev b{position:absolute;left:10px;bottom:8px;font-size:1.5rem;line-height:1}
+.dp-prev i{position:absolute;right:10px;bottom:12px;width:34px;height:10px;border-radius:99px;background:var(--a)}
+.dp-prev i+i{right:50px;width:18px;background:var(--a2)}
+.dp-shape{position:absolute;background:linear-gradient(135deg,var(--a),var(--a2));opacity:.85}
+.dp-shape.h-full{inset:0 0 45% 0;opacity:.55}
+.dp-shape.h-split{right:8px;top:8px;width:42%;height:58%;border-radius:8px}
+.dp-shape.h-center{left:25%;right:25%;top:10px;height:34%;border-radius:6px}
+.dp-shape.h-card{left:8px;right:8px;top:8px;height:40%;border-radius:8px}
+.dp-shape.h-mag{left:10px;top:12px;width:70%;height:22%;border-radius:2px;background:var(--a)}
+.dp-n{display:block;font-weight:700;font-size:.86rem}
+.dp-card small{display:block;color:var(--mut);font-size:.72rem;line-height:1.35}
+.dp-colors{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.dp-colors>span{font-size:.78rem;font-weight:700;color:var(--mut);margin-right:4px}
+.dp-sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--bdr2);position:relative;overflow:hidden;cursor:pointer}
+.dp-sw.on{outline:3px solid var(--acc);outline-offset:2px}
+.dp-sw input{position:absolute;inset:-6px;width:44px;height:44px;opacity:0;cursor:pointer}
+.dp-auto{background:conic-gradient(#E11D48,#F97316,#EAB308,#16A34A,#0284C7,#9333EA,#E11D48)}
+
 /* Lightbox */
 .lb{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.95);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 .lb.open{display:flex;animation:fadeIn .2s ease}
@@ -1645,8 +1775,9 @@ const CATS = [
 const PROVS = [['Panama','Panamá'],['Panama Oeste','Panamá Oeste'],['Colon','Colón'],['Chiriqui','Chiriquí'],['Cocle','Coclé'],['Herrera','Herrera'],['Los Santos','Los Santos'],['Veraguas','Veraguas'],['Bocas del Toro','Bocas del Toro'],['Darien','Darién'],['Ngabe-Bugle','Ngäbe-Buglé'],['Guna Yala','Guna Yala']];
 const SOCS = ['Instagram','Facebook','TikTok','LinkedIn','YouTube','Twitter/X','Pinterest','Snapchat'];
 const SOC_IC = {Instagram:'📸',Facebook:'👍',TikTok:'🎵',LinkedIn:'💼',YouTube:'▶️','Twitter/X':'✖️',Pinterest:'📌',Snapchat:'👻'};
-const PUB_COLS = 'id,plan,plan_n,plan_p,name,category,description,address,hours,whatsapp,website,map_url,socials,photos,province,active,activated_at,visit_count,slug,menu,extras,destacado_hasta';
-const PUB_COLS_V4 = PUB_COLS.replace(',extras,destacado_hasta', '');
+const PUB_COLS = 'id,plan,plan_n,plan_p,name,category,description,address,hours,whatsapp,website,map_url,socials,photos,province,active,activated_at,visit_count,slug,menu,extras,destacado_hasta,diseno';
+const PUB_COLS_V9 = PUB_COLS.replace(',diseno', '');
+const PUB_COLS_V4 = PUB_COLS_V9.replace(',extras,destacado_hasta', '');
 const PUB_COLS_OLD = PUB_COLS_V4.replace(',slug,menu', '');
 const MENU_LIMIT = { gratis:0, basico:25, pro:80, premium:200 };
 const FOOD_CAT = 'Restaurante / Comida';
@@ -1708,7 +1839,7 @@ function norm(b) {
     province: b.province || '', active: !!b.active, activatedAt: ms(b.activated_at), registeredAt: ms(b.registered_at),
     visits: Number(b.visit_count) || 0, owner: b.owner || '', cedula: b.cedula || '', email: b.email || '', phone: b.phone || '',
     ruc: b.ruc || '', payment: b.payment || {}, notes: b.notes || '', slug: b.slug || '', token: b.stats_token || '',
-    menu: normMenu(b.menu), extras: normExtras(b.extras), boostUntil: b.destacado_hasta ? Date.parse(b.destacado_hasta) : null
+    menu: normMenu(b.menu), extras: normExtras(b.extras), diseno: b.diseno && typeof b.diseno === 'object' ? b.diseno : {}, boostUntil: b.destacado_hasta ? Date.parse(b.destacado_hasta) : null
   };
 }
 function normMenu(m) {
@@ -1985,7 +2116,7 @@ async function loadDirectory() {
     if (!SB) throw new Error('sin conexión');
     let res = await SB.from('negocios').select(PUBC).eq('active', true);
     // fall back to older column sets if a newer SQL update has not been applied yet
-    for (const cols of [PUB_COLS_V4, PUB_COLS_OLD]) { if (!res.error || PUBC === PUB_COLS_OLD) break; if (cols.length < PUBC.length) { PUBC = cols; res = await SB.from('negocios').select(PUBC).eq('active', true); } }
+    for (const cols of [PUB_COLS_V9, PUB_COLS_V4, PUB_COLS_OLD]) { if (!res.error || PUBC === PUB_COLS_OLD) break; if (cols.length < PUBC.length) { PUBC = cols; res = await SB.from('negocios').select(PUBC).eq('active', true); } }
     if (res.error) throw res.error;
     ALL = (res.data || []).map(norm).filter(isLive); DIR_TRIES = 0; DIR_LOADED = true; renderFounder();
   } catch (e) {
@@ -2148,12 +2279,68 @@ async function openProfile(id, push) {
 function closeProfile(fromPop) {
   if (!byId('profile').classList.contains('open')) return;
   if (BL_PAGE && !fromPop) { location.href = SITE_ROOT() + '#directorio'; return; }
-  show('profile', false); document.body.classList.remove('pf-open'); CUR = null; CART = {}; renderCart();
+  show('profile', false); byId('profile').classList.remove('pv'); document.body.classList.remove('pf-open'); CUR = null; CART = {}; renderCart();
   document.title = 'BizLaunch by Roosevelt — Directorio de Negocios en Panamá';
   if (!fromPop && location.hash.startsWith('#n/')) history.pushState(null, '', location.pathname + '#directorio');
 }
 const SITE_ROOT = () => CFG.SITE.replace(/\/?$/, '/');
 const profileUrl = id => PAGES.map[id] ? SITE_ROOT() + 'n/' + PAGES.map[id] + '/' : SITE_ROOT() + '#n/' + encodeURIComponent(id);
+
+/* =====================================================================
+   PAGE DESIGNS — every business page gets its own look: palette, fonts,
+   hero layout, section style and background pattern. The owner picks one
+   (Básico+), with a custom main colour on Pro/Premium; otherwise one is
+   chosen for its category from its id, so neighbours rarely look alike.
+   ===================================================================== */
+const PT = [
+  { id: 'neon', n: 'Neón', d: 'Oscuro y tecnológico', dark: 1, bg: '#050A14', sur: '#0B1322', card: '#101A2D', txt: '#E8EDF5', mut: '#8C9BBA', acc: '#00F5C8', acc2: '#7C5CFC', on: '#04121A', fh: 'Syne', fb: 'DM Sans', g: '', hero: 'full', h: 'line', pat: 'grid', r: 16, btn: 999 },
+  { id: 'elegante', n: 'Elegante', d: 'Negro y dorado, letra clásica', dark: 1, bg: '#0E0D0B', sur: '#161411', card: '#1C1915', txt: '#F3EDE2', mut: '#A89F8E', acc: '#D4AF6A', acc2: '#8C6B3E', on: '#1A1408', fh: 'Playfair Display', fb: 'Jost', g: 'Playfair+Display:wght@600;800&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'lines', r: 4, btn: 4 },
+  { id: 'fresco', n: 'Fresco', d: 'Claro, limpio y moderno', dark: 0, bg: '#F3FAF7', sur: '#E6F4EE', card: '#FFFFFF', txt: '#0F2A22', mut: '#53706A', acc: '#0E9F6E', acc2: '#14B8A6', on: '#FFFFFF', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'split', h: 'pill', pat: 'dots', r: 22, btn: 999 },
+  { id: 'terracota', n: 'Terracota', d: 'Cálido, ideal para comida y café', dark: 0, bg: '#FBF5EE', sur: '#F3E7DA', card: '#FFFDF9', txt: '#2B1A12', mut: '#7A6052', acc: '#C2410C', acc2: '#E9A23B', on: '#FFFFFF', fh: 'Fraunces', fb: 'DM Sans', g: 'Fraunces:opsz,wght@9..144,600;9..144,800', hero: 'card', h: 'num', pat: 'waves', r: 18, btn: 12 },
+  { id: 'urbano', n: 'Urbano', d: 'Negro y amarillo, con fuerza', dark: 1, bg: '#0A0A0A', sur: '#141414', card: '#191919', txt: '#FAFAFA', mut: '#A3A3A3', acc: '#FACC15', acc2: '#F97316', on: '#0A0A0A', fh: 'Bebas Neue', fb: 'Archivo', g: 'Bebas+Neue&family=Archivo:wght@400;500;700', hero: 'mag', h: 'bar', pat: 'diag', r: 6, btn: 4 },
+  { id: 'oceano', n: 'Océano', d: 'Azul profundo con coral', dark: 1, bg: '#06142B', sur: '#0B1F3D', card: '#0F264A', txt: '#EAF2FF', mut: '#8FA7C9', acc: '#FF7A59', acc2: '#38BDF8', on: '#1A0A04', fh: 'DM Serif Display', fb: 'DM Sans', g: 'DM+Serif+Display', hero: 'full', h: 'serif', pat: 'waves', r: 20, btn: 999 },
+  { id: 'rosa', n: 'Rosa', d: 'Delicado, para belleza y eventos', dark: 0, bg: '#FDF4F5', sur: '#F8E4E8', card: '#FFFFFF', txt: '#3B1424', mut: '#8A5A6B', acc: '#B83268', acc2: '#E58FAE', on: '#FFFFFF', fh: 'Cormorant Garamond', fb: 'Jost', g: 'Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600', hero: 'center', h: 'serif', pat: 'blobs', r: 28, btn: 999 },
+  { id: 'bosque', n: 'Bosque', d: 'Verde natural y orgánico', dark: 1, bg: '#0B1A12', sur: '#11251A', card: '#152D20', txt: '#ECF5E9', mut: '#9BB5A2', acc: '#A3E635', acc2: '#FDE68A', on: '#102006', fh: 'Space Grotesk', fb: 'Space Grotesk', g: 'Space+Grotesk:wght@400;500;700', hero: 'split', h: 'num', pat: 'dots', r: 14, btn: 12 },
+  { id: 'minimal', n: 'Minimal', d: 'Blanco y negro, serio', dark: 0, bg: '#FFFFFF', sur: '#F4F4F5', card: '#FFFFFF', txt: '#0A0A0A', mut: '#666666', acc: '#111111', acc2: '#777777', on: '#FFFFFF', fh: 'Inter Tight', fb: 'Inter Tight', g: 'Inter+Tight:wght@400;500;700;800', hero: 'mag', h: 'line', pat: 'none', r: 2, btn: 2 },
+  { id: 'tropical', n: 'Tropical', d: 'Colores vivos y alegres', dark: 0, bg: '#FFF8F0', sur: '#FFEBD6', card: '#FFFFFF', txt: '#2A1033', mut: '#7C5C6E', acc: '#E11D74', acc2: '#F97316', on: '#FFFFFF', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'card', h: 'pill', pat: 'blobs', r: 24, btn: 999, grad: 1 },
+  { id: 'corporativo', n: 'Corporativo', d: 'Azul confiable para empresas', dark: 0, bg: '#F5F7FB', sur: '#E9EEF7', card: '#FFFFFF', txt: '#0B1B33', mut: '#55657E', acc: '#1D4ED8', acc2: '#0EA5E9', on: '#FFFFFF', fh: 'IBM Plex Sans', fb: 'IBM Plex Sans', g: 'IBM+Plex+Sans:wght@400;500;600;700', hero: 'split', h: 'bar', pat: 'grid', r: 10, btn: 10 },
+  { id: 'atardecer', n: 'Atardecer', d: 'Morado y naranja, nocturno', dark: 1, bg: '#140A24', sur: '#1C1033', card: '#24143F', txt: '#F6EEFF', mut: '#B4A2CF', acc: '#FF8A3D', acc2: '#C084FC', on: '#1E0B02', fh: 'Syne', fb: 'Outfit', g: 'Outfit:wght@400;500;600', hero: 'center', h: 'pill', pat: 'blobs', r: 20, btn: 999, grad: 1 }
+];
+const PT_BY = Object.fromEntries(PT.map(t => [t.id, t]));
+const PT_CAT = { 'Restaurante / Comida': ['terracota', 'tropical', 'elegante', 'urbano', 'oceano'], 'Belleza y Estetica': ['rosa', 'elegante', 'fresco', 'atardecer'], 'Salud y Bienestar': ['fresco', 'bosque', 'corporativo', 'rosa'],
+  'Tecnologia': ['neon', 'minimal', 'corporativo', 'atardecer'], 'Moda y Retail': ['minimal', 'rosa', 'tropical', 'urbano', 'elegante'], 'Automotriz': ['urbano', 'neon', 'minimal', 'oceano'], 'Construccion': ['corporativo', 'urbano', 'bosque', 'minimal'],
+  'Bienes Raices': ['elegante', 'corporativo', 'minimal', 'oceano'], 'Servicios Legales': ['elegante', 'minimal', 'corporativo'], 'Finanzas': ['corporativo', 'minimal', 'elegante'], 'Educacion': ['fresco', 'corporativo', 'tropical', 'bosque'],
+  'Turismo y Viajes': ['oceano', 'tropical', 'bosque', 'atardecer'], 'Entretenimiento': ['atardecer', 'urbano', 'neon', 'tropical'] };
+const PT_COLORS = ['#E11D48', '#F97316', '#EAB308', '#16A34A', '#0D9488', '#0284C7', '#4F46E5', '#9333EA', '#DB2777', '#111111'];
+const lumOf = hex => { const n = parseInt(hex.slice(1), 16); return [n >> 16, n >> 8 & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce((a, v, i) => a + v * [.2126, .7152, .0722][i], 0); };
+const mixHex = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const themeAuto = b => { const l = PT_CAT[b && b.category] || PT.map(t => t.id); return l[hashStr((b && b.id) || 'x') % l.length]; };
+function themeOf(b, over) {
+  const d = over || (b && b.diseno) || {}, free = !b || !PLANS[b.plan] || PLANS[b.plan].free;
+  const T = Object.assign({}, PT_BY[!free && PT_BY[d.tema] ? d.tema : themeAuto(b)]);
+  if (!free && hasExtras(b.plan) && /^#[0-9a-f]{6}$/i.test(d.color || '')) { T.acc = d.color.toUpperCase(); T.on = lumOf(d.color) > .45 ? '#0A0A0A' : '#FFFFFF'; T.custom = 1; }
+  const L = lumOf(T.acc);   // accent used as text must stay readable on the background
+  T.acct = !T.dark && L > .3 ? mixHex(T.acc, '#000000', .45) : T.dark && L < .06 ? mixHex(T.acc, '#FFFFFF', .55) : T.acc;
+  return T;
+}
+const FH_FALL = { 'Playfair Display': 'Georgia,serif', 'Fraunces': 'Georgia,serif', 'DM Serif Display': 'Georgia,serif', 'Cormorant Garamond': 'Garamond,Georgia,serif', 'Bebas Neue': "Impact,'Arial Narrow',sans-serif", 'Syne': 'system-ui,sans-serif' };
+const FONTS_ON = new Set();
+function loadFonts(q) { if (!q || FONTS_ON.has(q)) return; FONTS_ON.add(q); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=' + q + '&display=swap'; document.head.appendChild(l); }
+function applyTheme(el, T) {
+  loadFonts(T.g);
+  const v = { '--bg': T.bg, '--sur': T.sur, '--card': T.card, '--card2': T.card, '--txt': T.txt, '--mut': T.mut, '--dim': T.mut, '--acc': T.acc, '--acct': T.acct, '--acc2': T.acc2, '--pur': T.acc2, '--on': T.on,
+    '--bdr': `color-mix(in srgb,${T.txt} ${T.dark ? 13 : 11}%,transparent)`, '--bdr2': `color-mix(in srgb,${T.txt} ${T.dark ? 22 : 18}%,transparent)`, '--fh': `'${T.fh}',${FH_FALL[T.fh] || 'system-ui,sans-serif'}`, '--fb': `'${T.fb}',system-ui,sans-serif`, '--pr': T.r + 'px', '--btnr': T.btn + 'px' };
+  Object.entries(v).forEach(([k, x]) => el.style.setProperty(k, x));
+  el.style.colorScheme = T.dark ? 'dark' : 'light';
+  Object.assign(el.dataset, { tone: T.dark ? 'dark' : 'light', hero: T.hero, h: T.h, pat: T.pat, grad: T.grad ? '1' : '0', theme: T.id });
+}
+const tagline = d => { const t = String(d || '').replace(/\s+/g, ' ').trim(); if (!t) return ''; const m = t.match(/^.{20,150}?[.!?](\s|$)/); return m ? m[0].trim() : t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
+function pfJump(id) { const el = byId(id), pf = byId('profile'); if (!el) return; pf.scrollTo({ top: pf.scrollTop + el.getBoundingClientRect().top - 128, behavior: REDUCED ? 'auto' : 'smooth' }); }
+function pfNavSync() {
+  const pf = byId('profile'), nav = pf.querySelector('.pf-nav'); if (!nav) return;
+  let cur = ''; nav.querySelectorAll('[data-to]').forEach(b => { const el = byId(b.dataset.to); if (el && el.getBoundingClientRect().top < 170) cur = b.dataset.to; });
+  nav.querySelectorAll('[data-to]').forEach(b => { const on = b.dataset.to === cur; if (b.classList.contains('on') !== on) { b.classList.toggle('on', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center' }); } });
+}
 
 function renderProfile(b) {
   const P = PLANS[b.plan];
@@ -2169,13 +2356,22 @@ function renderProfile(b) {
   const T = tipo => ` data-track="${tipo}" data-id="${esc(b.id)}"`;
   const offers = OFFERS.filter(o => o.negocio_id === b.id);
   const statusHtml = hoursBadge(st, true);
+  const TH = themeOf(b), pfEl = byId('profile'); applyTheme(pfEl, TH);
+  const full = TH.hero === 'full', tag = tagline(b.desc);
+  const r = b.extras && b.extras.reservas;
+  const facts = [P.verified ? '<span>✓ Negocio verificado</span>' : '', '<span id="pf-fact-rv" hidden></span>',
+    pedidosOn(b) && b.menu.pedidos.entrega ? '<span>🛵 Entrega a domicilio</span>' : '', pedidosOn(b) && b.menu.pedidos.retiro ? '<span>🏪 Pedidos para retirar</span>' : '',
+    canReserve(b) ? `<span>📅 ${r.tipo === 'mesa' ? 'Reservas' : 'Citas'} en línea</span>` : '', hasExtras(b.plan) && b.extras.yappy && b.extras.yappy.numero ? '<span>📱 Acepta Yappy</span>' : '',
+    offers.length ? `<span>🏷 ${offers.length} oferta${offers.length > 1 ? 's' : ''}</span>` : '', photos.length > 2 ? `<span>📸 ${photos.length} fotos</span>` : ''].filter(Boolean);
+  const secs = [offers.length && ['pf-ofertas', 'Ofertas'], menuCount(b.menu) && (MENU_LIMIT[b.plan] ?? 25) > 0 && ['pf-menu', menuLabel(b.category)], b.desc && ['pf-sobre', 'Nosotros'], photos.length && ['pf-gal', 'Galería'], mapSrc && ['pf-ubic', 'Ubicación'], ['pf-resenas', 'Reseñas']].filter(Boolean);
 
   byId('pf-content').innerHTML = `
-  <section class="pf-hero">
-    <div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${P.c}55,transparent),linear-gradient(135deg,#13203A,#050A14)`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${P.c}">${catOf(b.category)[2]}</div>`}
-    <div class="wrap">
+  <section class="pf-hero h-${TH.hero}">
+    ${full ? `<div class="pf-bg" style="${cover ? `background-image:url('${esc(cssUrl(cover))}')` : `background:radial-gradient(60% 80% at 30% 20%,${TH.acc}55,transparent),radial-gradient(50% 60% at 90% 10%,${TH.acc2}44,transparent),linear-gradient(135deg,${TH.sur},${TH.bg})`}"></div>${cover ? '' : `<div class="pf-ico" aria-hidden="true" style="--c:${TH.acc}">${catOf(b.category)[2]}</div>`}` : '<div class="pf-pat" aria-hidden="true"></div>'}
+    <div class="wrap pf-hero-in"><div class="pf-txt">
       <div class="pf-badges">${hasExtras(b.plan) ? `<span class="chip chip-plan" style="--c:${P.c}">${P.n}</span>` : ''}${P.verified ? '<span class="chip chip-ver">✓ Verificado</span>' : ''}<span class="chip st-mut" id="pf-rating" hidden></span></div>
       <h1 class="pf-name">${esc(b.name)}</h1>
+      ${tag ? `<p class="pf-tag">${esc(tag)}</p>` : ''}
       <div class="pf-meta"><span>${catOf(b.category)[2]} ${esc(catOf(b.category)[1])}</span>${b.province ? `<span>📍 ${esc(provLabel(b.province))}</span>` : ''}${statusHtml}</div>
       <div class="pf-actions">
         ${wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}Escribir por WhatsApp</a>` : ''}
@@ -2187,15 +2383,19 @@ function renderProfile(b) {
         ${b.wa ? `<button class="btn btn-dark" data-act="vcard">👤 Guardar contacto</button>` : ''}
       </div>
     </div>
+    ${full ? '' : `<div class="pf-media">${cover ? `<img src="${esc(cover)}" alt="${esc(b.name)}" fetchpriority="high">` : `<div class="pf-ph" aria-hidden="true">${catOf(b.category)[2]}</div>`}</div>`}
+    </div>
   </section>
+  ${secs.length > 2 ? `<nav class="pf-nav" aria-label="Secciones de la página"><div class="wrap">${secs.map(x => `<button type="button" data-act="pf-jump" data-to="${x[0]}">${esc(x[1])}</button>`).join('')}</div></nav>` : ''}
+  ${facts.length > 2 ? `<div class="wrap pf-facts">${facts.join('')}</div>` : ''}
   <div class="wrap pf-body">
     <div>
       ${offers.length ? `<div class="pf-sec" id="pf-ofertas"><h2 style="color:var(--amb)">🏷 Ofertas vigentes</h2><div class="pf-offers">${offers.map(o => { const pr = offerPrice(o); return `<div class="pf-offer"><div><b>${esc(o.titulo)}</b>${o.descripcion ? `<p>${esc(o.descripcion)}</p>` : ''}<p>${pr ? `<span style="color:var(--amb);font-weight:700">${pr}</span> · ` : ''}${o.vence ? 'Válida hasta el ' + esc(fmtDay(o.vence)) : 'Por tiempo limitado'}</p></div>${b.wa ? `<a class="btn btn-wa btn-sm" href="${esc(waLink(b.wa, 'Hola ' + b.name + ', vi su oferta "' + o.titulo + '" en BizLaunch. ¿Sigue disponible?'))}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}La quiero</a>` : ''}</div>`; }).join('')}</div></div>` : ''}
       ${menuHTML(b, T)}
-      ${b.desc ? `<div class="pf-sec"><h2>Sobre nosotros</h2><p class="pf-about">${esc(b.desc)}</p></div>` : ''}
-      ${photos.length ? `<div class="pf-sec"><h2>Galería · ${photos.length} foto${photos.length > 1 ? 's' : ''}</h2><div class="gal">${photos.map((p, i) => `<button data-act="lb" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${esc(p)}" alt="Foto ${i + 1} de ${esc(b.name)}" loading="lazy"></button>`).join('')}</div></div>` : ''}
-      ${mapSrc ? `<div class="pf-sec"><h2>Ubicación</h2><div class="mapbox"><iframe src="${esc(mapSrc)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de ${esc(b.name)}"></iframe></div></div>` : ''}
-      <div class="pf-sec"><h2>Reseñas</h2><div id="rv-list"><div class="skel" style="height:90px"></div></div>
+      ${b.desc ? `<div class="pf-sec" id="pf-sobre"><h2>Sobre nosotros</h2><p class="pf-about">${esc(b.desc)}</p></div>` : ''}
+      ${photos.length ? `<div class="pf-sec" id="pf-gal"><h2>Galería · ${photos.length} foto${photos.length > 1 ? 's' : ''}</h2><div class="gal">${photos.map((p, i) => `<button data-act="lb" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${esc(p)}" alt="Foto ${i + 1} de ${esc(b.name)}" loading="lazy"></button>`).join('')}</div></div>` : ''}
+      ${mapSrc ? `<div class="pf-sec" id="pf-ubic"><h2>Ubicación</h2><div class="mapbox"><iframe src="${esc(mapSrc)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de ${esc(b.name)}"></iframe></div></div>` : ''}
+      <div class="pf-sec" id="pf-resenas"><h2>Reseñas</h2><div id="rv-list"><div class="skel" style="height:90px"></div></div>
         <form class="rv-form" id="rv-form">
           <b style="font-size:.92rem">¿Fuiste cliente? Deja tu opinión</b>
           <div class="star-in">${[5,4,3,2,1].map(n => `<input type="radio" name="rv-st" id="rs${n}" value="${n}"><label for="rs${n}" title="${n} estrellas">★</label>`).join('')}</div>
@@ -2225,6 +2425,8 @@ function renderProfile(b) {
   </div>`;
   byId('pf-bar').innerHTML = (wa ? `<a class="btn btn-wa" href="${esc(wa)}" target="_blank" rel="noopener"${T('whatsapp')}>${WA_SVG}WhatsApp</a>` : '') + (canReserve(b) ? `<button class="btn btn-pri" data-act="rsv-open">📅 ${b.extras.reservas.tipo === 'mesa' ? 'Reservar' : 'Agendar'}</button>` : P.call && b.wa ? `<a class="btn btn-dark" href="tel:+${esc(waNum(b.wa))}"${T('llamada')}>📞 Llamar</a>` : (gm ? `<a class="btn btn-dark" href="${esc(gm)}" target="_blank" rel="noopener"${T('mapa')}>🧭 Cómo llegar</a>` : ''));
   byId('rv-form').addEventListener('submit', submitReview);
+  pfEl.querySelectorAll('.pf-sec, .side-card, .pf-cta').forEach(x => x.classList.add('rv-in')); observeReveal();
+  if (!pfEl._navSync) { pfEl._navSync = 1; pfEl.addEventListener('scroll', () => requestAnimationFrame(pfNavSync), { passive: true }); }
   const q = byId('pf-qr');
   if (window.QRCode) { try { new QRCode(q, { text: profileUrl(b.id), width: 150, height: 150, correctLevel: QRCode.CorrectLevel.M }); } catch (e) { q.hidden = true; } } else q.hidden = true;
 }
@@ -2254,6 +2456,7 @@ async function loadReviews(id) {
   if (!rows.length) { box.innerHTML = '<p style="color:var(--mut);font-size:.9rem">Aún no hay reseñas. ¡Sé el primero en opinar!</p>'; return; }
   const avg = rows.reduce((s, r) => s + r.estrellas, 0) / rows.length;
   const rt = byId('pf-rating'); rt.textContent = '★ ' + avg.toFixed(1) + ' (' + rows.length + ')'; rt.style.color = '#FFC83D'; rt.hidden = false;
+  const rf = byId('pf-fact-rv'); if (rf) { rf.innerHTML = `<b style="color:#F59E0B">★ ${avg.toFixed(1)}</b> · ${rows.length} reseña${rows.length > 1 ? 's' : ''}`; rf.hidden = false; }
   box.innerHTML = `<div class="rv-sum"><b>${avg.toFixed(1)}</b><div><div class="stars">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5 - Math.round(avg))}</div><small style="color:var(--mut)">${rows.length} reseña${rows.length > 1 ? 's' : ''}</small></div></div>` +
     rows.map(r => `<div class="rv"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>${esc(r.comentario)}</p><small>${esc(r.autor || 'Cliente')} · ${fmtDate(Date.parse(r.created_at))}</small>${r.respuesta ? `<div class="rv-reply"><b>Respuesta de ${esc(CUR.name)}</b>${esc(r.respuesta)}</div>` : ''}</div>`).join('');
 }
@@ -2927,6 +3130,9 @@ function renderOwnerPanel() {
         <div class="box" style="text-align:center"><h3>Comparte tu perfil</h3><div class="qr" id="op-qr"></div>
           <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px"><button class="btn btn-ghost btn-xs" data-act="op-copy">🔗 Copiar link</button><button class="btn btn-ghost btn-xs" data-act="op-qr">⬇ QR</button><a class="btn btn-wa btn-xs" href="${esc('https://wa.me/?text=' + encodeURIComponent('Encuéntranos en BizLaunch 👉 ' + url))}" target="_blank" rel="noopener">Enviar</a></div>
           <p style="color:var(--dim);font-size:.74rem;margin-top:10px">Ponlo en la bio de Instagram, en tu estado de WhatsApp y en tu local.</p></div>
+        ${d.active ? `<div class="box" id="op-design-box"><h3>🎨 Diseño de tu página</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:14px">Elige cómo se ve tu página: colores, tipo de letra y estilo de portada. Cada diseño es distinto para que tu negocio se reconozca.</p>
+          <div id="op-design"></div>
+          ${PLANS[d.plan].free ? '' : `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><button class="btn btn-pri btn-sm" data-act="op-design-save">Guardar diseño</button><button class="btn btn-ghost btn-sm" data-act="op-design-preview">👁 Vista previa</button></div>`}</div>` : ''}
         ${d.active ? `<div class="box"><h3>🖨 Tarjetas y letrero</h3><p style="color:var(--mut);font-size:.84rem;margin-bottom:12px">Tarjetas de presentación, un letrero y volantes con tu código QR de WhatsApp y de tu página, listos para imprimir.</p><button class="btn btn-pri btn-sm btn-block" data-act="op-print">Crear e imprimir</button></div>` : ''}
         <div class="box"><h3>⭐ Reseñas</h3>${rv.total ? `<p><b style="font-family:Syne,sans-serif;font-size:1.6rem;color:#FFC83D">${rv.promedio}</b> <span style="color:var(--mut)">de 5 · ${rv.total} reseña${rv.total > 1 ? 's' : ''}</span></p>` : '<p style="color:var(--mut);font-size:.86rem">Aún no tienes reseñas.</p>'}<p style="color:var(--mut);font-size:.8rem;margin-top:8px">Pídele a tus clientes que te dejen una en tu perfil: generan confianza.</p></div>
         <div class="box"><h3>💡 Consejos</h3><ul class="tips">
@@ -2951,6 +3157,8 @@ function renderOwnerPanel() {
   const f = byId('op-form'); if (f) f.addEventListener('submit', submitOwnerOffer);
   if (byId('op-menu')) menuEditor(byId('op-menu'), d.menu, { food: isFood(d.category), limit: MENU_LIMIT[d.plan] ?? 25, pedidos: true });
   if (byId('op-extras')) extrasEditor(byId('op-extras'), d.extras, { prefix: 'ox' });
+  if (byId('op-design')) { const pub = ALL.find(x => x.id === d.id); const dz = d.diseno || (pub && pub.diseno); designPicker(byId('op-design'), dz || {}, { id: d.id, plan: d.plan, category: d.category });
+    if (!dz && SB) SB.from('negocios').select('diseno').eq('id', d.id).maybeSingle().then(({ data }) => { if (data && data.diseno && OP && OP.d.id === d.id) { OP.d.diseno = data.diseno; designPicker(byId('op-design'), data.diseno, { id: d.id, plan: d.plan, category: d.category }); } }, () => {}); }
   if (byId('op-rv-box')) loadOwnerReviews();
   clearInterval(IB.timer); IB.timer = null;
   if (byId('op-inbox')) { IB.tab = (MENU_LIMIT[d.plan] ?? 0) > 0 ? IB.tab : 'citas'; if (!hasExtras(d.plan)) IB.tab = 'pedidos'; renderInbox(); loadInbox(); IB.timer = setInterval(() => loadInbox(true), 40000); }
@@ -3045,6 +3253,45 @@ async function setIbStatus(t) {
   if (error) { t.disabled = false; return toast(niceErr(error.message), 'bad'); }
   it.estado = st; it.updated_at = new Date().toISOString(); renderInbox();
   toast('✓ ' + ((k === 'p' ? PED_ST : CITA_ST)[st] || [''])[0] + ' · avísale al cliente por WhatsApp', 'ok');
+}
+/* design picker: owner panel and admin editor */
+function designPicker(el, diseno, b) {
+  const D = { tema: (diseno && diseno.tema) || '', color: (diseno && diseno.color) || '' };
+  const free = PLANS[b.plan].free, colorOk = hasExtras(b.plan);
+  loadFonts(PT.map(t => t.g).filter(Boolean).join('&family='));
+  const card = (id, n, d) => { const T = PT_BY[id || themeAuto(b)]; return `<button type="button" class="dp-card${D.tema === id ? ' on' : ''}${free && id ? ' lock' : ''}" data-dp="${id}" aria-pressed="${D.tema === id}">
+      <span class="dp-prev" style="background:${T.bg};color:${T.txt};--a:${D.color && colorOk ? D.color : T.acc};--a2:${T.acc2}"><span class="dp-shape h-${T.hero}"></span><b style="font-family:'${T.fh}',${(FH_FALL[T.fh] || 'sans-serif').replace(/"/g, '')}">Aa</b><i></i><i></i></span>
+      <span class="dp-n">${esc(n)}</span><small>${esc(d)}</small></button>`; };
+  const render = () => {
+    el.innerHTML = `<div class="dp-grid">${card('', 'Automático', 'Elegimos ' + PT_BY[themeAuto(b)].n + ' para tu tipo de negocio')}${PT.map(t => card(t.id, t.n, t.d)).join('')}</div>
+      ${free ? '<p class="note" style="margin-top:12px">🔒 Con el plan Básico o superior eliges el diseño de tu página. Ahora usas el automático.</p>'
+        : colorOk ? `<div class="dp-colors"><span>Color principal</span><button type="button" class="dp-sw dp-auto${!D.color ? ' on' : ''}" data-dpc="" title="El color del diseño" aria-label="Color del diseño"></button>${PT_COLORS.map(c => `<button type="button" class="dp-sw${D.color.toUpperCase() === c ? ' on' : ''}" data-dpc="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}<label class="dp-sw${D.color && !PT_COLORS.includes(D.color.toUpperCase()) ? ' on' : ''}" style="background:${D.color && !PT_COLORS.includes(D.color.toUpperCase()) ? D.color : 'var(--card)'}" title="Otro color">＋<input type="color" data-dpc-in value="${D.color || themeOf(b, { tema: D.tema }).acc}" aria-label="Elegir otro color"></label></div>`
+        : '<p style="color:var(--dim);font-size:.78rem;margin-top:12px">Con Pro o Premium también eliges el color principal.</p>'}`;
+  };
+  el.onclick = e => { const c = e.target.closest('[data-dp]'); if (c && !free) { D.tema = c.dataset.dp; render(); } const w = e.target.closest('button[data-dpc]'); if (w) { D.color = w.dataset.dpc; render(); } };
+  el.onchange = e => { if (e.target.matches('[data-dpc-in]')) { D.color = e.target.value.toUpperCase(); render(); } };
+  render();
+  el._design = { get: () => free ? {} : JSON.parse(JSON.stringify({ tema: D.tema || undefined, color: colorOk && D.color ? D.color : undefined })) };
+}
+async function previewDesign() {
+  const box = byId('op-design'); if (!OP || !box || !box._design) return;
+  let b = ALL.find(x => x.id === OP.d.id);
+  if (!b) { try { const { data } = await SB.from('negocios').select(PUBC).eq('id', OP.d.id).maybeSingle(); b = norm(data); } catch (e) {} }
+  if (!b) return toast('No pudimos abrir la vista previa.', 'bad');
+  CUR = Object.assign({}, b, { diseno: box._design.get() }); CART = {};
+  renderProfile(CUR); renderCart(); byId('profile').classList.add('pv'); show('profile', true); byId('profile').scrollTo(0, 0); loadReviews(CUR.id);
+  toast('👁 Vista previa. Ciérrala con “← Directorio” para volver a tu panel.');
+}
+async function saveDesign(btn) {
+  const box = byId('op-design'); if (!OP || !box || !box._design) return;
+  btn.disabled = true; const old = btn.textContent; btn.textContent = 'Guardando…';
+  try {
+    const { data, error } = await SB.rpc('guardar_diseno_dueno', { p_token: OP.token, p_diseno: box._design.get() });
+    if (error) throw error;
+    OP.d.diseno = data || {}; const a = ALL.find(x => x.id === OP.d.id); if (a) a.diseno = OP.d.diseno;
+    toast('🎨 Diseño guardado. Tu página ya se ve así.', 'ok');
+  } catch (e) { toast(niceErr(e.message, 'No se pudo guardar el diseño.'), 'bad'); }
+  finally { btn.disabled = false; btn.textContent = old; }
 }
 async function loadOwnerReviews() {
   const box = byId('op-rv-box'), el = byId('op-rv'); if (!box || !OP) return;
@@ -3747,10 +3994,12 @@ function aEdit(id) {
     <div class="eh">Fotos <span id="e-pc" style="color:var(--mut)"></span></div><div class="thumbs" id="e-thumbs"></div>
     <button class="btn btn-ghost btn-sm" style="margin-top:10px" data-act="e-photo-add">📷 Agregar fotos</button><input type="file" id="e-files" accept="image/*" multiple hidden>
     <div class="eh" style="margin-top:22px">Menú, precios y pedidos en línea</div><div id="e-menu"></div>
-    <div class="eh" style="margin-top:22px">Agenda en línea y Yappy</div><div id="e-extras"></div>`;
+    <div class="eh" style="margin-top:22px">Agenda en línea y Yappy</div><div id="e-extras"></div>
+    <div class="eh" style="margin-top:22px">Diseño de la página</div><div id="e-design"></div>`;
   eRenderPlans(); eRenderSocs(); eRenderPhotos();
   menuEditor(byId('e-menu'), b.menu, { food: isFood(b.category), limit: 200, pedidos: true });
   extrasEditor(byId('e-extras'), b.extras, { prefix: 'ex', note: 'Se muestran en el perfil solo si el plan es Pro o Premium.' });
+  designPicker(byId('e-design'), b.diseno || {}, { id: b.id || 'nuevo', plan: 'premium', category: b.category || '' });
   byId('e-files').addEventListener('change', ev => { addPhotos(ev.target.files, EDIT.photos, 30, eRenderPhotos); ev.target.value = ''; });
   byId('edit-save').textContent = id ? 'Guardar cambios' : 'Crear negocio';
   show('edit', true);
@@ -3776,6 +4025,8 @@ async function eSave() {
       socials: EDIT.socials.filter(s => safeUrl(s.url)).map(s => ({ platform: s.platform, url: safeUrl(s.url) })), photos, active, updated_at: new Date().toISOString() };
     if (menu) f.menu = JSON.parse(JSON.stringify(menu));   // drops undefined keys
     if (extras && V5) f.extras = extras;
+    const dz = byId('e-design') && byId('e-design')._design ? byId('e-design')._design.get() : null;
+    if (dz && !EDIT.isNew) f.diseno = dz;
     if (active && !(prev && prev.activatedAt)) f.activated_at = new Date().toISOString();
     let res;
     if (EDIT.isNew) res = await SB.from('negocios').insert(Object.assign({ id, plan_p: PLANS[EDIT.plan].p, registered_at: new Date().toISOString(), payment: { method: 'admin', label: 'Registrado por admin' } }, f));
@@ -3989,9 +4240,9 @@ function openProfileFrom(card, id) {
     media.style.viewTransitionName = '';
     pf.classList.add('no-anim');
     await openProfile(id);
-    const bg = pf.querySelector('.pf-bg'); if (bg) bg.style.viewTransitionName = 'bl-cover';
+    const bg = pf.querySelector('.pf-bg, .pf-media img'); if (bg) bg.style.viewTransitionName = 'bl-cover';
   });
-  vt.finished.finally(() => { pf.classList.remove('no-anim'); const bg = pf.querySelector('.pf-bg'); if (bg) bg.style.viewTransitionName = ''; media.style.viewTransitionName = ''; });
+  vt.finished.finally(() => { pf.classList.remove('no-anim'); const bg = pf.querySelector('.pf-bg, .pf-media img'); if (bg) bg.style.viewTransitionName = ''; media.style.viewTransitionName = ''; });
 }
 
 /* =====================================================================
@@ -4214,6 +4465,7 @@ document.addEventListener('click', e => {
     case 'pay': R.pay = t.dataset.k; stepErr(4); renderPays(); break;
     case 'profile': if (t.closest('#trk-modal')) closeTrack(); if (t.closest('#dir-grid, #featured')) openProfileFrom(t, id); else openProfile(id); break;
     case 'pf-close': closeProfile(); break;
+    case 'pf-jump': pfJump(t.dataset.to); break;
     case 'share': share(); break;
     case 'qr-dl': downloadQR(); break;
     case 'lb': if (CUR) LB = CUR.photos.slice(0, PLANS[CUR.plan].f).map(safeUrl).filter(Boolean); lbOpen(+t.dataset.i); break;
@@ -4242,6 +4494,8 @@ document.addEventListener('click', e => {
     case 'dir-retry': clearTimeout(loadDirectory.t); loadDirectory(); break;
     case 'op-retry': openOwnerPanel(t.dataset.token, false); break;
     case 'ib-tab': IB.tab = t.dataset.t; renderInbox(); break;
+    case 'op-design-save': saveDesign(t); break;
+    case 'op-design-preview': previewDesign(); break;
     case 'ib-reload': loadInbox(); break;
     case 'ib-st': setIbStatus(t); break;
     case 'quiz': quizPick(t); break;
