@@ -17,7 +17,8 @@ begin
   if n.plan = 'gratis' then raise exception 'Elegir el diseño está disponible desde el plan Básico'; end if;
   if p_diseno is null or jsonb_typeof(p_diseno) <> 'object' then raise exception 'Diseño inválido'; end if;
   t := nullif(p_diseno->>'tema', '');
-  if t is not null and t not in ('neon','elegante','fresco','terracota','urbano','oceano','rosa','bosque','minimal','tropical','corporativo','atardecer') then
+  if t is not null and t not in ('neon','elegante','fresco','terracota','urbano','oceano','rosa','bosque','minimal','tropical','corporativo','atardecer',
+                                 'coral','cielo','citrico','lavanda','brisa','pop') then
     raise exception 'Ese diseño no existe'; end if;
   c := nullif(p_diseno->>'color', '');
   if c is not null and (c !~ '^#[0-9A-Fa-f]{6}$' or n.plan not in ('pro','premium')) then c := null; end if;

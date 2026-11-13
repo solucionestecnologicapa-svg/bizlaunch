@@ -669,6 +669,53 @@ footer{border-top:1px solid var(--bdr);padding:44px 0 90px;color:var(--mut);font
 @media(max-width:860px){#profile .pf-hero:not(.h-full) .wrap{padding-top:96px;padding-bottom:48px}#profile .pf-body{padding-top:40px}#profile .pf-sec{margin-bottom:56px}#profile .pf-nav{top:74px}.pf-barname{font-size:.85rem}#profile .btn-cta{font-size:.92rem}}
 @media (prefers-reduced-motion:reduce){.pf-orbs i{animation:none}#profile .rv-in{filter:none;transform:none}}
 
+/* ---------- Vivid light designs: white base, bold colour blocks ---------- */
+#profile[data-vivid="1"]{background-image:none}
+#profile[data-vivid="1"] .pf-hero:not(.h-card){background:linear-gradient(125deg,var(--acc) 0%,color-mix(in srgb,var(--acc) 55%,var(--acc2)) 45%,var(--acc2) 100%);color:#fff}
+#profile[data-vivid="1"] .pf-hero:not(.h-card):after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:70px;background:var(--bg);clip-path:ellipse(75% 100% at 50% 100%);pointer-events:none}
+#profile[data-vivid="1"] .h-card{background:linear-gradient(160deg,var(--acc),var(--acc2) 52%,var(--bg) 52.2%)}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-name,#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-tag,#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-meta,#profile[data-vivid="1"] .pf-hero:not(.h-card) .is-open{color:#fff}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-tag,#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-meta{opacity:.92}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-eyebrow{color:#fff;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .chip.st-mut,#profile[data-vivid="1"] .pf-hero:not(.h-card) .chip-plan{color:#fff!important;background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.35)}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .hstat{color:#fff;background:rgba(0,0,0,.16);padding:4px 10px;border-radius:999px}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .btn-pri{background:#fff;color:var(--acct)}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .btn-pri .bib{background:color-mix(in srgb,var(--acc) 14%,transparent)}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-actions .btn-dark,#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-actions .fav-big{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.38);color:#fff}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .fav-big .hrt{color:#fff}
+#profile[data-vivid="1"] .pf-hero:not(.h-card) .pf-name:after{background:#fff}
+#profile[data-vivid="1"] .h-mag .pf-txt{border-bottom-color:rgba(255,255,255,.55)}
+#profile[data-vivid="1"] .pf-hero .pf-pat{opacity:.35;filter:grayscale(1) brightness(3)}
+#profile[data-vivid="1"] .pf-orbs i{background:radial-gradient(circle,color-mix(in srgb,var(--acc3) 70%,transparent),transparent 62%);opacity:.55}
+#profile[data-vivid="1"] .pf-orbs i+i{background:radial-gradient(circle,rgba(255,255,255,.55),transparent 62%);opacity:.4}
+#profile[data-vivid="1"] .pf-media img,#profile[data-vivid="1"] .pf-ph{box-shadow:0 0 0 8px rgba(255,255,255,.22),0 0 0 9px rgba(255,255,255,.45),0 50px 90px -36px rgba(20,0,30,.55)}
+#profile[data-vivid="1"] .h-split .pf-media:before{background:var(--acc3);opacity:.9}
+#profile[data-vivid="1"] .pf-ph{background:linear-gradient(135deg,rgba(255,255,255,.3),rgba(255,255,255,.08))}
+/* colour play in the body */
+#profile[data-vivid="1"] .side-card,#profile[data-vivid="1"] .rv,#profile[data-vivid="1"] .rv-form{background:var(--card);border-color:color-mix(in srgb,var(--acc) 14%,transparent);box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 6%,transparent),0 24px 50px -34px color-mix(in srgb,var(--acc) 60%,transparent)}
+#profile[data-vivid="1"] aside .side-card{border-top:4px solid var(--acc)}
+#profile[data-vivid="1"] aside .side-card:nth-child(3n+2){border-top-color:var(--acc2)}
+#profile[data-vivid="1"] aside .side-card:nth-child(3n){border-top-color:var(--acc3)}
+#profile[data-vivid="1"] .pf-facts span{background:color-mix(in srgb,var(--acc) 10%,#fff);border-color:color-mix(in srgb,var(--acc) 25%,transparent);box-shadow:none}
+#profile[data-vivid="1"] .pf-facts span:nth-child(3n+2){background:color-mix(in srgb,var(--acc2) 12%,#fff);border-color:color-mix(in srgb,var(--acc2) 28%,transparent)}
+#profile[data-vivid="1"] .pf-facts span:nth-child(3n){background:color-mix(in srgb,var(--acc3) 16%,#fff);border-color:color-mix(in srgb,var(--acc3) 34%,transparent)}
+#profile[data-vivid="1"] .mi{background:var(--card);border-color:color-mix(in srgb,var(--acc) 12%,transparent)}
+#profile[data-vivid="1"] .mn-sec:nth-child(odd) .mi:hover{background:color-mix(in srgb,var(--acc) 7%,#fff)}
+#profile[data-vivid="1"] .mn-sec:nth-child(even) .mi:hover{background:color-mix(in srgb,var(--acc2) 8%,#fff);border-color:color-mix(in srgb,var(--acc2) 40%,transparent)}
+#profile[data-vivid="1"] .pf-cta{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:0}
+#profile[data-vivid="1"] .pf-cta p{color:rgba(255,255,255,.85)}
+#profile[data-vivid="1"] .pf-cta .btn-pri{background:#fff;color:var(--acct)}
+#profile[data-vivid="1"] .mapbox,#profile[data-vivid="1"] .gal button{box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 10%,transparent),0 0 0 6px color-mix(in srgb,var(--acc) 22%,transparent)}
+#profile[data-vivid="1"] .gal button:nth-child(3n+2){box-shadow:0 0 0 5px color-mix(in srgb,var(--acc2) 12%,transparent),0 0 0 6px color-mix(in srgb,var(--acc2) 26%,transparent)}
+#profile[data-vivid="1"] .gal button:nth-child(3n){box-shadow:0 0 0 5px color-mix(in srgb,var(--acc3) 16%,transparent),0 0 0 6px color-mix(in srgb,var(--acc3) 32%,transparent)}
+#profile[data-vivid="1"][data-h="bar"] .pf-sec:nth-child(3n+2) h2{border-left-color:var(--acc2)}
+#profile[data-vivid="1"][data-h="bar"] .pf-sec:nth-child(3n) h2{border-left-color:var(--acc3)}
+#profile[data-vivid="1"][data-h="pill"] .pf-sec:nth-child(3n+2) h2{background:color-mix(in srgb,var(--acc2) 14%,transparent);color:color-mix(in srgb,var(--acc2) 60%,#000)}
+#profile[data-vivid="1"][data-h="pill"] .pf-sec:nth-child(3n) h2{background:color-mix(in srgb,var(--acc3) 22%,transparent);color:color-mix(in srgb,var(--acc3) 45%,#000)}
+#profile[data-vivid="1"] .pf-bar{background:color-mix(in srgb,#fff 82%,transparent)}
+#profile[data-theme="pop"] .h-mag .pf-name{color:#fff;text-shadow:5px 5px 0 var(--acc3)}
+#profile[data-theme="citrico"] .h-mag .pf-name{color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.15)}
+
 /* Lightbox */
 .lb{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.95);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 .lb.open{display:flex;animation:fadeIn .2s ease}
@@ -2364,13 +2411,19 @@ const PT = [
   { id: 'minimal', n: 'Grafito', d: 'Carbón y azul hielo, sobrio y fuerte', dark: 1, bg: '#0F0F12', sur: '#16161B', card: '#1B1B21', txt: '#F2F2F5', mut: '#9A9AA6', acc: '#9DB8FF', acc2: '#6366F1', on: '#0B1020', fh: 'Plus Jakarta Sans', fb: 'Plus Jakarta Sans', g: 'Plus+Jakarta+Sans:wght@400;500;700;800', hero: 'mag', h: 'line', pat: 'grid', r: 14, btn: 999 },
   { id: 'tropical', n: 'Caribe', d: 'Turquesa profundo con fucsia y mango', dark: 1, bg: '#052A2C', sur: '#073537', card: '#0A3F42', txt: '#EFFFFC', mut: '#93C5C0', acc: '#FF5DA2', acc2: '#FFB547', on: '#2A0516', fh: 'Sora', fb: 'Sora', g: 'Sora:wght@400;500;600;800', hero: 'card', h: 'pill', pat: 'blobs', r: 28, btn: 999, grad: 1 },
   { id: 'corporativo', n: 'Zafiro', d: 'Azul noche y eléctrico, para empresas', dark: 1, bg: '#07112A', sur: '#0B1838', card: '#0F1F46', txt: '#EAF0FF', mut: '#8DA0C8', acc: '#3B82F6', acc2: '#22D3EE', on: '#FFFFFF', fh: 'Manrope', fb: 'Manrope', g: 'Manrope:wght@400;500;700;800', hero: 'split', h: 'bar', pat: 'grid', r: 16, btn: 999 },
-  { id: 'atardecer', n: 'Atardecer', d: 'Morado nocturno con naranja', dark: 1, bg: '#12081F', sur: '#1A0D2E', card: '#22123B', txt: '#F7EEFF', mut: '#B5A3CF', acc: '#FF8A3D', acc2: '#C084FC', on: '#1E0B02', fh: 'Unbounded', fb: 'Outfit', g: 'Unbounded:wght@600;700&family=Outfit:wght@400;500;600', hero: 'center', h: 'pill', pat: 'blobs', r: 26, btn: 999, grad: 1 }
+  { id: 'atardecer', n: 'Atardecer', d: 'Morado nocturno con naranja', dark: 1, bg: '#12081F', sur: '#1A0D2E', card: '#22123B', txt: '#F7EEFF', mut: '#B5A3CF', acc: '#FF8A3D', acc2: '#C084FC', on: '#1E0B02', fh: 'Unbounded', fb: 'Outfit', g: 'Unbounded:wght@600;700&family=Outfit:wght@400;500;600', hero: 'center', h: 'pill', pat: 'blobs', r: 26, btn: 999, grad: 1 },
+  { id: 'coral', n: 'Coral', d: 'Blanco con coral y naranja vibrantes', dark: 0, vivid: 1, bg: '#FFF5F2', sur: '#FFE7E0', card: '#FFFFFF', txt: '#2B0F14', mut: '#7A5560', acc: '#F43F5E', acc2: '#FB923C', acc3: '#FACC15', on: '#FFFFFF', fh: 'Sora', fb: 'DM Sans', g: 'Sora:wght@400;600;800', hero: 'split', h: 'pill', pat: 'blobs', r: 26, btn: 999 },
+  { id: 'cielo', n: 'Cielo', d: 'Blanco con azul cielo y turquesa', dark: 0, vivid: 1, bg: '#F1F7FF', sur: '#E0EEFF', card: '#FFFFFF', txt: '#0B1F3A', mut: '#4E6584', acc: '#2563EB', acc2: '#06B6D4', acc3: '#A78BFA', on: '#FFFFFF', fh: 'Manrope', fb: 'Manrope', g: 'Manrope:wght@400;500;700;800', hero: 'center', h: 'bar', pat: 'waves', r: 20, btn: 999 },
+  { id: 'citrico', n: 'Cítrico', d: 'Blanco con lima, verde agua y amarillo', dark: 0, vivid: 1, bg: '#FAFDF0', sur: '#F0F7DA', card: '#FFFFFF', txt: '#1A2410', mut: '#5D6B48', acc: '#4D9A0E', acc2: '#0E9384', acc3: '#FACC15', on: '#FFFFFF', fh: 'Unbounded', fb: 'Outfit', g: 'Unbounded:wght@600;700&family=Outfit:wght@400;500;600', hero: 'mag', h: 'num', pat: 'dots', r: 18, btn: 999 },
+  { id: 'lavanda', n: 'Lavanda', d: 'Blanco con violeta y rosa', dark: 0, vivid: 1, bg: '#F7F3FF', sur: '#ECE4FF', card: '#FFFFFF', txt: '#1F1240', mut: '#665A86', acc: '#7C3AED', acc2: '#EC4899', acc3: '#38BDF8', on: '#FFFFFF', fh: 'Fraunces', fb: 'Jost', g: 'Fraunces:opsz,wght@9..144,600;9..144,800&family=Jost:wght@400;500;600', hero: 'card', h: 'serif', pat: 'blobs', r: 28, btn: 999 },
+  { id: 'brisa', n: 'Brisa', d: 'Blanco con verde agua y amarillo', dark: 0, vivid: 1, bg: '#F0FBF7', sur: '#DDF5EC', card: '#FFFFFF', txt: '#0E2A23', mut: '#4F6E66', acc: '#0D9488', acc2: '#22C55E', acc3: '#FBBF24', on: '#FFFFFF', fh: 'Outfit', fb: 'Outfit', g: 'Outfit:wght@400;500;600;800', hero: 'split', h: 'pill', pat: 'dots', r: 24, btn: 999 },
+  { id: 'pop', n: 'Pop', d: 'Blanco con fucsia, azul y amarillo', dark: 0, vivid: 1, bg: '#FFFBF0', sur: '#FFF1CC', card: '#FFFFFF', txt: '#151515', mut: '#5E5A52', acc: '#FF3D7F', acc2: '#2D7FF9', acc3: '#FFC93C', on: '#FFFFFF', fh: 'Bebas Neue', fb: 'Archivo', g: 'Bebas+Neue&family=Archivo:wght@400;500;700', hero: 'mag', h: 'bar', pat: 'diag', r: 12, btn: 999 }
 ];
 const PT_BY = Object.fromEntries(PT.map(t => [t.id, t]));
-const PT_CAT = { 'Restaurante / Comida': ['terracota', 'tropical', 'elegante', 'urbano', 'oceano'], 'Belleza y Estetica': ['rosa', 'elegante', 'fresco', 'atardecer'], 'Salud y Bienestar': ['fresco', 'bosque', 'corporativo', 'rosa'],
-  'Tecnologia': ['neon', 'minimal', 'corporativo', 'atardecer'], 'Moda y Retail': ['minimal', 'rosa', 'tropical', 'urbano', 'elegante'], 'Automotriz': ['urbano', 'neon', 'minimal', 'oceano'], 'Construccion': ['corporativo', 'urbano', 'bosque', 'minimal'],
-  'Bienes Raices': ['elegante', 'corporativo', 'minimal', 'oceano'], 'Servicios Legales': ['elegante', 'minimal', 'corporativo'], 'Finanzas': ['corporativo', 'minimal', 'elegante'], 'Educacion': ['fresco', 'corporativo', 'tropical', 'bosque'],
-  'Turismo y Viajes': ['oceano', 'tropical', 'bosque', 'atardecer'], 'Entretenimiento': ['atardecer', 'urbano', 'neon', 'tropical'] };
+const PT_CAT = { 'Restaurante / Comida': ['terracota', 'coral', 'pop', 'tropical', 'elegante', 'urbano', 'oceano'], 'Belleza y Estetica': ['rosa', 'lavanda', 'coral', 'elegante', 'atardecer'], 'Salud y Bienestar': ['brisa', 'cielo', 'fresco', 'bosque', 'lavanda'],
+  'Tecnologia': ['neon', 'cielo', 'minimal', 'corporativo', 'atardecer'], 'Moda y Retail': ['pop', 'lavanda', 'rosa', 'coral', 'urbano', 'elegante'], 'Automotriz': ['urbano', 'neon', 'pop', 'minimal', 'oceano'], 'Construccion': ['corporativo', 'citrico', 'urbano', 'cielo', 'minimal'],
+  'Bienes Raices': ['elegante', 'cielo', 'corporativo', 'brisa', 'oceano'], 'Servicios Legales': ['elegante', 'cielo', 'minimal', 'corporativo'], 'Finanzas': ['corporativo', 'cielo', 'minimal', 'elegante'], 'Educacion': ['citrico', 'cielo', 'brisa', 'lavanda', 'tropical'],
+  'Turismo y Viajes': ['oceano', 'tropical', 'brisa', 'coral', 'atardecer'], 'Entretenimiento': ['pop', 'atardecer', 'urbano', 'neon', 'lavanda'] };
 const PT_COLORS = ['#E11D48', '#F97316', '#EAB308', '#16A34A', '#0D9488', '#0284C7', '#4F46E5', '#9333EA', '#DB2777', '#111111'];
 const lumOf = hex => { const n = parseInt(hex.slice(1), 16); return [n >> 16, n >> 8 & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce((a, v, i) => a + v * [.2126, .7152, .0722][i], 0); };
 const mixHex = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
@@ -2388,11 +2441,11 @@ const FONTS_ON = new Set();
 function loadFonts(q) { if (!q || FONTS_ON.has(q)) return; FONTS_ON.add(q); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=' + q + '&display=swap'; document.head.appendChild(l); }
 function applyTheme(el, T) {
   loadFonts(T.g);
-  const v = { '--bg': T.bg, '--sur': T.sur, '--card': T.card, '--card2': T.card, '--txt': T.txt, '--mut': T.mut, '--dim': T.mut, '--acc': T.acc, '--acct': T.acct, '--acc2': T.acc2, '--pur': T.acc2, '--on': T.on,
+  const v = { '--bg': T.bg, '--sur': T.sur, '--card': T.card, '--card2': T.card, '--txt': T.txt, '--mut': T.mut, '--dim': T.mut, '--acc': T.acc, '--acct': T.acct, '--acc2': T.acc2, '--acc3': T.acc3 || T.acc2, '--pur': T.acc2, '--on': T.on,
     '--bdr': `color-mix(in srgb,${T.txt} ${T.dark ? 13 : 11}%,transparent)`, '--bdr2': `color-mix(in srgb,${T.txt} ${T.dark ? 22 : 18}%,transparent)`, '--fh': `'${T.fh}',${FH_FALL[T.fh] || 'system-ui,sans-serif'}`, '--fb': `'${T.fb}',system-ui,sans-serif`, '--pr': T.r + 'px', '--btnr': T.btn + 'px' };
   Object.entries(v).forEach(([k, x]) => el.style.setProperty(k, x));
   el.style.colorScheme = T.dark ? 'dark' : 'light';
-  Object.assign(el.dataset, { tone: T.dark ? 'dark' : 'light', hero: T.hero, h: T.h, pat: T.pat, grad: T.grad ? '1' : '0', theme: T.id });
+  Object.assign(el.dataset, { tone: T.dark ? 'dark' : 'light', hero: T.hero, h: T.h, pat: T.pat, grad: T.grad ? '1' : '0', vivid: T.vivid ? '1' : '0', theme: T.id });
 }
 const tagline = d => { const t = String(d || '').replace(/\s+/g, ' ').trim(); if (!t) return ''; const m = t.match(/^.{20,150}?[.!?](\s|$)/); return m ? m[0].trim() : t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
 function pfJump(id) { const el = byId(id), pf = byId('profile'); if (!el) return; pf.scrollTo({ top: pf.scrollTop + el.getBoundingClientRect().top - 150, behavior: REDUCED ? 'auto' : 'smooth' }); }
